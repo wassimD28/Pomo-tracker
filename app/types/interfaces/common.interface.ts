@@ -1,13 +1,10 @@
 export interface PomoStore {
   pomoSession: PomoSession;
-  startPomoSession: (
-    note: Note,
-    duration: number,
-    breakDuration: number,
-  ) => void;
+  startPomoSession: (duration: number, breakDuration: number) => void;
   pausePomoSession: () => void;
   resumePomoSession: () => void;
   endPomoSession: () => void;
+  updateRemainingTime: (remainingTime: number) => void;
 }
 
 export interface Note {
@@ -19,11 +16,14 @@ export interface Note {
 
 export interface PomoSession {
   target: Note | null;
-  duration: number; // in minutes
-  breakDuration: number; // in minutes
+  duration: number; // in seconds
+  remainingTime?: number; // in seconds 
+  breakDuration: number; // in seconds
   pausedAt: Date[] | null;
   resumedAt: Date[] | null;
   isPaused: boolean;
+  isStarted: boolean;
+  isCompleted: boolean;
   startedAt: Date | null;
   endedAt: Date | null;
 }

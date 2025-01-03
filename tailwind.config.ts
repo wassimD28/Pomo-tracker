@@ -153,6 +153,9 @@ export default {
         "glow-2xl":
           "0 0 50px rgba(255, 255, 255, 0.8), 0 0 100px rgba(255, 255, 255, 0.6), 0 0 150px rgba(255, 255, 255, 0.4), 0 0 200px rgba(255, 255, 255, 0.2), 0 0 250px rgba(255, 255, 255, 0.1)",
       },
+      transitionTimingFunction: {
+        "custom-ease": "cubic-bezier(0, 0.48, 0, 0.99)",
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports

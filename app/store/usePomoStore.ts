@@ -4,26 +4,24 @@ import { PomoStore } from "../types/interfaces/common.interface";
 export const usePomoStore = create<PomoStore>((set) => ({
   pomoSession: {
     target: null,
-    duration: 25,
-    breakDuration: 5,
+    duration: 60,
+    breakDuration: 5 * 60,
     isPaused: false,
+    isStarted: false,
+    isCompleted: false,
     pausedAt: null,
     resumedAt: null,
     startedAt: null,
     endedAt: null,
   },
-  startPomoSession: (note, duration, breakDuration) =>
+  startPomoSession: (duration, breakDuration) =>
     set((state) => ({
       pomoSession: {
         ...state.pomoSession,
-        target: note,
         duration,
         breakDuration,
         startedAt: new Date(),
-        isPaused: false,
-        pausedAt: null,
-        resumedAt: null,
-        endedAt: null,
+        isStarted: true,
       },
     })),
   pausePomoSession: () =>
@@ -52,6 +50,15 @@ export const usePomoStore = create<PomoStore>((set) => ({
         ...state.pomoSession,
         endedAt: new Date(),
         isPaused: false,
+        isStarted: false,
+        isCompleted: true,
+      },
+    })),
+  updateRemainingTime: (remainingTime: number) =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        remainingTime,
       },
     })),
 }));
