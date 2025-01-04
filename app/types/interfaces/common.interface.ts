@@ -1,23 +1,23 @@
-export interface PomoStore {
-  pomoSession: PomoSession;
-  startPomoSession: (duration: number, breakDuration: number) => void;
-  pausePomoSession: () => void;
-  resumePomoSession: () => void;
-  endPomoSession: () => void;
-  updateRemainingTime: (remainingTime: number) => void;
+import { LucideIcon } from "lucide-react";
+
+export interface Link{
+  href: string;
+  isActive: boolean;
+  icon: LucideIcon
 }
 
-export interface Note {
+export interface Task {
   title: string;
   description: string;
+  isCompleted: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface PomoSession {
-  target: Note | null;
+  target: Task | null;
   duration: number; // in seconds
-  remainingTime?: number; // in seconds 
+  remainingTime?: number; // in seconds
   breakDuration: number; // in seconds
   pausedAt: Date[] | null;
   resumedAt: Date[] | null;

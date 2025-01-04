@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { PomoStore } from "../types/interfaces/common.interface";
+import { PomoStore } from "../types/interfaces/store.interface";
 
 export const usePomoStore = create<PomoStore>((set) => ({
   pomoSession: {

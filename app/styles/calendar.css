@@ -1,0 +1,111 @@
+/* Sets the base text color for the entire calendar */
+.rbc-calendar {
+  color: white;
+}
+
+/* Styles the current day's cell with a subtle white background */
+.rbc-today {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the days that belong to previous/next months in the current view */
+.rbc-off-range-bg {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Styles the day names row (Mon, Tue, Wed, etc.) border */
+.rbc-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(236, 220, 220, 0.644);
+  padding: 0;
+}
+.rbc-header + .rbc-header {
+    border-left: none;
+    padding: 0;
+}
+.rbc-time-header-content{
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the outer border of the monthly calendar view */
+.rbc-month-view {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the vertical borders between days */
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the horizontal borders between weeks */
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the view selection buttons (Month, Week, Day) */
+.rbc-btn-group button {
+  color: white !important;
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Styles the currently selected view button */
+.rbc-btn-group button.rbc-active {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Hover effect for toolbar buttons (includes navigation and view selection) */
+.rbc-toolbar button:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Styles for active/clicked toolbar buttons */
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+/* Styles for time slot  */
+.rbc-day-slot .rbc-time-slot {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.rbc-timeslot-group {
+  border: none;
+}
+/* time slot container  */
+.rbc-time-content > * + * > * {
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.rbc-time-content{
+  border: none;
+  padding-right: 8px;
+}
+.rbc-time-content::-webkit-scrollbar-thumb{
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border-radius: 10px;
+  cursor: grab;
+}
+.rbc-time-content::-webkit-scrollbar{
+  width: 8px;
+  background: transparent;
+}
+/* left side time in hour style */
+.rbc-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.9em;
+}
+
+.rbc-current-time-indicator{
+  height: 2px;
+  background-color: #cd9d1a;
+}
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-time-header.rbc-overflowing {
+  border: none;
+}
+.rbc-time-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.384) !important;
+}
