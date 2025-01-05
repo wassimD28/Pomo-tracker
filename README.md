@@ -34,3 +34,88 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+```
+note
+├─ .gitignore
+├─ .prettierrc
+├─ app
+│  ├─ api
+│  │  ├─ hello
+│  │  │  └─ route.ts
+│  │  └─ tasks
+│  │     └─ route.ts
+│  ├─ checklist
+│  │  └─ page.tsx
+│  ├─ dashboard
+│  │  ├─ page.tsx
+│  │  └─ _components
+│  │     ├─ calendar.tsx
+│  │     ├─ pomodoroSamary.tsx
+│  │     └─ todayTodos.tsx
+│  ├─ favicon.ico
+│  ├─ globals.css
+│  ├─ layout.tsx
+│  ├─ page.tsx
+│  ├─ pomodoro
+│  │  └─ page.tsx
+│  ├─ sign-in
+│  │  └─ [[...sign-in]]
+│  │     └─ page.tsx
+│  ├─ sign-up
+│  │  └─ [[...sign-up]]
+│  │     └─ page.tsx
+│  ├─ store
+│  │  └─ usePomoStore.ts
+│  ├─ styles
+│  │  └─ calendar.css
+│  └─ types
+│     └─ interfaces
+│        ├─ common.interface.ts
+│        ├─ pomodoro.interface.ts
+│        └─ store.interface.ts
+├─ bun.lockb
+├─ components
+│  ├─ pomoProgressBar.conponent.tsx
+│  ├─ sideBar.component.tsx
+│  └─ ui
+│     ├─ button.tsx
+│     ├─ checkbox.tsx
+│     ├─ input.tsx
+│     ├─ separator.tsx
+│     ├─ sheet.tsx
+│     ├─ sidebar.tsx
+│     ├─ skeleton.tsx
+│     └─ tooltip.tsx
+├─ components.json
+├─ db
+│  ├─ drizzle.ts
+│  └─ schema.ts
+├─ drizzle
+│  ├─ 0000_rainy_kylun.sql
+│  └─ meta
+│     ├─ 0000_snapshot.json
+│     └─ _journal.json
+├─ drizzle.config.ts
+├─ eslint.config.mjs
+├─ hooks
+│  └─ use-mobile.tsx
+├─ lib
+│  └─ utils.ts
+├─ middleware.ts
+├─ next.config.ts
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ public
+│  ├─ file.svg
+│  ├─ globe.svg
+│  ├─ next.svg
+│  ├─ tomato-icon.svg
+│  ├─ vercel.svg
+│  └─ window.svg
+├─ README.md
+├─ tailwind.config.ts
+└─ tsconfig.json
+
+```
