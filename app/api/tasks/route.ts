@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { db } from "@/db/drizzle";
-import { tasks } from "@/db/schema";
+import { task } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 const app = new Hono().basePath("/api/tasks");
@@ -19,8 +19,7 @@ app.use("*", async (c, next) => {
 // Get all tasks
 app.get("/", async (c) => {
   try {
-    // This will select all tasks from your database
-    const allTasks = await db.select().from(tasks);
+    const allTasks = await db.select().from(task);
     return c.json({ tasks: allTasks });
   } catch (error) {
     console.error("Failed to fetch tasks:", error);
@@ -40,9 +39,10 @@ app.post("/", async (c) => {
 
     // Insert the new task
     const [newTask] = await db
-      .insert(tasks)
+      .insert(task)
       .values({
         userId : body.userId,
+        categoryId: body.categoryId,
         title: body.title,
         description: body.description,
         isCompleted: body.isCompleted ?? false,
@@ -61,22 +61,20 @@ app.put("/:id", async (c) => {
   try {
     const id = c.req.param("id");
     const body = await c.req.json();
-
     const [updatedTask] = await db
-      .update(tasks)
+      .update(task)
       .set({
         title: body.title,
         description: body.description,
         isCompleted: body.isCompleted,
         updatedAt: new Date(),
       })
-      .where(tasks.id, id)
+      .where(eq(task.id, Number(id)))
       .returning();
 
     if (!updatedTask) {
       return c.json({ error: "Task not found" }, 404);
     }
-
     return c.json({ task: updatedTask });
   } catch (error) {
     console.error("Failed to update task:", error);
@@ -90,8 +88,8 @@ app.delete("/:id", async (c) => {
     const id = c.req.param("id");
 
     const [deletedTask] = await db
-      .delete(tasks)
-      .where(eq(tasks.id, id))
+      .delete(task)
+      .where(eq(task.id, Number(id)))
       .returning();
 
     if (!deletedTask) {

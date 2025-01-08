@@ -20,7 +20,7 @@ function Categories() {
 
   const showEmpty = () => {
     return (
-      <div className="text-center text-gray-400">No categories found.</div>
+      <div className="text-center text-gray-400 flex h-full w-full justify-center items-center">No categories found.</div>
     );
   };
 
