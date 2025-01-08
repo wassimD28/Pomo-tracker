@@ -1,6 +1,17 @@
+"use client"
 import { PomodoroSamary } from "./_components/pomodoroSamary";
 import { TodayTodos } from "./_components/todayTodos";
-import { CalendarComponent } from "./_components/calendar";
+import dynamic from "next/dynamic";
+
+// Fix the dynamic import by explicitly handling the default export
+const CalendarComponent = dynamic(
+  () => import("./_components/calendar").then((mod) => mod.default),
+  {
+    loading: ()=> <div>loging...</div>,
+    ssr: false,
+  },
+);
+
 export default function DashboardPage() {
   return (
     <div className="relative flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 text-custom-white-400">

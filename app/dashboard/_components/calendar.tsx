@@ -15,8 +15,7 @@ interface CalendarEvent extends Omit<Event, "title"> {
   description?: string;
   category?: "work" | "personal" | "meeting";
 }
-
-export const CalendarComponent = () => {
+ const CalendarComponent = () => {
   const localizer = momentLocalizer(moment);
 
   // Sample events - replace with your actual events data
@@ -118,3 +117,4 @@ export const CalendarComponent = () => {
     </div>
   );
 };
+export default CalendarComponent;

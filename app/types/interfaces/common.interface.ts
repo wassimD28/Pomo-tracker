@@ -27,3 +27,10 @@ export interface PomoSession {
   startedAt: Date | null;
   endedAt: Date | null;
 }
+
+
+export interface Category{
+  id: number;
+  name: string;
+  icon: string;
+}
