@@ -5,7 +5,7 @@ import { CreateUserParams, UserRepository } from "@/repositories/users";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const SIGNING_SECRET = process.env.SIGNING_SECRET;
+  const SIGNING_SECRET = process.env.WEBHOOK_SECRET_KEY;
 
   if (!SIGNING_SECRET) {
     throw new Error(
@@ -66,6 +66,7 @@ export async function POST(req: Request) {
     };
 
     await UserRepository.createUser(user);
+    console.log("User created : ", user);
     return NextResponse.json({ message: "New user created", user });
   }
 
