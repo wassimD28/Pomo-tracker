@@ -8,7 +8,8 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: text("id").primaryKey(), // Clerk ID (string)
+  id: serial("id").primaryKey(), // Using serial for auto-increment
+  clerkId: text("clerk_id").unique(), // Clerk ID (string)
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").unique().notNull(),
@@ -19,7 +20,7 @@ export const users = pgTable("users", {
 
 export const categories = pgTable("categories", {
   id: serial("id").primaryKey(), // Using serial for auto-increment
-  userId: text("user_id")
+  userId: integer("user_id")
     .notNull()
     .references(() => users.id),
   name: text("name").notNull(),
@@ -29,7 +30,7 @@ export const categories = pgTable("categories", {
 
 export const task = pgTable("tasks", {
   id: serial("id").primaryKey(), // Using serial for auto-increment
-  userId: text("user_id")
+  userId: integer("user_id")
     .notNull()
     .references(() => users.id),
   categoryId: integer("category_id")

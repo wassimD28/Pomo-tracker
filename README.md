@@ -35,18 +35,24 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+
 ```
-note
+Note
 ├─ .gitignore
 ├─ .prettierrc
 ├─ app
 │  ├─ api
 │  │  ├─ hello
 │  │  │  └─ route.ts
-│  │  └─ tasks
+│  │  ├─ tasks
+│  │  │  └─ route.ts
+│  │  └─ webhooks
 │  │     └─ route.ts
 │  ├─ checklist
-│  │  └─ page.tsx
+│  │  ├─ page.tsx
+│  │  └─ _components
+│  │     ├─ categories.tsx
+│  │     └─ tasks.tsx
 │  ├─ dashboard
 │  │  ├─ page.tsx
 │  │  └─ _components
@@ -66,6 +72,7 @@ note
 │  │  └─ [[...sign-up]]
 │  │     └─ page.tsx
 │  ├─ store
+│  │  ├─ useAuthStore.ts
 │  │  └─ usePomoStore.ts
 │  ├─ styles
 │  │  └─ calendar.css
@@ -82,6 +89,7 @@ note
 │     ├─ button.tsx
 │     ├─ checkbox.tsx
 │     ├─ input.tsx
+│     ├─ resizable.tsx
 │     ├─ separator.tsx
 │     ├─ sheet.tsx
 │     ├─ sidebar.tsx
@@ -89,14 +97,7 @@ note
 │     └─ tooltip.tsx
 ├─ components.json
 ├─ db
-│  ├─ drizzle.ts
 │  └─ schema.ts
-├─ drizzle
-│  ├─ 0000_rainy_kylun.sql
-│  └─ meta
-│     ├─ 0000_snapshot.json
-│     └─ _journal.json
-├─ drizzle.config.ts
 ├─ eslint.config.mjs
 ├─ hooks
 │  └─ use-mobile.tsx

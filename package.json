@@ -41,6 +41,7 @@
     "react-dom": "^19.0.0",
     "react-resizable-panels": "^2.1.7",
     "react-timer-hook": "^3.0.8",
+    "svix": "^1.45.1",
     "tailwind-merge": "^2.6.0",
     "tailwind-scrollbar": "^4.0.0-beta.0",
     "tailwindcss-animate": "^1.0.7",
