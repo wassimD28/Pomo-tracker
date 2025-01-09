@@ -46,6 +46,19 @@ export class UserRepository {
     }
   }
 
+  // get user by userId
+  static async getUserById(userId: number) {
+    try {
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, Number(userId)),
+      });
+      return user;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
+  }
+
   // Update user
   static async updateUser(clerkId: string, data: Partial<CreateUserParams>) {
     try {

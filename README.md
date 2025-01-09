@@ -37,6 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 
+
 ```
 Note
 ├─ .gitignore
@@ -44,6 +45,8 @@ Note
 ├─ app
 │  ├─ api
 │  │  ├─ categories
+│  │  │  └─ route.ts
+│  │  ├─ hello
 │  │  │  └─ route.ts
 │  │  ├─ tasks
 │  │  │  └─ route.ts
@@ -54,6 +57,8 @@ Note
 │  │  ├─ page.tsx
 │  │  └─ _components
 │  │     ├─ categories.tsx
+│  │     ├─ elements
+│  │     │  └─ categoryDialog.tsx
 │  │     └─ tasks.tsx
 │  ├─ dashboard
 │  │  ├─ page.tsx
@@ -90,7 +95,9 @@ Note
 │  └─ ui
 │     ├─ button.tsx
 │     ├─ checkbox.tsx
+│     ├─ dialog.tsx
 │     ├─ input.tsx
+│     ├─ label.tsx
 │     ├─ resizable.tsx
 │     ├─ separator.tsx
 │     ├─ sheet.tsx
@@ -104,13 +111,30 @@ Note
 ├─ hooks
 │  └─ use-mobile.tsx
 ├─ lib
-│  └─ utils.ts
+│  ├─ controllers
+│  │  └─ category.controller.ts
+│  ├─ middlewares
+│  │  ├─ authenticateUser.ts
+│  │  ├─ handleValidationError.ts
+│  │  └─ validateOwnership.ts
+│  ├─ repositories
+│  │  ├─ categoryRepo.ts
+│  │  └─ userRepo.ts
+│  ├─ utils.ts
+│  └─ validations
+│     ├─ category.validator.ts
+│     ├─ errors
+│     │  └─ validation.error.ts
+│     ├─ schemas
+│     │  └─ category.schema.ts
+│     └─ validators
 ├─ middleware.ts
 ├─ next.config.ts
 ├─ package-lock.json
 ├─ package.json
 ├─ postcss.config.mjs
 ├─ public
+│  ├─ default-avatar-image.jpg
 │  ├─ file.svg
 │  ├─ globe.svg
 │  ├─ next.svg
@@ -118,9 +142,6 @@ Note
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ README.md
-├─ repositories
-│  ├─ categoryRepo.ts
-│  └─ userRepo.ts
 ├─ tailwind.config.ts
 └─ tsconfig.json
 

@@ -11,10 +11,12 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SignOutButton, useAuth } from "@clerk/nextjs";
+import { SignOutButton, useAuth, useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export const SideBar = () => {
   const { isLoaded, userId } = useAuth();
+  const { user } = useUser();
   const pathname = usePathname();
   const [links, setLinks] = useState<LinkType[]>([
     { href: "/dashboard", isActive: false, icon: LayoutDashboard },
@@ -62,7 +64,14 @@ export const SideBar = () => {
         <SignOutButton>
           <LogOut className="text-gray-400 transition-all duration-200 hover:scale-110 hover:text-white" />
         </SignOutButton>
-
+        <Image
+          src={user?.imageUrl || "/default-avatar-image.jpg"}
+          alt="User profile"
+          width={24}
+          height={24}
+          className="rounded-full"
+          unoptimized // keep this or you'll get hydration error
+        />
         <Link
           href="/settings"
           className="text-gray-400 transition-all duration-200 hover:scale-110 hover:text-white"
