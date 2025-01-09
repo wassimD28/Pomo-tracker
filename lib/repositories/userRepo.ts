@@ -1,7 +1,5 @@
-
-// lib/repositories/users.ts
 import { db } from "@/db/drizzle";
-import { users } from './../db/schema';
+import { users } from "../../db/schema";
 import { eq } from "drizzle-orm";
 
 export interface CreateUserParams {

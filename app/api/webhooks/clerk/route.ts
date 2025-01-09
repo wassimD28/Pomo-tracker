@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { CreateUserParams, UserRepository } from "@/repositories/users";
+import { CreateUserParams, UserRepository } from "@/lib/repositories/userRepo";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

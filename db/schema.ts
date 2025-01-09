@@ -19,7 +19,7 @@ export const users = pgTable("users", {
 });
 
 export const categories = pgTable("categories", {
-  id: serial("id").primaryKey(), // Using serial for auto-increment
+  id: serial("id").primaryKey(), 
   userId: integer("user_id")
     .notNull()
     .references(() => users.id),
@@ -29,7 +29,7 @@ export const categories = pgTable("categories", {
 });
 
 export const task = pgTable("tasks", {
-  id: serial("id").primaryKey(), // Using serial for auto-increment
+  id: serial("id").primaryKey(), 
   userId: integer("user_id")
     .notNull()
     .references(() => users.id),

@@ -36,18 +36,20 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
+
 ```
 Note
 ├─ .gitignore
 ├─ .prettierrc
 ├─ app
 │  ├─ api
-│  │  ├─ hello
+│  │  ├─ categories
 │  │  │  └─ route.ts
 │  │  ├─ tasks
 │  │  │  └─ route.ts
 │  │  └─ webhooks
-│  │     └─ route.ts
+│  │     └─ clerk
+│  │        └─ route.ts
 │  ├─ checklist
 │  │  ├─ page.tsx
 │  │  └─ _components
@@ -116,6 +118,9 @@ Note
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ README.md
+├─ repositories
+│  ├─ categoryRepo.ts
+│  └─ userRepo.ts
 ├─ tailwind.config.ts
 └─ tsconfig.json
 
