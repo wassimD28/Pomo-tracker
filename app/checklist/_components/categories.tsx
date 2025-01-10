@@ -1,10 +1,11 @@
 "use client";
-import { Category } from "@/app/types/interfaces/common.interface";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Pencil, Trash2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import axios from "axios";
-import {CreateCategoryDialog } from "./elements/categoryDialog";
+import { CreateCategoryDialog } from "./elements/categoryDialog";
+import CategoryCard from "./elements/categoryCard";
+import { Category } from "@/app/types/interfaces/common.interface";
+import { useState } from "react";
 
 interface CategoryResponse {
   status: string;
@@ -12,6 +13,7 @@ interface CategoryResponse {
 }
 
 function Categories() {
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>();
   // Fetching categories
   const { data, isLoading, isError } = useQuery<CategoryResponse>({
     queryKey: ["categories"],
@@ -23,15 +25,12 @@ function Categories() {
     staleTime: 1000 * 60 * 5, // Cache categories for 5 minutes
   });
 
-  
-
   // Loading state
   if (isLoading) {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
           <h1 className="text-2xl text-gray-400">Categories</h1>
-          
         </span>
         <div className="flex h-full w-full items-center justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
@@ -46,7 +45,6 @@ function Categories() {
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
           <h1 className="text-2xl text-gray-400">Categories</h1>
-          
         </span>
         <div className="flex h-full w-full items-center justify-center">
           <p className="text-center text-red-400">
@@ -56,43 +54,21 @@ function Categories() {
       </div>
     );
   }
+  const handleSelectedCategory = (index: number): void => {
+    setSelectedCategoryIndex(index);
+  };
 
   const categories = data?.data || [];
-
   const showList = () => {
     return (
       <div className="flex h-full w-full flex-col space-y-2">
         {categories.map((category) => (
-          <div
+          <CategoryCard
             key={category.id}
-            className="group flex w-full cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-white/5"
-          >
-            <p className="text-gray-400">{category.name}</p>
-            <div className="hidden space-x-2 group-hover:flex">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // Handle edit
-                }}
-              >
-                <Pencil className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0 hover:text-red-400"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // Handle delete
-                }}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
+            category={category}
+            isSelected={selectedCategoryIndex === category.id}
+            onSelect={handleSelectedCategory}
+          />
         ))}
       </div>
     );

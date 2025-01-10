@@ -32,5 +32,4 @@ export interface PomoSession {
 export interface Category{
   id: number;
   name: string;
-  icon: string;
 }

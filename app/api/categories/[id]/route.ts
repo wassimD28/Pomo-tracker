@@ -2,11 +2,12 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { CategoryController } from "@/lib/controllers/category.controller";
 import { authenticateUser } from "@/lib/middlewares/authenticateUser";
+import { validateCategoryOwnership } from "@/lib/middlewares/validateOwnership";
 import { HTTPException } from "hono/http-exception";
 
 const app = new Hono();
 
-// Global error handling
+// Global error handling (keeping consistent error handling)
 app.use("*", async (c, next) => {
   try {
     await next();
@@ -31,13 +32,14 @@ app.use("*", async (c, next) => {
   }
 });
 
-// Apply authentication to all routes
+// Apply authentication validation
 app.use("*", authenticateUser);
 
-
-// Only keep the routes that don't need an ID
-app.get("/api/categories", CategoryController.getCategories);
-app.post("/api/categories", CategoryController.createCategory);
+// ID-specific routes
+app.get("/api/categories/:id",validateCategoryOwnership, CategoryController.getCategory);
+app.put("/api/categories/:id",validateCategoryOwnership, CategoryController.updateCategory);
+app.delete("/api/categories/:id",validateCategoryOwnership, CategoryController.deleteCategory);
 
 export const GET = handle(app);
-export const POST = handle(app);
+export const PUT = handle(app);
+export const DELETE = handle(app);
