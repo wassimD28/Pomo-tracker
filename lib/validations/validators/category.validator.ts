@@ -1,6 +1,6 @@
 import { Context } from "hono";
-import { categorySchema } from "./schemas/category.schema";
-import { ValidationError } from "./errors/validation.error";
+import { categorySchema } from "../schemas/category.schema";
+import { ValidationError } from "../errors/validation.error";
 
 export class CategoryValidator {
   static async validateCreate(c: Context) {

@@ -1,7 +1,6 @@
-
 import { Context } from "hono";
 import { CategoryRepository } from "../repositories/categoryRepo";
-import { CategoryValidator } from "../validations/category.validator";
+import { CategoryValidator } from "../validations/validators/category.validator";
 import { HTTPException } from "hono/http-exception";
 
 export class CategoryController {
@@ -67,14 +66,17 @@ export class CategoryController {
   static async updateCategory(c: Context) {
     try {
       const categoryId = parseInt(c.req.param("id"));
-      const validatedData = await CategoryValidator.validateUpdate(c)
+      const validatedData = await CategoryValidator.validateUpdate(c);
       // get the specific category
       const category = await CategoryRepository.getCategoryById(categoryId);
       if (!category) {
         throw new HTTPException(404, { message: "Category not found" });
       }
       // update the category
-      const updatedCategory = await CategoryRepository.updateCategory(categoryId, validatedData);
+      const updatedCategory = await CategoryRepository.updateCategory(
+        categoryId,
+        validatedData,
+      );
       return c.json({
         status: "success",
         data: updatedCategory,

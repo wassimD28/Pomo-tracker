@@ -5,7 +5,10 @@ import {
   timestamp,
   integer,
   serial,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const contentTypeEnum = pgEnum("content_type",["text", "image", "link"])
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(), // Using serial for auto-increment
@@ -28,7 +31,7 @@ export const categories = pgTable("categories", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const task = pgTable("tasks", {
+export const tasks = pgTable("tasks", {
   id: serial("id").primaryKey(), 
   userId: integer("user_id")
     .notNull()
@@ -37,8 +40,19 @@ export const task = pgTable("tasks", {
     .notNull()
     .references(() => categories.id),
   title: text("title").notNull(),
-  description: text("description").notNull(),
   isCompleted: boolean("is_completed").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const taskComponents = pgTable("taskComponents",{
+  id: serial("id").primaryKey(), 
+  taskId: integer("task_id")
+    .notNull()
+    .references(() => tasks.id),
+  order: integer("order").notNull(),
+  content: text("content").notNull(),
+  type: contentTypeEnum("type").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+})

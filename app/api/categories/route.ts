@@ -2,34 +2,11 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { CategoryController } from "@/lib/controllers/category.controller";
 import { authenticateUser } from "@/lib/middlewares/authenticateUser";
-import { HTTPException } from "hono/http-exception";
+import { errorHandler } from "@/lib/middlewares/errorHandler";
 
 const app = new Hono();
 
-// Global error handling
-app.use("*", async (c, next) => {
-  try {
-    await next();
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      return c.json(
-        {
-          status: "error",
-          message: error.message,
-        },
-        error.status,
-      );
-    }
-    console.error(error);
-    return c.json(
-      {
-        status: "error",
-        message: "Internal Server Error",
-      },
-      500,
-    );
-  }
-});
+app.use("*", errorHandler)
 
 // Apply authentication to all routes
 app.use("*", authenticateUser);
