@@ -40,8 +40,7 @@ export class TaskController {
   static async getTask(c: Context){
     try {
       const taskId = parseInt(c.req.param("id"));
-      const userId = c.get("userId");
-      const task = await TaskRepository.getTaskById(taskId, userId);
+      const task = await TaskRepository.getTaskById(taskId);
       return c.json({
         status: "success",
         data: task,
@@ -55,7 +54,7 @@ export class TaskController {
   // get tasks by category
   static async getTasksByCategory(c: Context){
     try {
-      const categoryId = parseInt(c.req.param("categoryId"));
+      const categoryId = parseInt(c.req.param("id"));
       const tasks = await TaskRepository.getTasksByCategory(categoryId);
       return c.json({
         status: "success",

@@ -1,13 +1,24 @@
 import { create } from "zustand";
 
-interface CategoryStore {
+interface Category {
   id: number | null;
   name: string | null;
 }
 
-export const useCategoryStore = create<CategoryStore>((set)=>({
-  id: null,
-  name: null,
-  setCategory: (id:number, name:string) => set({id, name}),
-  clearCategory: () => set({ id: null, name: null }),
-}))
+interface CategoryStore {
+  category: Category;
+  setCategory: (id: number, name: string | null) => void;
+  clearCategory: () => void;
+}
+
+export const useCategoryStore = create<CategoryStore>((set) => ({
+  category: { id: null, name: null },
+  setCategory: (id, name) =>
+    set(() => ({
+      category: { id, name },
+    })),
+  clearCategory: () =>
+    set(() => ({
+      category: { id: null, name: null },
+    })),
+}));

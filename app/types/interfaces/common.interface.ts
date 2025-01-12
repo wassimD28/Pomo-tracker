@@ -7,11 +7,10 @@ export interface Link{
 }
 
 export interface Task {
+  id: number;
+  categoryId: number;
   title: string;
-  description: string;
   isCompleted: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface PomoSession {

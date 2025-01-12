@@ -6,6 +6,7 @@ import { CreateCategoryDialog } from "./elements/categoryDialog";
 import CategoryCard from "./elements/categoryCard";
 import { Category } from "@/app/types/interfaces/common.interface";
 import { useState } from "react";
+import { useCategoryStore } from "@/app/store/useCategoryStore";
 
 interface CategoryResponse {
   status: string;
@@ -13,6 +14,7 @@ interface CategoryResponse {
 }
 
 function Categories() {
+  const { setCategory } = useCategoryStore();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>();
   // Fetching categories
   const { data, isLoading, isError } = useQuery<CategoryResponse>({
@@ -56,6 +58,11 @@ function Categories() {
   }
   const handleSelectedCategory = (index: number): void => {
     setSelectedCategoryIndex(index);
+    const categoryName = categories.find((c) => c.id === index)?.name;
+    // console log index and category name
+    console.log("category id :", index);
+    console.log("category name :", categoryName);
+    setCategory(index, categoryName ?? null);
   };
 
   const categories = data?.data || [];

@@ -12,8 +12,8 @@ app.use("*", errorHandler);
 app.use("*", authenticateUser);
 
 // Only keep the routes that don't need an ID
-app.get("/api/taks", TaskController.getTasks);
-app.post("/api/taks", TaskController.create);
+app.get("/api/tasks", TaskController.getTasks);
+app.post("/api/tasks", TaskController.create);
 
 export const GET = handle(app);
 export const POST = handle(app);

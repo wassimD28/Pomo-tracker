@@ -1,41 +1,56 @@
 import { Context } from "hono";
 import { CategoryRepository } from "@/lib/repositories/categoryRepo";
 import { HTTPException } from "hono/http-exception";
+import { Entity } from "@/app/types/enum/common.enum";
+import { TaskRepository } from "../repositories/taskRep";
 
-export const validateCategoryOwnership = async (
-  c: Context,
-  next: () => Promise<void>,
-) => {
-  try {
-    const userId = c.get("userId");
-    const categoryId = Number(c.req.param("id"));
+export const validateOwnership = (entityName: keyof typeof Entity) => {
+  return async (c: Context, next: () => Promise<void>) => {
+    try {
+      const userId = c.get("userId");
+      const EntityId = Number(c.req.param("id"));
 
-    if (isNaN(categoryId)) {
-      throw new HTTPException(400, { message: "Invalid category ID" });
-    }
+      if (isNaN(EntityId)) {
+        throw new HTTPException(400, {
+          message: `Invalid ${entityName.toLocaleLowerCase()} ID`,
+        });
+      }
+      let entity;
+      switch (entityName) {
+        case "CATEGORY":
+          entity = await CategoryRepository.getCategoryById(EntityId);
+          break;
+        case "TASK":
+          entity = await TaskRepository.getTaskById(EntityId);
+          break;
+        default:
+          throw new HTTPException(400, {
+            message: "Invalid entity name to validate ownership.",
+          });
+          break;
+      }
 
-    const category = await CategoryRepository.getCategoryById(categoryId);
+      if (!entity) {
+        throw new HTTPException(404, {
+          message: `${entityName.toLocaleLowerCase()} not found to validate ownership.`,
+        });
+      }
 
-    if (!category) {
-      throw new HTTPException(404, { message: "Category not found" });
-    }
+      if (entity.userId !== userId) {
+        throw new HTTPException(403, {
+          message: "You do not have permission to access this category",
+        });
+      }
 
-    if (category.userId !== userId) {
-      throw new HTTPException(403, {
-        message: "You do not have permission to access this category",
+      await next();
+    } catch (error) {
+      if (error instanceof HTTPException) {
+        throw error;
+      }
+      console.error("Error in ownership validation:", error);
+      throw new HTTPException(500, {
+        message: "Internal server error during ownership validation",
       });
     }
-
-    // Store the category in the context for the controller to use
-    c.set("category", category);
-    await next();
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      throw error;
-    }
-    console.error("Error in ownership validation:", error);
-    throw new HTTPException(500, {
-      message: "Internal server error during ownership validation",
-    });
-  }
+  };
 };

@@ -45,10 +45,18 @@ Note
 ├─ app
 │  ├─ api
 │  │  ├─ categories
-│  │  │  └─ route.ts
+│  │  │  ├─ route.ts
+│  │  │  └─ [id]
+│  │  │     └─ route.ts
 │  │  ├─ hello
 │  │  │  └─ route.ts
 │  │  ├─ tasks
+│  │  │  ├─ route.ts
+│  │  │  ├─ [categoryId]
+│  │  │  │  └─ route.ts
+│  │  │  └─ [id]
+│  │  │     └─ route.ts
+│  │  ├─ user
 │  │  │  └─ route.ts
 │  │  └─ webhooks
 │  │     └─ clerk
@@ -58,7 +66,10 @@ Note
 │  │  └─ _components
 │  │     ├─ categories.tsx
 │  │     ├─ elements
-│  │     │  └─ categoryDialog.tsx
+│  │     │  ├─ categoryCard.tsx
+│  │     │  ├─ categoryDialog.tsx
+│  │     │  ├─ taskCard.tsx
+│  │     │  └─ taskDialog.tsx
 │  │     └─ tasks.tsx
 │  ├─ dashboard
 │  │  ├─ page.tsx
@@ -80,7 +91,9 @@ Note
 │  │     └─ page.tsx
 │  ├─ store
 │  │  ├─ useAuthStore.ts
-│  │  └─ usePomoStore.ts
+│  │  ├─ useCategoryStore.ts
+│  │  ├─ usePomoStore.ts
+│  │  └─ useTaskStore.ts
 │  ├─ styles
 │  │  └─ calendar.css
 │  └─ types
@@ -96,6 +109,7 @@ Note
 │     ├─ button.tsx
 │     ├─ checkbox.tsx
 │     ├─ dialog.tsx
+│     ├─ dropdown-menu.tsx
 │     ├─ input.tsx
 │     ├─ label.tsx
 │     ├─ resizable.tsx
@@ -111,23 +125,31 @@ Note
 ├─ hooks
 │  └─ use-mobile.tsx
 ├─ lib
+│  ├─ context
+│  │  └─ authProvider.tsx
 │  ├─ controllers
-│  │  └─ category.controller.ts
+│  │  ├─ category.controller.ts
+│  │  ├─ task.controller.ts
+│  │  └─ user.controller.ts
 │  ├─ middlewares
 │  │  ├─ authenticateUser.ts
+│  │  ├─ errorHandler.ts
 │  │  ├─ handleValidationError.ts
 │  │  └─ validateOwnership.ts
 │  ├─ repositories
 │  │  ├─ categoryRepo.ts
+│  │  ├─ taskRep.ts
 │  │  └─ userRepo.ts
 │  ├─ utils.ts
 │  └─ validations
-│     ├─ category.validator.ts
 │     ├─ errors
 │     │  └─ validation.error.ts
 │     ├─ schemas
-│     │  └─ category.schema.ts
+│     │  ├─ category.schema.ts
+│     │  └─ task.shema.ts
 │     └─ validators
+│        ├─ category.validator.ts
+│        └─ task.validator.ts
 ├─ middleware.ts
 ├─ next.config.ts
 ├─ package-lock.json

@@ -34,12 +34,12 @@ export class TaskRepository {
   }
 
   // Get single task
-  static async getTaskById(taskId: number, userId: number) {
+  static async getTaskById(taskId: number) {
     try {
       const task = await db
         .select()
         .from(tasks)
-        .where(and(eq(tasks.id, taskId), eq(tasks.userId, userId)))
+        .where(and(eq(tasks.id, taskId)))
         .then((res) => res[0]);
 
       return task;
