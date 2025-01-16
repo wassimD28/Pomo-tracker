@@ -8,7 +8,11 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 
-export const contentTypeEnum = pgEnum("content_type",["text", "image", "link"])
+export const contentTypeEnum = pgEnum("content_type", [
+  "text",
+  "image",
+  "link",
+]);
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(), // Using serial for auto-increment
@@ -22,7 +26,7 @@ export const users = pgTable("users", {
 });
 
 export const categories = pgTable("categories", {
-  id: serial("id").primaryKey(), 
+  id: serial("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
     .references(() => users.id),
@@ -32,7 +36,7 @@ export const categories = pgTable("categories", {
 });
 
 export const tasks = pgTable("tasks", {
-  id: serial("id").primaryKey(), 
+  id: serial("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
     .references(() => users.id),
@@ -45,8 +49,11 @@ export const tasks = pgTable("tasks", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const taskComponents = pgTable("taskComponents",{
-  id: serial("id").primaryKey(), 
+export const taskComponents = pgTable("taskComponents", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
   taskId: integer("task_id")
     .notNull()
     .references(() => tasks.id),
@@ -55,4 +62,4 @@ export const taskComponents = pgTable("taskComponents",{
   type: contentTypeEnum("type").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-})
+});

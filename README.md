@@ -48,12 +48,15 @@ Note
 │  │  │  ├─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
-│  │  ├─ hello
-│  │  │  └─ route.ts
-│  │  ├─ tasks
+│  │  ├─ taskDetails
 │  │  │  ├─ route.ts
-│  │  │  ├─ [categoryId]
-│  │  │  │  └─ route.ts
+│  │  │  └─ [id]
+│  │  │     └─ route.ts
+│  │  ├─ tasks
+│  │  │  ├─ category
+│  │  │  │  └─ [id]
+│  │  │  │     └─ route.ts
+│  │  │  ├─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
 │  │  ├─ user
@@ -70,6 +73,7 @@ Note
 │  │     │  ├─ categoryDialog.tsx
 │  │     │  ├─ taskCard.tsx
 │  │     │  └─ taskDialog.tsx
+│  │     ├─ taskDetail.tsx
 │  │     └─ tasks.tsx
 │  ├─ dashboard
 │  │  ├─ page.tsx
@@ -97,6 +101,8 @@ Note
 │  ├─ styles
 │  │  └─ calendar.css
 │  └─ types
+│     ├─ enum
+│     │  └─ common.enum.ts
 │     └─ interfaces
 │        ├─ common.interface.ts
 │        ├─ pomodoro.interface.ts
@@ -130,6 +136,7 @@ Note
 │  ├─ controllers
 │  │  ├─ category.controller.ts
 │  │  ├─ task.controller.ts
+│  │  ├─ taskComponent.controller.ts
 │  │  └─ user.controller.ts
 │  ├─ middlewares
 │  │  ├─ authenticateUser.ts
@@ -138,6 +145,7 @@ Note
 │  │  └─ validateOwnership.ts
 │  ├─ repositories
 │  │  ├─ categoryRepo.ts
+│  │  ├─ taskComponentRepo.ts
 │  │  ├─ taskRep.ts
 │  │  └─ userRepo.ts
 │  ├─ utils.ts
@@ -146,10 +154,12 @@ Note
 │     │  └─ validation.error.ts
 │     ├─ schemas
 │     │  ├─ category.schema.ts
-│     │  └─ task.shema.ts
+│     │  ├─ task.shema.ts
+│     │  └─ taskComponent.shema.ts
 │     └─ validators
 │        ├─ category.validator.ts
-│        └─ task.validator.ts
+│        ├─ task.validator.ts
+│        └─ taskComponent.validator.ts
 ├─ middleware.ts
 ├─ next.config.ts
 ├─ package-lock.json

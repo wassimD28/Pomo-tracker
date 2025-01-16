@@ -4,3 +4,9 @@ export enum Entity {
   //TASK_COMPONENT,
   //POMODORO_SESSION,
 }
+
+export enum ContentType {
+  text = "text",
+  image = "image",
+  link = "link",
+}

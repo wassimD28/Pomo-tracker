@@ -126,7 +126,7 @@ function TaskCard({ task }: TaskCardProps) {
       className={cn(
         "group relative grid h-10 w-full cursor-pointer select-none grid-cols-[auto_1fr_auto] items-center justify-start gap-2 rounded-md bg-transparent px-2 text-custom-white-200/70 duration-300 ease-out hover:bg-custom-white-400/10",
         isEditing && "grid-cols-[1fr_auto] px-2",
-        activeTask?.id === task.id && "bg-custom-white-200/20"
+        activeTask?.id === task.id && "bg-custom-white-200/10"
       )}
     >
       {isEditing ? (
@@ -174,7 +174,7 @@ function TaskCard({ task }: TaskCardProps) {
           />
           <Label
             className={cn(
-              "text-sm text-gray-400",
+              "text-sm font-normal text-custom-white-200/60",
               updatedTask.isCompleted && "line-through opacity-50",
             )}
           >

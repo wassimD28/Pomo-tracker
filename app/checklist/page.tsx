@@ -3,6 +3,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import Categories from "./_components/categories";
 import Tasks from "./_components/tasks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import TaskDetails from "./_components/taskDetail";
 
 
 
@@ -26,7 +27,7 @@ export default function NotePage() {
           </ResizablePanel>
           <ResizableHandle className="w-2 opacity-0" />
           <ResizablePanel defaultSize={50}>
-            <Tasks />
+            <TaskDetails />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
