@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { CategoryController } from "@/lib/controllers/category.controller";
-import { authenticateUser } from "@/lib/middlewares/authenticateUser";
-import { validateOwnership } from "@/lib/middlewares/validateOwnership";
-import { errorHandler } from "@/lib/middlewares/errorHandler";
+import { CategoryController } from "@/src/server/controllers/category.controller";
+import { authenticateUser } from "@/src/server/middlewares/authenticateUser";
+import { validateOwnership } from "@/src/server/middlewares/validateOwnership";
+import { errorHandler } from "@/src/server/middlewares/errorHandler";
 
 const app = new Hono();
 

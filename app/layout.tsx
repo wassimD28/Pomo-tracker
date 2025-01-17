@@ -2,8 +2,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SideBar } from "@/components/sideBar.component";
-import { AuthProvider } from "@/lib/context/authProvider";
+import { SideBar } from "@/src/client/components/layout/sideBar";
+import { AuthProvider } from "@/src/client/context/authProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

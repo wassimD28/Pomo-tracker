@@ -1,7 +1,7 @@
-import { TaskController } from "@/lib/controllers/task.controller";
-import { authenticateUser } from "@/lib/middlewares/authenticateUser";
-import { errorHandler } from "@/lib/middlewares/errorHandler";
-import { validateOwnership } from "@/lib/middlewares/validateOwnership";
+import { TaskController } from "@/src/server/controllers/task.controller";
+import { authenticateUser } from "@/src/server/middlewares/authenticateUser";
+import { errorHandler } from "@/src/server/middlewares/errorHandler";
+import { validateOwnership } from "@/src/server/middlewares/validateOwnership";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
