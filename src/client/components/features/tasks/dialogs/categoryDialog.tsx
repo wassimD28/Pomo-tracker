@@ -13,73 +13,13 @@ import {
 import { Input } from "@/src/client/components/ui/input";
 import { Label } from "@/src/client/components/ui/label";
 import { Plus } from "lucide-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { Category } from "@/src/shared/types/interfaces/common.interface";
+import { useCreateCategory } from "@/src/client/api/mutations/category/useCreateCategoy";
 
 export function CreateCategoryDialog() {
   const [name, setName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
-
-  const createCategory = useMutation({
-    mutationFn: async (categoryName: string) => {
-      const response = await axios.post("/api/categories", {
-        name: categoryName,
-      });
-      return response.data;
-    },
-    onMutate: async (newCategoryName) => {
-      // Cancel any outgoing refetches to avoid overwriting our optimistic update
-      await queryClient.cancelQueries({ queryKey: ["categories"] });
-
-      // Snapshot the previous value
-      const previousCategories = queryClient.getQueryData<{
-        status: string;
-        data: Category[];
-      }>(["categories"]);
-
-      // Create a temporary ID for the optimistic update
-      const tempId = Date.now();
-
-      // Optimistically update the categories by adding the new one
-      queryClient.setQueryData<{
-        status: string;
-        data: Category[];
-      }>(["categories"], (old) => {
-        if (!old)
-          return {
-            status: "success",
-            data: [{ id: tempId, name: newCategoryName }],
-          };
-        return {
-          ...old,
-          data: [...old.data, { id: tempId, name: newCategoryName }],
-        };
-      });
-
-      // Reset form and close dialog immediately for better UX
-      setName("");
-      setIsOpen(false);
-
-      // Return the snapshot so we can rollback if something goes wrong
-      return { previousCategories };
-    },
-    onError: (err, newCategory, context) => {
-      // If the mutation fails, use the context we saved to roll back
-      if (context?.previousCategories) {
-        queryClient.setQueryData(["categories"], context.previousCategories);
-      }
-      console.error("Failed to create category:", err);
-      // You might want to reopen the dialog here
-      setIsOpen(true);
-    },
-    onSettled: () => {
-      // Always refetch after error or success to ensure our local data is correct
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-  });
-
+  const createCategory = useCreateCategory(setName, setIsOpen) // create category custom hook
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {

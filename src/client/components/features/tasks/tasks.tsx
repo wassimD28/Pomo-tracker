@@ -1,34 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import TaskDialog from "./dialogs/taskDialog";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { Task } from "@/src/shared/types/interfaces/common.interface";
+import {  Task } from "@/src/shared/types/interfaces/common.interface";
 import TaskCard from "./cards/taskCard";
+import { useTaskQuery } from "@/src/client/api/queries/useTaskQuery";
 
-interface TaskResponse {
-  status: string;
-  data: Task[];
-}
 
 function Tasks() {
   const { category } = useCategoryStore();
 
   // Fetch tasks only when we have a category selected
-  const { data, isLoading, isError } = useQuery<TaskResponse>({
-    queryKey: ["tasks", category.id], // Add category.id to query key
-    queryFn: async () => {
-      if (!category.id) {
-        return { status: "success", data: [] };
-      }
-      const response = await axios.get(`/api/tasks/category/${category.id}`);
-      console.log("Tasks data:", response.data);
-      return response.data;
-    },
-    enabled: !!category.id, // Only run query when category.id exists
-    refetchInterval: 60000,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data, isLoading, isError } = useTaskQuery(category)
 
   // Loading state
   if (isLoading) {

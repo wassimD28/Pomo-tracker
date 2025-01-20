@@ -1,31 +1,18 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
 import { CreateCategoryDialog } from "./dialogs/categoryDialog";
 import CategoryCard from "./cards/categoryCard";
-import { Category } from "@/src/shared/types/interfaces/common.interface";
 import { useState } from "react";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
+import { useCategoryQuery } from "@/src/client/api/queries/useCatigoryQuery";
+import { Category } from "@/src/shared/types/interfaces/common.interface";
 
-interface CategoryResponse {
-  status: string;
-  data: Category[];
-}
 
 function Categories() {
   const { setCategory } = useCategoryStore();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>();
   // Fetching categories
-  const { data, isLoading, isError } = useQuery<CategoryResponse>({
-    queryKey: ["categories"],
-    queryFn: async () => {
-      const response = await axios.get("/api/categories");
-      return response.data;
-    },
-    refetchInterval: 60000, // Fetch categories every minute
-    staleTime: 1000 * 60 * 5, // Cache categories for 5 minutes
-  });
+  const { data, isLoading, isError } = useCategoryQuery()
 
   // Loading state
   if (isLoading) {
@@ -58,7 +45,7 @@ function Categories() {
   }
   const handleSelectedCategory = (index: number): void => {
     setSelectedCategoryIndex(index);
-    const categoryName = categories.find((c) => c.id === index)?.name;
+    const categoryName = categories.find((category : Category) => category.id === index)?.name;
     // console log index and category name
     console.log("category id :", index);
     console.log("category name :", categoryName);
@@ -69,7 +56,7 @@ function Categories() {
   const showList = () => {
     return (
       <div className="flex h-full w-full flex-col space-y-2">
-        {categories.map((category) => (
+        {categories.map((category : Category) => (
           <CategoryCard
             key={category.id}
             category={category}

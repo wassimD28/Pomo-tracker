@@ -1,5 +1,10 @@
 import { LucideIcon } from "lucide-react";
 
+export interface ApiResponse<T> {
+  status: string;
+  data: T[];
+}
+
 export interface Link{
   href: string;
   isActive: boolean;

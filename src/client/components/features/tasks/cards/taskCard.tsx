@@ -15,9 +15,9 @@ import { cn } from "@/src/shared/utils/utils";
 import { useState } from "react";
 import { Button } from "@/src/client/components/ui/button";
 import { Input } from "@/src/client/components/ui/input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useTaskStore } from "@/src/client/store/useTaskStore";
+import { useUpdateTask } from "@/src/client/api/mutations/task/useUpdateTask";
+import { useDeleteTask } from "@/src/client/api/mutations/task/useDeleteTask";
 
 interface TaskCardProps {
   task: Task;
@@ -27,66 +27,10 @@ function TaskCard({ task }: TaskCardProps) {
   const { setActiveTask, activeTask } = useTaskStore();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTask, setUpdatedTask] = useState<Task>(task);
-  const queryClient = useQueryClient();
 
-  const updateTask = useMutation({
-    mutationFn: async (newTaskValue: Task) => {
-      const response = await axios.put(`/api/tasks/${task.id}`, {
-        categoryId: newTaskValue.categoryId,
-        title: newTaskValue.title,
-        isCompleted: newTaskValue.isCompleted,
-      });
-      return response.data;
-    },
-    onMutate: async (newTaskValue) => {
-      await queryClient.cancelQueries({ queryKey: ["tasks", task.categoryId] });
-      const previousTasks = queryClient.getQueryData<{
-        status: string;
-        data: Task[];
-      }>(["tasks", task.categoryId]);
+  const updateTask = useUpdateTask(setUpdatedTask, setIsEditing, task);
 
-      queryClient.setQueryData<{
-        status: string;
-        data: Task[];
-      }>(["tasks", task.categoryId], (old) => {
-        if (!old) return { status: "success", data: [] };
-        return {
-          ...old,
-          data: old.data.map((oldTask) =>
-            oldTask.id === task.id ? newTaskValue : oldTask,
-          ),
-        };
-      });
-
-      return { previousTasks };
-    },
-    onError: (err, newTaskValue, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(
-          ["tasks", task.categoryId],
-          context.previousTasks,
-        );
-      }
-      setUpdatedTask(task);
-      console.error("Failed to update task:", err);
-    },
-    onSuccess: () => {
-      setIsEditing(false);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks", task.categoryId] });
-    },
-  });
-
-  const deleteTask = useMutation({
-    mutationFn: async () => {
-      const response = await axios.delete(`/api/tasks/${task.id}`);
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks", task.categoryId] });
-    },
-  });
+  const deleteTask = useDeleteTask(task);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -119,7 +63,39 @@ function TaskCard({ task }: TaskCardProps) {
     setUpdatedTask(newTask);
     updateTask.mutate(newTask);
   };
+  
+  // If the task is being deleted, show a fade-out animation
+  if (deleteTask.isPending) {
+    return (
+      <div className="animate-fadeOut grid h-10 w-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-md bg-custom-white-200/5 px-2 opacity-50">
+        <div className="h-4 w-4 rounded bg-custom-white-200/20" />
+        <div className="h-4 w-full rounded bg-custom-white-200/20" />
+      </div>
+    );
+  }
 
+  // If there's an error, show an error state
+  if (deleteTask.isError) {
+    return (
+      <div className="grid h-10 w-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-md bg-red-500/10 px-2">
+        <Checkbox
+          id={updatedTask.id.toString()}
+          checked={updatedTask.isCompleted}
+          className="h-4 w-4 rounded border-red-300"
+        />
+        <Label className="text-sm font-normal text-red-300">
+          {updatedTask.title}
+        </Label>
+        <Button
+          onClick={() => deleteTask.reset()}
+          className="h-6 w-6 rounded-full bg-red-500/20 p-1 hover:bg-red-500/30"
+          variant="ghost"
+        >
+          <X className="h-4 w-4 text-red-300" />
+        </Button>
+      </div>
+    );
+  }
   return (
     <div
       onClick={() => setActiveTask(task)}

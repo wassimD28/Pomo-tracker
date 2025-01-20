@@ -38,18 +38,37 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 
+
+
+
 ```
 Note
 ├─ .gitignore
 ├─ .prettierrc
 ├─ app
+│  ├─ (routes)
+│  │  ├─ dashboard
+│  │  │  └─ page.tsx
+│  │  ├─ pomodoro
+│  │  │  └─ page.tsx
+│  │  ├─ sign-in
+│  │  │  └─ [[...sign-in]]
+│  │  │     └─ page.tsx
+│  │  ├─ sign-up
+│  │  │  └─ [[...sign-up]]
+│  │  │     └─ page.tsx
+│  │  └─ tasks
+│  │     └─ page.tsx
 │  ├─ api
 │  │  ├─ categories
 │  │  │  ├─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
-│  │  ├─ taskDetails
+│  │  ├─ taskComponents
 │  │  │  ├─ route.ts
+│  │  │  ├─ task
+│  │  │  │  └─ [id]
+│  │  │  │     └─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
 │  │  ├─ tasks
@@ -59,107 +78,18 @@ Note
 │  │  │  ├─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
-│  │  ├─ user
+│  │  ├─ users
 │  │  │  └─ route.ts
 │  │  └─ webhooks
 │  │     └─ clerk
 │  │        └─ route.ts
-│  ├─ checklist
-│  │  ├─ page.tsx
-│  │  └─ _components
-│  │     ├─ categories.tsx
-│  │     ├─ elements
-│  │     │  ├─ categoryCard.tsx
-│  │     │  ├─ categoryDialog.tsx
-│  │     │  ├─ taskCard.tsx
-│  │     │  └─ taskDialog.tsx
-│  │     ├─ taskDetail.tsx
-│  │     └─ tasks.tsx
-│  ├─ dashboard
-│  │  ├─ page.tsx
-│  │  └─ _components
-│  │     ├─ calendar.tsx
-│  │     ├─ pomodoroSamary.tsx
-│  │     └─ todayTodos.tsx
 │  ├─ favicon.ico
 │  ├─ globals.css
 │  ├─ layout.tsx
-│  ├─ page.tsx
-│  ├─ pomodoro
-│  │  └─ page.tsx
-│  ├─ sign-in
-│  │  └─ [[...sign-in]]
-│  │     └─ page.tsx
-│  ├─ sign-up
-│  │  └─ [[...sign-up]]
-│  │     └─ page.tsx
-│  ├─ store
-│  │  ├─ useAuthStore.ts
-│  │  ├─ useCategoryStore.ts
-│  │  ├─ usePomoStore.ts
-│  │  └─ useTaskStore.ts
-│  ├─ styles
-│  │  └─ calendar.css
-│  └─ types
-│     ├─ enum
-│     │  └─ common.enum.ts
-│     └─ interfaces
-│        ├─ common.interface.ts
-│        ├─ pomodoro.interface.ts
-│        └─ store.interface.ts
+│  └─ page.tsx
 ├─ bun.lockb
-├─ components
-│  ├─ pomoProgressBar.conponent.tsx
-│  ├─ sideBar.component.tsx
-│  └─ ui
-│     ├─ button.tsx
-│     ├─ checkbox.tsx
-│     ├─ dialog.tsx
-│     ├─ dropdown-menu.tsx
-│     ├─ input.tsx
-│     ├─ label.tsx
-│     ├─ resizable.tsx
-│     ├─ separator.tsx
-│     ├─ sheet.tsx
-│     ├─ sidebar.tsx
-│     ├─ skeleton.tsx
-│     └─ tooltip.tsx
 ├─ components.json
-├─ db
-│  └─ schema.ts
 ├─ eslint.config.mjs
-├─ hooks
-│  └─ use-mobile.tsx
-├─ lib
-│  ├─ context
-│  │  └─ authProvider.tsx
-│  ├─ controllers
-│  │  ├─ category.controller.ts
-│  │  ├─ task.controller.ts
-│  │  ├─ taskComponent.controller.ts
-│  │  └─ user.controller.ts
-│  ├─ middlewares
-│  │  ├─ authenticateUser.ts
-│  │  ├─ errorHandler.ts
-│  │  ├─ handleValidationError.ts
-│  │  └─ validateOwnership.ts
-│  ├─ repositories
-│  │  ├─ categoryRepo.ts
-│  │  ├─ taskComponentRepo.ts
-│  │  ├─ taskRep.ts
-│  │  └─ userRepo.ts
-│  ├─ utils.ts
-│  └─ validations
-│     ├─ errors
-│     │  └─ validation.error.ts
-│     ├─ schemas
-│     │  ├─ category.schema.ts
-│     │  ├─ task.shema.ts
-│     │  └─ taskComponent.shema.ts
-│     └─ validators
-│        ├─ category.validator.ts
-│        ├─ task.validator.ts
-│        └─ taskComponent.validator.ts
 ├─ middleware.ts
 ├─ next.config.ts
 ├─ package-lock.json
@@ -174,6 +104,99 @@ Note
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ README.md
+├─ src
+│  ├─ client
+│  │  ├─ api
+│  │  │  ├─ mutations
+│  │  │  │  └─ category
+│  │  │  │     └─ useDeleteCategory.ts
+│  │  │  └─ queries
+│  │  │     └─ useCatigories.ts
+│  │  ├─ components
+│  │  │  ├─ features
+│  │  │  │  ├─ dashboard
+│  │  │  │  │  ├─ calendar.tsx
+│  │  │  │  │  ├─ pomodoroSamary.tsx
+│  │  │  │  │  └─ todayTodos.tsx
+│  │  │  │  ├─ pomodoro
+│  │  │  │  │  └─ pomoProgressBar.tsx
+│  │  │  │  └─ tasks
+│  │  │  │     ├─ cards
+│  │  │  │     │  ├─ categoryCard.tsx
+│  │  │  │     │  └─ taskCard.tsx
+│  │  │  │     ├─ categories.tsx
+│  │  │  │     ├─ dialogs
+│  │  │  │     │  ├─ categoryDialog.tsx
+│  │  │  │     │  └─ taskDialog.tsx
+│  │  │  │     ├─ taskComponents.tsx
+│  │  │  │     └─ tasks.tsx
+│  │  │  ├─ layout
+│  │  │  │  └─ sideBar.tsx
+│  │  │  └─ ui
+│  │  │     ├─ button.tsx
+│  │  │     ├─ checkbox.tsx
+│  │  │     ├─ dialog.tsx
+│  │  │     ├─ dropdown-menu.tsx
+│  │  │     ├─ input.tsx
+│  │  │     ├─ label.tsx
+│  │  │     ├─ resizable.tsx
+│  │  │     ├─ separator.tsx
+│  │  │     ├─ sheet.tsx
+│  │  │     ├─ sidebar.tsx
+│  │  │     ├─ skeleton.tsx
+│  │  │     └─ tooltip.tsx
+│  │  ├─ context
+│  │  │  └─ authProvider.tsx
+│  │  ├─ hooks
+│  │  │  └─ use-mobile.tsx
+│  │  ├─ store
+│  │  │  ├─ useAuthStore.ts
+│  │  │  ├─ useCategoryStore.ts
+│  │  │  ├─ usePomoStore.ts
+│  │  │  └─ useTaskStore.ts
+│  │  └─ styles
+│  │     └─ calendar.css
+│  ├─ server
+│  │  ├─ controllers
+│  │  │  ├─ category.controller.ts
+│  │  │  ├─ task.controller.ts
+│  │  │  ├─ taskComponent.controller.ts
+│  │  │  └─ user.controller.ts
+│  │  ├─ db
+│  │  │  └─ schema.ts
+│  │  ├─ middlewares
+│  │  │  ├─ authenticateUser.ts
+│  │  │  ├─ errorHandler.ts
+│  │  │  ├─ handleValidationError.ts
+│  │  │  └─ validateOwnership.ts
+│  │  └─ repositories
+│  │     ├─ categoryRepo.ts
+│  │     ├─ taskComponentRepo.ts
+│  │     ├─ taskRep.ts
+│  │     └─ userRepo.ts
+│  └─ shared
+│     ├─ constant
+│     │  └─ endpoints.ts
+│     ├─ types
+│     │  ├─ enum
+│     │  │  └─ common.enum.ts
+│     │  └─ interfaces
+│     │     ├─ common.interface.ts
+│     │     ├─ pomodoro.interface.ts
+│     │     └─ store.interface.ts
+│     ├─ utils
+│     │  └─ utils.ts
+│     └─ validations
+│        ├─ errors
+│        │  └─ validation.error.ts
+│        ├─ schemas
+│        │  ├─ category.schema.ts
+│        │  ├─ task.shema.ts
+│        │  └─ taskComponent.shema.ts
+│        └─ validators
+│           ├─ category.validator.ts
+│           ├─ task.validator.ts
+│           └─ taskComponent.validator.ts
 ├─ tailwind.config.ts
 └─ tsconfig.json
 

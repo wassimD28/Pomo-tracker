@@ -1,4 +1,3 @@
-import { Task } from "@/src/shared/types/interfaces/common.interface";
 import { Button } from "@/src/client/components/ui/button";
 import {
   Dialog,
@@ -11,15 +10,12 @@ import {
 } from "@/src/client/components/ui/dialog";
 import { Input } from "@/src/client/components/ui/input";
 import { Label } from "@/src/client/components/ui/label";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { TaskCreatePayload } from "@/src/shared/types/interfaces/task.interface";
+import { useCreateTask } from "@/src/client/api/mutations/task/useCreateTask";
 
-interface TaskCreatePayload {
-  categoryId: number;
-  title: string;
-}
+
 
 interface TaskDialogProps {
   categoryId: number | null;
@@ -33,72 +29,9 @@ function TaskDialog({ categoryId, disabled = false }: TaskDialogProps) {
   });
   const [isOpen, setIsOpen] = useState(false);
 
-  const queryClient = useQueryClient();
+  
 
-  const createTask = useMutation({
-    mutationFn: async (task: TaskCreatePayload) => {
-      const response = await axios.post("/api/tasks", {
-        title: task.title,
-        categoryId: task.categoryId,
-      });
-      return response.data;
-    },
-    onMutate: async (task) => {
-      await queryClient.cancelQueries({ queryKey: ["tasks"] });
-
-      const previousTasks = queryClient.getQueryData<{
-        status: string;
-        data: Task[];
-      }>(["tasks"]);
-
-      const tempId = Date.now();
-
-      queryClient.setQueryData<{
-        status: string;
-        data: Task[];
-      }>(["tasks"], (old) => {
-        if (!old)
-          return {
-            status: "success",
-            data: [
-              {
-                id: tempId,
-                title: task.title,
-                categoryId: task.categoryId,
-                isCompleted: false,
-              },
-            ],
-          };
-        return {
-          ...old,
-          data: [
-            ...old.data,
-            {
-              id: tempId,
-              title: task.title,
-              categoryId: task.categoryId,
-              isCompleted: false,
-            },
-          ],
-        };
-      });
-
-      setTaskData({ categoryId: categoryId || 0, title: "" });
-      setIsOpen(false);
-
-      return { previousTasks };
-    },
-    onError: (err, newTask, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(["tasks"], context.previousTasks);
-      }
-      console.error("Failed to create task:", err);
-      setIsOpen(true);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-  });
+  const createTask = useCreateTask(setTaskData, setIsOpen, categoryId)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
