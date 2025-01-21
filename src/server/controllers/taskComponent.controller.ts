@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { TaskComponentValidator } from "../validations/validators/taskComponent.validator";
+import { TaskComponentValidator } from "@/src/shared/validations/validators/taskComponent.validator";
 import { TaskComponentRepository } from "../repositories/taskComponentRepo";
 import { HTTPException } from "hono/http-exception";
 import { ContentType } from "@/src/shared/types/enum/common.enum";
@@ -32,10 +32,11 @@ export class TaskComponentController {
 
   static async getAll(c: Context) {
     try {
-      const taskId = c.get("id");
+      const taskId = Number(c.req.param("id"));
 
       const taskComponents =
         await TaskComponentRepository.getAllByTaskId(taskId);
+
       return c.json({
         status: "success",
         data: taskComponents,

@@ -2,7 +2,7 @@
 import { Loader2 } from "lucide-react";
 import { CreateCategoryDialog } from "./dialogs/categoryDialog";
 import CategoryCard from "./cards/categoryCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
 import { useCategoryQuery } from "@/src/client/api/queries/useCatigoryQuery";
 import { Category } from "@/src/shared/types/interfaces/common.interface";
@@ -13,6 +13,16 @@ function Categories() {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>();
   // Fetching categories
   const { data, isLoading, isError } = useCategoryQuery()
+
+  // select the first category when loading
+  useEffect(() => {
+    const categories = data?.data || [];
+    if (categories.length > 0) {
+      setSelectedCategoryIndex(categories[0].id);
+      setCategory(categories[0].id, categories[0].name);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[data])
 
   // Loading state
   if (isLoading) {

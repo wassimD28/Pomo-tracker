@@ -16,7 +16,6 @@ export const useTaskQuery = (
         return { status: "success", data: [] };
       }
       const response = await axios.get(API_ENDPOINTS.TASKS.BY_CATEGORY(category.id));
-      console.log("Tasks data:", response.data);
       return response.data;
     },
     enabled: !!category.id, // Only run query when category.id exists and not null

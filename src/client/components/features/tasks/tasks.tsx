@@ -1,16 +1,15 @@
 import TaskDialog from "./dialogs/taskDialog";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
 import { Loader2 } from "lucide-react";
-import {  Task } from "@/src/shared/types/interfaces/common.interface";
+import { Task } from "@/src/shared/types/interfaces/common.interface";
 import TaskCard from "./cards/taskCard";
 import { useTaskQuery } from "@/src/client/api/queries/useTaskQuery";
-
 
 function Tasks() {
   const { category } = useCategoryStore();
 
   // Fetch tasks only when we have a category selected
-  const { data, isLoading, isError } = useTaskQuery(category)
+  const { data, isLoading, isError } = useTaskQuery(category);
 
   // Loading state
   if (isLoading) {
@@ -61,7 +60,9 @@ function Tasks() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
+    <div
+      className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4"
+    >
       <span className="flex w-full items-center justify-between">
         <h1 className="text-2xl text-gray-400">Tasks</h1>
         <TaskDialog categoryId={category.id} disabled={!category.id} />

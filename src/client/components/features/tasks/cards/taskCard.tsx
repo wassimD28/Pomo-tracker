@@ -24,7 +24,7 @@ interface TaskCardProps {
 }
 
 function TaskCard({ task }: TaskCardProps) {
-  const { setActiveTask, activeTask } = useTaskStore();
+  const { setActiveTask, activeTaskId } = useTaskStore();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTask, setUpdatedTask] = useState<Task>(task);
 
@@ -98,11 +98,11 @@ function TaskCard({ task }: TaskCardProps) {
   }
   return (
     <div
-      onClick={() => setActiveTask(task)}
+      onClick={() => setActiveTask(task.id)}
       className={cn(
         "group relative grid h-10 w-full cursor-pointer select-none grid-cols-[auto_1fr_auto] items-center justify-start gap-2 rounded-md bg-transparent px-2 text-custom-white-200/70 duration-300 ease-out hover:bg-custom-white-400/10",
         isEditing && "grid-cols-[1fr_auto] px-2",
-        activeTask?.id === task.id && "bg-custom-white-200/10",
+        activeTaskId === task.id && "bg-custom-white-200/10",
       )}
     >
       {isEditing ? (

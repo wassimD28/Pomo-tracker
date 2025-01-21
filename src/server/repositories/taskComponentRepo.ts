@@ -37,11 +37,14 @@ export class TaskComponentRepository {
   // Get all task components for a task
   static async getAllByTaskId(taskId: number) {
     try {
+      if (!taskId || isNaN(taskId)) {
+        throw new Error("Invalid taskId provided to repository");
+      }
       const taskComponentsList = await db
-        .select()
-        .from(taskComponents)
-        .where(eq(taskComponents.taskId, taskId));
-
+      .select()
+      .from(taskComponents)
+      .where(eq(taskComponents.taskId, taskId));
+      
       return taskComponentsList;
     } catch (error) {
       console.error("Failed to fetch task components:", error);
