@@ -48,4 +48,44 @@ export class TaskComponentController {
       });
     }
   }
+
+  // delete task comp
+  static async delete(c: Context) {
+    try {
+      const taskCompId = Number(c.req.param("id"));
+
+      // Delete the task component
+      await TaskComponentRepository.delete(taskCompId);
+
+      // Send a success response
+      return c.json({
+        status: "success",
+        message: "Task component deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting task components:", error);
+      throw new HTTPException(500, {
+        message: "Failed to delete task components",
+      });
+    }
+  }
+  // update task comp
+  static async update(c: Context) {
+    try {
+      const taskCompId = Number(c.req.param("id"));
+      const validatedData = await TaskComponentValidator.validateUpdate(c);
+
+      const updatedTaskComp = await TaskComponentRepository.update(taskCompId, validatedData);
+      
+      return c.json({
+        status: "success",
+        data: updatedTaskComp,
+      });
+    } catch (error) {
+      console.error("Error updating task components:", error);
+      throw new HTTPException(500, {
+        message: "Failed to update task components",
+      });
+    }
+  }
 }

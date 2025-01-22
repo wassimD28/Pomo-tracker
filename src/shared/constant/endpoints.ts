@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
   // task components
   TASK_COMPONENTS: {
     BASE: "/api/task-components",
+    BY_ID: (id: number) => `/api/task-components/${id}`,
     BY_TASK_ID: (taskId: number) => `/api/task-components/task/${taskId}`,
   },
   // Users

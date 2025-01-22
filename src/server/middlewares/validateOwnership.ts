@@ -3,6 +3,7 @@ import { CategoryRepository } from "../repositories/categoryRepo";
 import { HTTPException } from "hono/http-exception";
 import { Entity } from "@/src/shared/types/enum/common.enum";
 import { TaskRepository } from "../repositories/taskRep";
+import { TaskComponentRepository } from "../repositories/taskComponentRepo";
 
 export const validateOwnership = (entityName: keyof typeof Entity) => {
   return async (c: Context, next: () => Promise<void>) => {
@@ -23,6 +24,9 @@ export const validateOwnership = (entityName: keyof typeof Entity) => {
         case "TASK":
           entity = await TaskRepository.getTaskById(EntityId);
           break;
+        case "TASK_COMPONENT":
+          entity = await TaskComponentRepository.getOneById(EntityId);
+          break;
         default:
           throw new HTTPException(400, {
             message: "Invalid entity name to validate ownership.",
@@ -38,7 +42,7 @@ export const validateOwnership = (entityName: keyof typeof Entity) => {
 
       if (entity.userId !== userId) {
         throw new HTTPException(403, {
-          message: "You do not have permission to access this category",
+          message: `You do not have permission to access this ${entityName.toLowerCase()}.`,
         });
       }
 

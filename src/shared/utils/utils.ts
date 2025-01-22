@@ -20,7 +20,7 @@ export const getLatestOrder = (taskComponents : TaskComponent[] | undefined) => 
   if (taskComponents && taskComponents.length > 0) {
     latestOrder = Math.max(...taskComponents.map((tc) => tc.order));
   }
-  return latestOrder + 1;
+  return latestOrder;
 }
 
 // sort taks component by order

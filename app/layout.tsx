@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SideBar } from "@/src/client/components/layout/sideBar";
-import { AuthProvider } from "@/src/client/context/authProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,16 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <AuthProvider>
-        <html lang="en">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            <SideBar />
-            {children}
-          </body>
-        </html>
-      </AuthProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <SideBar />
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

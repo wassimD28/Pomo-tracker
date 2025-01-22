@@ -31,7 +31,6 @@ interface TaskDialogProps {
 }
 
 function TaskCompDialog({ taskId, latestOrder }: TaskDialogProps) {
-  console.log("active taskId from TC diag: " + taskId);
   const [taskCompData, setTaskCompData] = useState<TaskCompCreatePayload>({
     taskId: taskId ?? 0,
     order: latestOrder + 1,
@@ -48,7 +47,7 @@ function TaskCompDialog({ taskId, latestOrder }: TaskDialogProps) {
       setTaskCompData((prev) => ({
         ...prev,
         taskId: taskId,
-        order: Math.max(1, latestOrder + 1),
+        order: latestOrder,
       }));
     }
   }, [taskId, latestOrder]);

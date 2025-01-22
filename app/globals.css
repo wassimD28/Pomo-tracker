@@ -8,6 +8,16 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+/* Add this to your globals.css */
+textarea {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 
 @layer base {

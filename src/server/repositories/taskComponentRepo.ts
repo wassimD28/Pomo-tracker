@@ -41,10 +41,10 @@ export class TaskComponentRepository {
         throw new Error("Invalid taskId provided to repository");
       }
       const taskComponentsList = await db
-      .select()
-      .from(taskComponents)
-      .where(eq(taskComponents.taskId, taskId));
-      
+        .select()
+        .from(taskComponents)
+        .where(eq(taskComponents.taskId, taskId));
+
       return taskComponentsList;
     } catch (error) {
       console.error("Failed to fetch task components:", error);
@@ -68,9 +68,31 @@ export class TaskComponentRepository {
   // Delete task components
   static async delete(id: number) {
     try {
+      // check if the id is valid
+      if (!id || isNaN(id)) {
+        throw new Error("Invalid id provided to repository");
+      }
+
       await db.delete(taskComponents).where(eq(taskComponents.id, id));
     } catch (error) {
       console.error("Failed to delete task component:", error);
+      throw error;
+    }
+  }
+  // Get a task component by id
+  static async getOneById(id: number) {
+    try {
+      if (!id || isNaN(id)) {
+        throw new Error("Invalid id provided to repository");
+      }
+      const [taskComponent] = await db // Destructure the first item
+        .select()
+        .from(taskComponents)
+        .where(eq(taskComponents.id, id));
+
+      return taskComponent || null; // Return null if no component found
+    } catch (error) {
+      console.error("Failed to get task component:", error);
       throw error;
     }
   }
