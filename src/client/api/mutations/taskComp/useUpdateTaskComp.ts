@@ -8,14 +8,13 @@ export const useUpdateTaskComp = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (taskComp: TaskComponent) => {
+      console.log("Making update mutation for TaskComp :", taskComp.id);
       const response = await axios.put(
         API_ENDPOINTS.TASK_COMPONENTS.BY_ID(taskComp.id),
         {
-          taskId: taskComp.taskId,
           order: taskComp.order,
           content: taskComp.content,
-          type: taskComp.type,
-        }
+        },
       );
       return response.data as ApiResponse<TaskComponent>;
     },
@@ -32,12 +31,12 @@ export const useUpdateTaskComp = () => {
         (old) => {
           if (!old) return { status: "success", data: [] };
           return {
-           ...old,
+            ...old,
             data: old.data.map((comp) =>
-              comp.id === newTaskComp.id? newTaskComp : comp
+              comp.id === newTaskComp.id ? newTaskComp : comp,
             ),
           };
-        }
+        },
       );
       return { previousTaskComps };
     },
@@ -45,7 +44,7 @@ export const useUpdateTaskComp = () => {
       if (context?.previousTaskComps) {
         queryClient.setQueryData(
           ["taskComp", newTaskComp.taskId],
-          context.previousTaskComps
+          context.previousTaskComps,
         );
       }
       console.error("Error updating task component:", err);

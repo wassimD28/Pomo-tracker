@@ -10,7 +10,6 @@ export const useTaskCompQuery = (taskId: number | null) => {
   return useQuery<ApiResponse<TaskComponent>>({
     queryKey: ["taskComp", taskId],
     queryFn: async () => {
-      console.log("Making request for taskId:", taskId);
       if (!taskId) {
         return { status: "success", data: [] };
       }

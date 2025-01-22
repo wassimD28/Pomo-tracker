@@ -1,11 +1,11 @@
 "use client";
-import { Loader2 } from "lucide-react";
 import { CreateCategoryDialog } from "./dialogs/categoryDialog";
 import CategoryCard from "./cards/categoryCard";
 import { useEffect, useState } from "react";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
 import { useCategoryQuery } from "@/src/client/api/queries/useCatigoryQuery";
 import { Category } from "@/src/shared/types/interfaces/common.interface";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 function Categories() {
@@ -31,8 +31,10 @@ function Categories() {
         <span className="flex w-full items-center justify-between">
           <h1 className="text-2xl text-gray-400">Categories</h1>
         </span>
-        <div className="flex h-full w-full items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+        <div className="w-ful flex h-full flex-col gap-2 py-4 opacity-20">
+          <div className="flex w-full gap-3 rounded bg-white/10 p-3">
+            <Skeleton className="h-4 w-full" />
+          </div>
         </div>
       </div>
     );

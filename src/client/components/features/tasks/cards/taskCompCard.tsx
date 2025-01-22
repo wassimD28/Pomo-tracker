@@ -84,7 +84,10 @@ function TaskCompCard({ taskComponent }: TaskCompCardProps) {
               <Button
                 onClick={() => {
                   setIsEditing(false);
-                  updateTaskComp.mutate(taskComponent)
+                  updateTaskComp.mutate({
+                    ...taskComponent,
+                    content
+                  })
                 }}
                 className="bg-custom-red-300 hover:bg-custom-red-400 h-6 w-6 rounded-md p-0.5 text-custom-white-100/50 hover:bg-custom-white-100/20 hover:text-custom-white-100/80 focus:outline-none"
               >

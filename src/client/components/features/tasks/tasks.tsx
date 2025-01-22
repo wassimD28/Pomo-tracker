@@ -1,9 +1,9 @@
 import TaskDialog from "./dialogs/taskDialog";
 import { useCategoryStore } from "@/src/client/store/useCategoryStore";
-import { Loader2 } from "lucide-react";
 import { Task } from "@/src/shared/types/interfaces/common.interface";
 import TaskCard from "./cards/taskCard";
 import { useTaskQuery } from "@/src/client/api/queries/useTaskQuery";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Tasks() {
   const { category } = useCategoryStore();
@@ -18,8 +18,27 @@ function Tasks() {
         <span className="flex w-full items-center justify-between">
           <h1 className="text-2xl text-gray-400">Tasks</h1>
         </span>
-        <div className="flex h-full w-full items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+        <div className="w-ful flex h-full flex-col gap-2 py-4 opacity-20">
+          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
+            <Skeleton className="w-4 aspect-square" />
+            <Skeleton className="w-full h-4" />
+          </div>
+          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
+            <Skeleton className="w-4 aspect-square" />
+            <Skeleton className="w-full h-4" />
+          </div>
+          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
+            <Skeleton className="w-4 aspect-square" />
+            <Skeleton className="w-full h-4" />
+          </div>
+          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
+            <Skeleton className="w-4 aspect-square" />
+            <Skeleton className="w-full h-4" />
+          </div>
+          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
+            <Skeleton className="w-4 aspect-square" />
+            <Skeleton className="w-full h-4" />
+          </div>
         </div>
       </div>
     );

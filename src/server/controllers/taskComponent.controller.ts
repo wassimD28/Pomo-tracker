@@ -75,7 +75,7 @@ export class TaskComponentController {
       const taskCompId = Number(c.req.param("id"));
       const validatedData = await TaskComponentValidator.validateUpdate(c);
 
-      const updatedTaskComp = await TaskComponentRepository.update(taskCompId, validatedData);
+      const updatedTaskComp = await TaskComponentRepository.update(taskCompId,{ ...validatedData});
       
       return c.json({
         status: "success",
