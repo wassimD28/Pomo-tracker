@@ -6,6 +6,7 @@ export interface ApiResponse<T> {
 }
 
 export interface Link{
+  name: string;
   href: string;
   isActive: boolean;
   icon: LucideIcon

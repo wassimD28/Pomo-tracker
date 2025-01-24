@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -60,6 +61,46 @@ export const taskComponents = pgTable("taskComponents", {
   order: integer("order").notNull(),
   content: text("content").notNull(),
   type: contentTypeEnum("type").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const pomodoroSessions = pgTable("pomodoroSessions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  targetTaskId: integer("targetTask_id").references(() => tasks.id),
+  focusDuration: integer("focus_duration").notNull(),
+  cyclesNumber: integer("cycles_number").notNull(),
+  breakDuration: integer("break_duration").notNull(),
+  longBreakDuration: integer("long_break_duration").notNull(),
+  wastedTime: integer("wasted_time").notNull(),
+  pausedAt: timestamp("paused_at")
+    .array()
+    .notNull()
+    .default(sql`'{}'::timestamp[]`), // Set default value as an empty array
+  resumedAt: timestamp("resumed_at")
+    .array()
+    .notNull()
+    .default(sql`'{}'::timestamp[]`), // Set default value as an empty array
+  startedAt: timestamp("started_at").defaultNow(),
+  endedAt: timestamp("ended_at").defaultNow(),
+  isCompleated: boolean("is_compleated").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const settings = pgTable("settings", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  darkmode: boolean("darkmode").notNull().default(false),
+  defaultSessionDuration: integer("default_focus_duration").notNull().default(1500), // 25 minutes
+  defaultBreakDuration: integer("default_break_duration").notNull().default(300), // 5 minutes
+  defaultLongBreakDuration: integer("default_long_break_duration").notNull().default(900), // 15 minutes
+  defaultCyclesNumber: integer("default_cycles_number").notNull().default(4),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
