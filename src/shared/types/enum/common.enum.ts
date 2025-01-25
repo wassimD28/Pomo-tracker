@@ -2,6 +2,7 @@ export enum Entity {
   CATEGORY,
   TASK,
   TASK_COMPONENT,
+  SETTING,
   //POMODORO_SESSION,
 }
 

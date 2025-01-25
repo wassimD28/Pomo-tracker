@@ -97,9 +97,15 @@ export const settings = pgTable("settings", {
     .notNull()
     .references(() => users.id),
   darkmode: boolean("darkmode").notNull().default(false),
-  defaultSessionDuration: integer("default_focus_duration").notNull().default(1500), // 25 minutes
-  defaultBreakDuration: integer("default_break_duration").notNull().default(300), // 5 minutes
-  defaultLongBreakDuration: integer("default_long_break_duration").notNull().default(900), // 15 minutes
+  defaultFocusDuration: integer("default_focus_duration")
+    .notNull()
+    .default(1500), // 25 minutes
+  defaultBreakDuration: integer("default_break_duration")
+    .notNull()
+    .default(300), // 5 minutes
+  defaultLongBreakDuration: integer("default_long_break_duration")
+    .notNull()
+    .default(900), // 15 minutes
   defaultCyclesNumber: integer("default_cycles_number").notNull().default(4),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

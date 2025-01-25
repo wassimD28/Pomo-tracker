@@ -8,6 +8,7 @@ import { X } from "lucide-react"; // Import X icon from Lucide React
 import { useSettingsStore } from "@/src/client/store/useSettingsStore";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PomodoroSettingTab from "../../features/settings/pomodoroTab";
+import { Button } from "../../ui/button";
 
 function SettingsDialog() {
   const { settingsDialogOpen, setSettingDialogOpen } = useSettingsStore();
@@ -17,7 +18,7 @@ function SettingsDialog() {
       open={settingsDialogOpen}
       onOpenChange={setSettingDialogOpen} // This enables closing the dialog
     >
-      <DialogContent className="flex h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-sm">
+      <DialogContent className="flex h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-sm ">
         <DialogClose
           className="bg-white-20 group absolute right-4 top-4 rounded-sm border-none opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:border-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
           onClick={() => setSettingDialogOpen(false)}
@@ -54,6 +55,10 @@ function SettingsDialog() {
             Change your password here.
           </TabsContent>
         </Tabs>
+        {/* save button  */}
+        <Button className="w-32 relative left-3/4 mt-2 bg-custom-white-300 font-semibold hover:bg-custom-white-300/80">
+          Save
+        </Button>
       </DialogContent>
     </Dialog>
   );

@@ -1,6 +1,6 @@
 import { Context } from "hono";
 import { TaskValidator } from "@/src/shared/validations/validators/task.validator";
-import { TaskRepository } from "../repositories/taskRep";
+import { TaskRepository } from "../repositories/taskRepo";
 import { HTTPException } from "hono/http-exception";
 
 export class TaskController {
@@ -20,10 +20,10 @@ export class TaskController {
       });
     } catch (err) {
       console.error("Error creating task:", err);
-      throw new HTTPException(500,{ message: "Failed to create task" });
+      throw new HTTPException(500, { message: "Failed to create task" });
     }
   }
-  static async getTasks(c: Context){
+  static async getTasks(c: Context) {
     try {
       const userId = c.get("userId");
       const tasks = await TaskRepository.getAllUserTasks(userId);
@@ -37,7 +37,7 @@ export class TaskController {
     }
   }
   // get single task
-  static async getTask(c: Context){
+  static async getTask(c: Context) {
     try {
       const taskId = parseInt(c.req.param("id"));
       const task = await TaskRepository.getTaskById(taskId);
@@ -52,7 +52,7 @@ export class TaskController {
   }
 
   // get tasks by category
-  static async getTasksByCategory(c: Context){
+  static async getTasksByCategory(c: Context) {
     try {
       const categoryId = parseInt(c.req.param("id"));
       const tasks = await TaskRepository.getTasksByCategory(categoryId);
@@ -62,16 +62,21 @@ export class TaskController {
       });
     } catch (err) {
       console.error("Error fetching tasks by category:", err);
-      throw new HTTPException(500, { message: "Failed to fetch tasks by category" });
+      throw new HTTPException(500, {
+        message: "Failed to fetch tasks by category",
+      });
     }
   }
   // update task
-  static async updateTask(c: Context){
+  static async updateTask(c: Context) {
     try {
       const taskId = parseInt(c.req.param("id"));
       const body = await c.req.json();
       const validatedData = await TaskValidator.validateUpdate(c);
-      const updatedTask = await TaskRepository.updateTask(taskId, {...validatedData,...body });
+      const updatedTask = await TaskRepository.updateTask(taskId, {
+        ...validatedData,
+        ...body,
+      });
       return c.json({
         status: "success",
         data: updatedTask,
@@ -82,7 +87,7 @@ export class TaskController {
     }
   }
   // delete task
-  static async deleteTask(c: Context){
+  static async deleteTask(c: Context) {
     try {
       const taskId = parseInt(c.req.param("id"));
       await TaskRepository.deleteTask(taskId);
