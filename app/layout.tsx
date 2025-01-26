@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/src/client/components/layout/navbar";
+import QueryProvider from "@/src/client/providers/queryProvider";
+import { SettingsProvider } from "@/src/client/providers/settingsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +29,19 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html
+        className="pointer-events-none relative z-0 overflow-visible"
+        lang="en"
+      >
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} pointer-events-auto relative z-10 antialiased`}
         >
-          <NavBar />
-          {children}
+          <QueryProvider>
+            <SettingsProvider>
+              <NavBar />
+              {children}
+            </SettingsProvider>
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>

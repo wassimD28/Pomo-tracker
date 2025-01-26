@@ -100,7 +100,7 @@ export const NavBar = () => {
     );
 
   return (
-    <div className="fixed z-50 flex h-full w-fit flex-col items-center justify-between px-4 py-8 text-custom-white-200">
+    <div className="fixed z-50 pointer-events-auto flex h-full w-fit flex-col items-center justify-between px-4 py-8 text-custom-white-200">
       <div className="flex flex-col gap-8">
         {links.map((link) => {
           const Icon = link.icon;

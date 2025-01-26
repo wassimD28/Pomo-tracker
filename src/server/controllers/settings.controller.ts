@@ -8,6 +8,7 @@ export class SettingsController {
   static async getSettings(c: Context) {
     try {
       const userId = c.get("userId");
+      console.log("setting controller received a request")
 
       // Try to get existing settings, create if not exists
       let userSettings = await SettingsRepository.getUserSettings(userId);
@@ -31,15 +32,29 @@ export class SettingsController {
   static async updateSettings(c: Context) {
     try {
       const userId = c.get("userId");
-
+      console.log("setting update controller received a request");
       // Validate input
       const validatedData = await SettingsValidator.validateUpdate(c);
+      console.log('validated setting data from controller :', JSON.stringify(validatedData));
 
       // Update settings
-      const updatedSettings = await SettingsRepository.updateSettings(
-        userId,
-        validatedData,
-      );
+      const updatedSettings = await SettingsRepository.updateSettings(userId, {
+        ...(validatedData.darkmode !== undefined && {
+          darkmode: validatedData.darkmode,
+        }),
+        ...(validatedData.defaultCyclesNumber && {
+          defaultCyclesNumber: validatedData.defaultCyclesNumber,
+        }),
+        ...(validatedData.defaultFocusDuration && {
+          defaultFocusDuration: validatedData.defaultFocusDuration,
+        }),
+        ...(validatedData.defaultBreakDuration && {
+          defaultBreakDuration: validatedData.defaultBreakDuration,
+        }),
+        ...(validatedData.defaultLongBreakDuration && {
+          defaultLongBreakDuration: validatedData.defaultLongBreakDuration,
+        }),
+      });
 
       return c.json({
         status: "success",

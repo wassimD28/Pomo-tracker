@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import "@/src/client/styles/removeInputBorder.css";
+import { ToMinutes } from "@/src/shared/utils/utils";
+import { Setting } from "@/src/shared/types/interfaces/common.interface";
+import { useSettings } from "@/src/client/hooks/useSettings";
 
-function PomodoroSettingTab() {
-  // State for different Pomodoro settings
-  const [settings, setSettings] = useState({
-    cycles: 1,
-    focusDuration: 25,
-    breakDuration: 5,
-    longBreakDuration: 15,
-  });
+interface PomodoroTabProps{
+  settings: Setting
+  setSettings : (value: Setting) => void
+}
+
+function PomodoroSettingTab({ settings, setSettings}: PomodoroTabProps) {
+  // Use query to fetch existing settings
+  const { settings: settingsData, isLoading, isError } = useSettings();
+
+  // Populate settings from fetched data
+  useEffect(() => {
+    if (settingsData) {
+      const fetchedSettings = settingsData;
+      setSettings({
+        darkmode: false, // Placeholder, update with actual darkmode logic
+        defaultCyclesNumber: fetchedSettings.defaultCyclesNumber,
+        defaultFocusDuration: ToMinutes(fetchedSettings.defaultFocusDuration),
+        defaultBreakDuration: ToMinutes(fetchedSettings.defaultBreakDuration),
+        defaultLongBreakDuration: ToMinutes(
+          fetchedSettings.defaultLongBreakDuration,
+        ),
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settingsData]);
+
+  
 
   // Generic handler for number input changes
   const handleNumberChange =
@@ -27,25 +49,38 @@ function PomodoroSettingTab() {
       // Set bounds for different fields
       let boundedValue = numValue;
       switch (field) {
-        case "cycles":
+        case "defaultCyclesNumber":
           boundedValue = Math.max(1, Math.min(numValue, 10)); // 1-10 cycles
           break;
-        case "focusDuration":
+        case "defaultFocusDuration":
           boundedValue = Math.max(5, Math.min(numValue, 60)); // 5-60 minutes
           break;
-        case "breakDuration":
+        case "defaultBreakDuration":
           boundedValue = Math.max(1, Math.min(numValue, 30)); // 1-30 minutes
           break;
-        case "longBreakDuration":
+        case "defaultLongBreakDuration":
           boundedValue = Math.max(5, Math.min(numValue, 45)); // 5-45 minutes
           break;
       }
 
-      setSettings((prev) => ({
-        ...prev,
+      setSettings({
+        ...settings,
         [field]: boundedValue,
-      }));
+      });
     };
+  // Render error message if there was an error
+  if (isError) {
+    return (
+      <div className="text-red-500 text-sm">
+        Failed to fetch settings. Please try again later.
+      </div>
+    );
+  }
+
+  // Render input with error handling for loading state
+  if (isLoading) {
+    return <div>Loading settings...</div>;
+  }
 
   return (
     <div className="flex flex-col gap-4 p-2">
@@ -59,13 +94,15 @@ function PomodoroSettingTab() {
         </Label>
         <span className="relative flex items-center">
           <Input
-            value={settings.cycles}
-            onChange={handleNumberChange("cycles")}
+            value={settings.defaultCyclesNumber}
+            onChange={handleNumberChange("defaultCyclesNumber")}
             maxLength={2}
             type="number"
             className="[&]:[-moz-appearance]:textfield h-8 bg-white/10 text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
           />
-          <span className="absolute right-2 text-xs text-white/60">{settings.cycles == 1 ? "cycle" : "cycles"}</span>
+          <span className="absolute right-2 text-xs text-white/60">
+            {settings.defaultCyclesNumber == 1 ? "cycle" : "cycles"}
+          </span>
         </span>
 
         {/* Focus duration  */}
@@ -74,8 +111,8 @@ function PomodoroSettingTab() {
         </Label>
         <span className="relative flex items-center">
           <Input
-            value={settings.focusDuration}
-            onChange={handleNumberChange("focusDuration")}
+            value={settings.defaultFocusDuration}
+            onChange={handleNumberChange("defaultFocusDuration")}
             maxLength={2}
             type="number"
             className="[&]:[-moz-appearance]:textfield h-8 bg-white/10 text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
@@ -91,8 +128,8 @@ function PomodoroSettingTab() {
         </Label>
         <span className="relative flex items-center">
           <Input
-            value={settings.breakDuration}
-            onChange={handleNumberChange("breakDuration")}
+            value={settings.defaultBreakDuration}
+            onChange={handleNumberChange("defaultBreakDuration")}
             maxLength={2}
             type="number"
             className="[&]:[-moz-appearance]:textfield h-8 bg-white/10 text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
@@ -108,8 +145,8 @@ function PomodoroSettingTab() {
         </Label>
         <span className="relative flex items-center">
           <Input
-            value={settings.longBreakDuration}
-            onChange={handleNumberChange("longBreakDuration")}
+            value={settings.defaultLongBreakDuration}
+            onChange={handleNumberChange("defaultLongBreakDuration")}
             maxLength={2}
             type="number"
             className="[&]:[-moz-appearance]:textfield h-8 bg-white/10 text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
@@ -119,6 +156,14 @@ function PomodoroSettingTab() {
           </span>
         </span>
       </div>
+      {/* Save button integrated with mutation */}
+      {/* <Button
+        onClick={handleSaveSettings}
+        disabled={updateSettingsMutation.isPending}
+        className="relative left-3/4 mt-2 w-32 bg-custom-white-300 font-semibold hover:bg-custom-white-300/80"
+      >
+        {updateSettingsMutation.isPending ? "Saving..." : "Save"}
+      </Button> */}
     </div>
   );
 }

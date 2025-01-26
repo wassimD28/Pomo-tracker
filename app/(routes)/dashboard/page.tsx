@@ -14,7 +14,7 @@ const CalendarComponent = dynamic(
 
 export default function DashboardPage() {
   return (
-    <div className="relative flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 text-custom-white-400">
+    <div className="relative pointer-events-auto flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 text-custom-white-400">
       {/* blured circle  */}
       <div className="absolute aspect-square w-[600px] rounded-full bg-custom-orange-500 opacity-30 blur-[100px]" />
       {/* dashboard content */}

@@ -38,3 +38,11 @@ export interface Category{
   id: number;
   name: string;
 }
+
+export interface Setting{
+  darkmode: boolean;
+  defaultCyclesNumber: number;
+  defaultFocusDuration: number;
+  defaultBreakDuration: number;
+  defaultLongBreakDuration: number;
+}

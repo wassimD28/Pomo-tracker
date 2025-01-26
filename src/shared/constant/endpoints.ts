@@ -20,4 +20,9 @@ export const API_ENDPOINTS = {
   USERS: {
     BASE: "/api/users",
   },
+  // settings
+  SETTINGS: {
+    BASE: "/api/settings",
+  },
+  
 } as const;

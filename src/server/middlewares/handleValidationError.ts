@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { ValidationError } from "../validations/errors/validation.error";
+import { ValidationError } from "@/src/shared/validations/errors/validation.error";
 
 export const handleValidationErrors = async (
   c: Context,

@@ -28,3 +28,13 @@ export const sortTaskCompByOrder = (taskComponents: TaskComponent[] | undefined)
   if (!taskComponents) return [];
   return taskComponents.sort((a, b) => a.order - b.order);
 };
+
+/**convert time from seconds to minutes*/
+ export const ToMinutes = (seconds: number) => {
+  return Math.round(seconds / 60);
+};
+
+/**convert time from minutes to seconds*/
+ export const ToSeconds = (minutes: number) => {
+  return minutes * 60;
+};

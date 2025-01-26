@@ -14,7 +14,7 @@ export default function PomodoroPage() {
     resumePomoSession,
   } = usePomoStore();
   return (
-    <div className="relative flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 pl-10 text-custom-white-300">
+    <div className="relative pointer-events-auto flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 pl-10 text-custom-white-300">
       {/* blured circle  */}
       <div
         className={cn(
