@@ -21,11 +21,13 @@ export interface Task {
 
 export interface PomoSession {
   target: Task | null;
-  duration: number; // in seconds
-  remainingTime?: number; // in seconds
+  cyclesNumber: number;
+  focusDuration: number; // in seconds
   breakDuration: number; // in seconds
-  pausedAt: Date[] | null;
-  resumedAt: Date[] | null;
+  longBreakDuration: number; // in seconds
+  remainingTime?: number; // in seconds
+  pausedAt: Date[];
+  resumedAt: Date[];
   isPaused: boolean;
   isStarted: boolean;
   isCompleted: boolean;

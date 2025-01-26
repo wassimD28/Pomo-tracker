@@ -14,7 +14,7 @@ export default function PomodoroPage() {
     resumePomoSession,
   } = usePomoStore();
   return (
-    <div className="relative pointer-events-auto flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 pl-10 text-custom-white-300">
+    <div className="pointer-events-auto relative flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 pl-10 text-custom-white-300">
       {/* blured circle  */}
       <div
         className={cn(
@@ -36,7 +36,7 @@ export default function PomodoroPage() {
           pomoSession.isStarted && "-top-0 opacity-0",
         )}
       >
-        {`focus ${~~(pomoSession.duration / 60)} min and rest ${~~(pomoSession.breakDuration / 60)} min`}
+        {`focus ${~~(pomoSession.focusDuration / 60)} min and rest ${~~(pomoSession.breakDuration / 60)} min`}
       </p>
       <div
         className={cn(
@@ -66,7 +66,10 @@ export default function PomodoroPage() {
         >
           <Play
             onClick={() =>
-              startPomoSession(pomoSession.duration, pomoSession.breakDuration)
+              startPomoSession(
+                pomoSession.focusDuration,
+                pomoSession.breakDuration,
+              )
             }
             strokeLinecap="round"
             className={cn(

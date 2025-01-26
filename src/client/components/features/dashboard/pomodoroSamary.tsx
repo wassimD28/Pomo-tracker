@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import { usePomoStore } from "@/src/client/store/usePomoStore";
 import Image from "next/image";
 export const PomodoroSamary = () => {
-    const {pomoSession} = usePomoStore();
-    const toatalFocusDuration = ~~(pomoSession.duration/60)
+  const { pomoSession } = usePomoStore();
+  const toatalFocusDuration = ~~(pomoSession.focusDuration / 60);
   return (
     <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-custom-maroon-700">
       {/* blured circle  */}
@@ -21,7 +21,7 @@ export const PomodoroSamary = () => {
         <h1 className="text-6xl font-bold capitalize text-custom-white-500">
           good job!
         </h1>
-        <p className="text-sm pl-2 text-custom-white-500/50 capitalize">
+        <p className="pl-2 text-sm capitalize text-custom-white-500/50">
           {`You have focused for ${toatalFocusDuration} minutes today`}
         </p>
       </div>

@@ -18,13 +18,13 @@ const PomodoroProgress = ({
   useEffect(() => {
     if (pomoSession.isStarted) {
       const expiryTime = new Date();
-      const durationInSeconds = pomoSession.duration;
+      const durationInSeconds = pomoSession.focusDuration;
       expiryTime.setSeconds(expiryTime.getSeconds() + durationInSeconds);
       timer.restart(expiryTime);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pomoSession.isStarted, pomoSession.duration]);
+  }, [pomoSession.isStarted, pomoSession.focusDuration]);
 
   useEffect(() => {
     if (pomoSession.isStarted && pomoSession.isPaused) {
@@ -43,7 +43,7 @@ const PomodoroProgress = ({
 
   let remainingTime: number;
   const getProgress = () => {
-    const totalDuration = pomoSession.duration;
+    const totalDuration = pomoSession.focusDuration;
     remainingTime = timer.minutes * 60 + timer.seconds;
     const progress = (remainingTime / totalDuration) * 100;
     return circumference - (progress / 100) * circumference;
@@ -108,7 +108,7 @@ const PomodoroProgress = ({
       >
         {pomoSession.isStarted
           ? formatTime(timer.minutes * 60 + timer.seconds)
-          : formatTime(pomoSession.duration)}
+          : formatTime(pomoSession.focusDuration)}
       </h1>
     </div>
   );

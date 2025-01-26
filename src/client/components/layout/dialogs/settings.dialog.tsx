@@ -67,7 +67,7 @@ function SettingsDialog() {
         <DialogTitle className="p-2 text-2xl font-semibold text-white/90">
           Settings
         </DialogTitle>
-        <Tabs defaultValue="tasks" className="flex h-full w-[500px]">
+        <Tabs defaultValue="pomodoro" className="flex h-full w-[500px]">
           <TabsList className="mt-4 flex h-full w-36 flex-col items-start justify-start bg-transparent p-0 text-start">
             <TabsTrigger
               className="w-full justify-start rounded rounded-r-none data-[state=active]:bg-white/10 data-[state=active]:text-white/90"

@@ -1,3 +1,4 @@
+import { useToast } from "@/src/client/hooks/use-toast";
 import { API_ENDPOINTS } from "@/src/shared/constant/endpoints";
 import {
   ApiResponse,
@@ -8,12 +9,10 @@ import axios from "axios";
 
 export const useUpdateSettings = () => {
   const queryClient = useQueryClient();
+  const {toast} = useToast()
   return useMutation({
     mutationFn: async (settingsPayload: Setting) => {
       try {
-        // Log the payload being sent
-        console.log("Settings Payload:", settingsPayload);
-
         const response = await axios.put<ApiResponse<Setting>>(
           API_ENDPOINTS.SETTINGS.BASE,
           {
@@ -70,7 +69,10 @@ export const useUpdateSettings = () => {
 
     // Optionally, handle successful mutation
     onSuccess: () => {
-      // Invalidate and refetch settings
+      toast({
+        title: "Settings updated successfully",
+      });
+
       
 
       // Optional: show success toast
