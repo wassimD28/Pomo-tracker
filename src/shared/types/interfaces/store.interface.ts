@@ -1,14 +1,22 @@
 import { PomoSession, Task } from "./common.interface";
+import { PomoSessionData } from "./pomodoro.interface";
 
 export interface PomoStore {
   pomoSession: PomoSession;
-  startPomoSession: (duration: number, breakDuration: number) => void;
+  endBreakDuration: () => void;
+  startFocus: () => void;
+  skipBreakDuration: () => void;
+  updateCurrentCycle: () => void;
+  resetPomoSession: () => void;
+  endFocusSession: () => void;
+  setPomoSessionData: (data: PomoSessionData) => void;
+  startBreakSession: () => void;
+  startPomoSession: () => void;
   pausePomoSession: () => void;
   resumePomoSession: () => void;
   endPomoSession: () => void;
   updateRemainingTime: (remainingTime: number) => void;
 }
-
 
 export interface CheckListStore {
   checklists: Task[];

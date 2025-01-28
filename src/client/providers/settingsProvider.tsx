@@ -1,7 +1,9 @@
 "use client"
-import React, { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useEffect } from "react";
 import { useSettingQuery } from "@/src/client/api/queries/useSettingQuery";
 import { Setting } from "@/src/shared/types/interfaces/common.interface";
+import { usePomoStore } from "../store/usePomoStore";
+import { PomoSessionData } from "@/src/shared/types/interfaces/pomodoro.interface";
 
 // Define the shape of our context
 interface SettingsContextType {
@@ -25,6 +27,24 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   // Use the settings query hook
   const { data, isLoading, isError, error } = useSettingQuery();
+
+  const { setPomoSessionData } = usePomoStore()
+  useEffect(() => {
+    if (data?.data) {
+      const settings = data.data;
+
+      const pomoSessionData: PomoSessionData = {
+        cyclesNumber: settings.defaultCyclesNumber,
+        focusDuration : settings.defaultFocusDuration,
+        breakDuration: settings.defaultBreakDuration,
+        longBreakDuration: settings.defaultLongBreakDuration,
+      };
+
+      // Update Pomo store with default settings
+      setPomoSessionData(pomoSessionData);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[data])
 
   // Prepare the context value
   const contextValue = {
