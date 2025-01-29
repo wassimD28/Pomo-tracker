@@ -20,7 +20,7 @@ function EndSessionDialog() {
       <AlertDialogTrigger
         className={cn(
           "pointer-events-none absolute scale-[2] cursor-pointer opacity-0",
-          pomoSession.isFocus && "pointer-events-auto right-10 opacity-100",
+          pomoSession.isStarted && "pointer-events-auto right-10 opacity-100",
         )}
       >
         <Square
@@ -28,7 +28,7 @@ function EndSessionDialog() {
           className="fill-custom-white-200 stroke-custom-white-200 hover:fill-custom-white-600 hover:stroke-custom-white-600"
         />
       </AlertDialogTrigger>
-      <AlertDialogContent className="border-white/60 bg-white/10 backdrop-blur-md">
+      <AlertDialogContent className="border-white/60 bg-white/10 backdrop-blur-md max-sm:w-80 rounded-lg">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-white">
             Will you stop during the session?
@@ -52,7 +52,7 @@ function EndSessionDialog() {
             End Session
           </AlertDialogAction>
           <AlertDialogAction
-            className="bg-custom-white-500 text-custom-black-700 hover:bg-custom-white-400"
+            className="bg-custom-white-500 mb-2 xl:m-0 text-custom-black-700 hover:bg-custom-white-400"
             onClick={() => {
               endPomoSession();
               resetPomoSession();

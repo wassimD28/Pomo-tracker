@@ -28,6 +28,7 @@ export interface PomoSession {
   longBreakDuration: number; // in seconds
   remainingTime: number; // in seconds
   wastedTime: number;
+  skipCounting: boolean;
   pausedAt: Date[];
   resumedAt: Date[];
   isBreakComplete: boolean;

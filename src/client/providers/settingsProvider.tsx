@@ -28,7 +28,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
   // Use the settings query hook
   const { data, isLoading, isError, error } = useSettingQuery();
 
-  const { setPomoSessionData } = usePomoStore()
+  const { setPomoSessionData, resetPomoSession } = usePomoStore()
   useEffect(() => {
     if (data?.data) {
       const settings = data.data;
@@ -42,6 +42,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
 
       // Update Pomo store with default settings
       setPomoSessionData(pomoSessionData);
+      resetPomoSession()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[data])

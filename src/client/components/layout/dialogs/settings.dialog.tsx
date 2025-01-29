@@ -56,7 +56,7 @@ function SettingsDialog() {
         setSettingDialogOpen(open);
       }}
     >
-      <DialogContent className="z-50 flex h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-md">
+      <DialogContent className="z-50 flex h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-md w-[95%] rounded-lg items-end">
         <DialogClose
           className="bg-white-20 group absolute right-4 top-4 rounded-sm border-none opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:border-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
           // Ensure this explicitly closes the dialog
@@ -64,11 +64,11 @@ function SettingsDialog() {
         >
           <X className="h-4 w-4" />
         </DialogClose>
-        <DialogTitle className="p-2 text-2xl font-semibold text-white/90">
+        <DialogTitle className="p-2 self-start text-2xl font-semibold text-white/90">
           Settings
         </DialogTitle>
-        <Tabs defaultValue="pomodoro" className="flex h-full w-[500px]">
-          <TabsList className="mt-4 flex h-full w-36 flex-col items-start justify-start bg-transparent p-0 text-start">
+        <Tabs defaultValue="pomodoro" className="flex h-full xl:w-[500px] w-full">
+          <TabsList className="mt-4 flex h-full xl:w-36 flex-col items-start justify-start bg-transparent p-0 text-start">
             <TabsTrigger
               className="w-full justify-start rounded rounded-r-none data-[state=active]:bg-white/10 data-[state=active]:text-white/90"
               value="pomodoro"
@@ -108,7 +108,7 @@ function SettingsDialog() {
         <Button
           onClick={handleSaveSettings}
           disabled={updateSettingsMutation.isPending}
-          className="relative left-3/4 mt-2 w-32 bg-custom-white-300 font-semibold hover:bg-custom-white-300/80"
+          className="relative mt-2 w-32 bg-custom-white-300 font-semibold hover:bg-custom-white-300/80"
         >
           {updateSettingsMutation.isPending ? "Saving..." : "Save"}
         </Button>

@@ -11,32 +11,29 @@ const PomodoroProgress = ({
     pomoSession,
     endFocusSession,
     updateRemainingTime,
-    endPomoSession,
+    completePomoSession,
     updateCurrentCycle,
     endBreakDuration,
+    startFocus,
   } = usePomoStore();
 
-  // Let's create a more sophisticated expire handler
   const handleExpire = () => {
-    if (pomoSession.currentCycle + 1 === pomoSession.cyclesNumber + 1) {
-      endPomoSession();
-      updateRemainingTime(pomoSession.focusDuration);
-      // You might want to add a function to end break session
-      // endBreakSession();
-    } else if (
+    if (
       pomoSession.isStarted &&
-      !pomoSession.isFocusComplete &&
-      !pomoSession.isBreak
+      pomoSession.currentCycle === pomoSession.cyclesNumber
     ) {
+      completePomoSession();
+    } else if (pomoSession.isStarted && pomoSession.isFocus) {
       endFocusSession();
-      updateCurrentCycle();
-    } else if (
-      pomoSession.isStarted &&
-      pomoSession.isBreak &&
-      !pomoSession.isFocusComplete
-    ) {
+    } else if (pomoSession.isStarted && pomoSession.isBreak) {
       endBreakDuration();
       updateRemainingTime(pomoSession.focusDuration);
+    } else if (
+      pomoSession.isStarted &&
+      pomoSession.currentCycle < pomoSession.cyclesNumber
+    ) {
+      updateRemainingTime(pomoSession.focusDuration);
+      startFocus();
     }
   };
 
@@ -45,6 +42,15 @@ const PomodoroProgress = ({
     onExpire: handleExpire,
     autoStart: false,
   });
+  //! for debugging purposes
+  useEffect(() => {
+    if ((pomoSession.isBreak || pomoSession.isFocus) && pomoSession.skipCounting) {
+      const expiryTime = new Date();
+      expiryTime.setSeconds(expiryTime.getSeconds() + 2);
+      timer.restart(expiryTime);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pomoSession.skipCounting]);
 
   useEffect(() => {
     // Extract boolean properties
@@ -57,19 +63,19 @@ const PomodoroProgress = ({
       }, {});
 
     // Log the rest of the pomoSession object (excluding boolean properties)
-    // const nonBooleanProperties = Object.entries(pomoSession)
-    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //   .filter(([key, value]) => typeof value !== "boolean")
-    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   .reduce((acc: { [key: string]: any }, [key, value]) => {
-    //     acc[key] = value;
-    //     return acc;
-    //   }, {});
+    const nonBooleanProperties = Object.entries(pomoSession)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([key, value]) => typeof value !== "boolean")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .reduce((acc: { [key: string]: any }, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
 
-    // console.log(
-    //   "Non-Boolean Properties:",
-    //   JSON.stringify(nonBooleanProperties, null, 2),
-    // );
+    console.log(
+      "Non-Boolean Properties:",
+      JSON.stringify(nonBooleanProperties, null, 2),
+    );
     console.log(
       "Boolean Properties:",
       JSON.stringify(booleanProperties, null, 2),
@@ -77,7 +83,10 @@ const PomodoroProgress = ({
   }, [pomoSession]);
 
   useEffect(() => {
-    if (pomoSession.isStarted || pomoSession.isFocus) {
+    if (
+      pomoSession.isFocus &&
+      pomoSession.currentCycle < pomoSession.cyclesNumber
+    ) {
       const expiryTime = new Date();
       const durationInSeconds = pomoSession.focusDuration;
       expiryTime.setSeconds(expiryTime.getSeconds() + durationInSeconds);
@@ -102,7 +111,7 @@ const PomodoroProgress = ({
     if (pomoSession.isFocusComplete) {
       // Immediately pause the timer
       timer.pause();
-      // Update the remaining time in the store
+      updateCurrentCycle();
     }
     if (pomoSession.isBreak && !pomoSession.isBreakComplete) {
       // Set the timer to display break duration
@@ -152,7 +161,7 @@ const PomodoroProgress = ({
   const circumference = 2 * Math.PI * radius;
 
   let remainingTime: number;
-  const getProgress = () => {
+  const getProgress = (): number => {
     const totalDuration = pomoSession.remainingTime;
     remainingTime = timer.minutes * 60 + timer.seconds;
     const progress = (remainingTime / totalDuration) * 100;
@@ -214,9 +223,9 @@ const PomodoroProgress = ({
       {/* Timer text */}
       <h1
         className={cn(
-          "absolute translate-y-0 select-none bg-gradient-to-b from-custom-white-200 to-custom-white-600 bg-clip-text text-9xl font-bold text-transparent opacity-100 transition-all duration-1000 ease-custom-ease",
-          !pomoSession.isStarted && "translate-y-0",
-          pomoSession.isFocusComplete && "-translate-y-80 opacity-0",
+          "absolute translate-y-0 max-sm:-translate-y-20 max-sm:scale-90 select-none bg-gradient-to-b from-custom-white-200 to-custom-white-600 bg-clip-text text-9xl font-bold text-transparent opacity-100 transition-all duration-1000 ease-custom-ease",
+          pomoSession.isStarted && "max-sm:translate-y-0",
+          (pomoSession.isFocusComplete || pomoSession.isCompleted)&& "-translate-y-96 opacity-0",
         )}
       >
         {pomoSession.isStarted

@@ -83,7 +83,7 @@ function PomodoroSettingTab({ settings, setSettings}: PomodoroTabProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-2">
+    <div className="flex flex-col gap-4 xl:p-2">
       <h1 className="text-lg font-medium capitalize text-white/90">
         Default session values
       </h1>
@@ -156,14 +156,6 @@ function PomodoroSettingTab({ settings, setSettings}: PomodoroTabProps) {
           </span>
         </span>
       </div>
-      {/* Save button integrated with mutation */}
-      {/* <Button
-        onClick={handleSaveSettings}
-        disabled={updateSettingsMutation.isPending}
-        className="relative left-3/4 mt-2 w-32 bg-custom-white-300 font-semibold hover:bg-custom-white-300/80"
-      >
-        {updateSettingsMutation.isPending ? "Saving..." : "Save"}
-      </Button> */}
     </div>
   );
 }

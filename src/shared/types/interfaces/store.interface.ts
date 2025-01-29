@@ -3,6 +3,8 @@ import { PomoSessionData } from "./pomodoro.interface";
 
 export interface PomoStore {
   pomoSession: PomoSession;
+  skipCounting: () => void;
+  completePomoSession: () => void;
   endBreakDuration: () => void;
   startFocus: () => void;
   skipBreakDuration: () => void;
