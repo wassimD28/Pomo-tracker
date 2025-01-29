@@ -17,7 +17,7 @@ export const useBreakConfirmation = () => {
             className="bg-custom-white-500 hover:bg-custom-white-200 text-amber-950"
             size="sm"
             onClick={() => {
-              startBreakSession(false); // Short break
+              startBreakSession(); // Short break
               toast({ title: "Short Break Started" });
             }}
           >
@@ -27,7 +27,7 @@ export const useBreakConfirmation = () => {
             variant="default"
             size="sm"
             onClick={() => {
-              startBreakSession(true); // Long break
+              startBreakSession(); // Long break
               toast({ title: "Long Break Started" });
             }}
           >
