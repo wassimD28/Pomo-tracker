@@ -13,7 +13,7 @@ import { Check, EllipsisVertical, PenBox, Trash2, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useDeleteCategory } from "@/src/client/api/mutations/category/useDeleteCategory";
 import { useUpdateCategory } from "@/src/client/api/mutations/category/useUpdateCategory";
-import { useIsMobile } from "@/src/client/hooks/use-mobile";
+//import { useIsMobile } from "@/src/client/hooks/use-mobile";
 
 interface CategoryCardProps {
   category: {
