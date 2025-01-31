@@ -117,7 +117,7 @@ export default function PomodoroPage() {
           pomoSession.isBreak &&
             !pomoSession.isPaused &&
             "pointer-events-auto bottom-20 opacity-100",
-          pomoSession.isFocusComplete &&
+          (pomoSession.isFocusComplete || pomoSession.isBreakComplete )&&
             "pointer-events-none -bottom-0 opacity-0",
         )}
       >

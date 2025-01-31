@@ -5,11 +5,11 @@ export interface ApiResponse<T> {
   data: T[];
 }
 
-export interface Link{
+export interface Link {
   name: string;
   href: string;
   isActive: boolean;
-  icon: LucideIcon
+  icon: LucideIcon;
 }
 
 export interface Task {
@@ -23,12 +23,18 @@ export interface PomoSession {
   target: Task | null;
   cyclesNumber: number;
   currentCycle: number;
+  totalSessionDuration: number; // in seconds
   focusDuration: number; // in seconds
   breakDuration: number; // in seconds
   longBreakDuration: number; // in seconds
   remainingTime: number; // in seconds
-  wastedTime: number;
+  wastedTime: number; // in seconds
+  currentFocusDuration: number; // in seconds
+  currentBreakDuration: number; // in seconds
+  totalFocusDuration: number; // in seconds
+  totalBreakDuration: number; // in seconds
   skipCounting: boolean;
+  isBreakSkipped: boolean;
   pausedAt: Date[];
   resumedAt: Date[];
   isBreakComplete: boolean;
@@ -37,19 +43,18 @@ export interface PomoSession {
   isStarted: boolean;
   isEnded: boolean;
   isBreak: boolean;
-  isFocus : boolean;
+  isFocus: boolean;
   isCompleted: boolean;
   startedAt: Date | null;
   endedAt: Date | null;
 }
 
-
-export interface Category{
+export interface Category {
   id: number;
   name: string;
 }
 
-export interface Setting{
+export interface Setting {
   darkmode: boolean;
   defaultCyclesNumber: number;
   defaultFocusDuration: number;

@@ -13,6 +13,7 @@ import { Check, EllipsisVertical, PenBox, Trash2, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useDeleteCategory } from "@/src/client/api/mutations/category/useDeleteCategory";
 import { useUpdateCategory } from "@/src/client/api/mutations/category/useUpdateCategory";
+import { useIsMobile } from "@/src/client/hooks/use-mobile";
 
 interface CategoryCardProps {
   category: {
@@ -26,16 +27,16 @@ interface CategoryCardProps {
 function CategoryCard({ category, isSelected, onSelect }: CategoryCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(category.name);
-  
+  const isMobile = useIsMobile();
 
   // Reset name when category changes
   useEffect(() => {
     setName(category.name);
   }, [category.name]);
 
-  const deleteCategory = useDeleteCategory()
+  const deleteCategory = useDeleteCategory();
 
-  const updateCategory = useUpdateCategory(setIsEditing, setName , category)
+  const updateCategory = useUpdateCategory(setIsEditing, setName, category);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -64,8 +65,9 @@ function CategoryCard({ category, isSelected, onSelect }: CategoryCardProps) {
     <div
       onClick={() => !isEditing && onSelect(category.id)}
       className={cn(
-        "group relative grid h-10 w-full cursor-pointer select-none grid-cols-[1fr_auto] items-center gap-1 rounded-md bg-transparent px-2 text-custom-white-200/70 duration-300 ease-out hover:bg-custom-white-400/10",
-        isSelected && "bg-custom-white-200/10",
+        "group relative grid h-10 xl:w-full cursor-pointer select-none grid-cols-[1fr_auto] items-center gap-1 rounded-md bg-transparent px-2 text-custom-white-500/70 duration-300 ease-out hover:bg-custom-white-400/10 max-sm:w-32 max-sm:justify-center max-sm:rounded-full max-sm:bg-custom-white-500/10",
+        isSelected &&
+          "bg-custom-white-200/10 max-sm:bg-custom-white-500/25 max-sm:text-custom-white-200/90",
         isEditing && "px-2",
       )}
     >
@@ -101,11 +103,11 @@ function CategoryCard({ category, isSelected, onSelect }: CategoryCardProps) {
           </div>
         </div>
       ) : (
-        <h1 className="text-sm">{category.name}</h1>
+        <h1 className="text-sm max-sm:text-center">{category.name}</h1>
       )}
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger className="max-sm:hidden" asChild>
           <Button
             className={cn(
               "absolute right-2 h-8 w-3 opacity-0 duration-300 ease-out hover:bg-custom-white-200/30 hover:text-custom-white-200 group-hover:opacity-100",

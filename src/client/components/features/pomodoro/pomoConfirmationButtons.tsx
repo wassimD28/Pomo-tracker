@@ -6,11 +6,12 @@ import { ChevronLast, Play } from "lucide-react";
 function PomoConfirmationButtons() {
     const {
       pomoSession,
+      resetPomoSession,
       startFocus,
       skipBreakDuration,
       endFocusSession,
       startBreakSession,
-      endPomoSession,
+      endFocus,
       resumePomoSession,
     } = usePomoStore();
     return (
@@ -66,7 +67,8 @@ function PomoConfirmationButtons() {
           </Button>
           <Button
             onClick={() => {
-              endPomoSession();
+              endFocusSession();
+              resetPomoSession();
             }}
             className={cn(
               "w-full border border-custom-white-500 bg-transparent text-custom-white-500 opacity-100 backdrop-blur-sm transition-all duration-500 ease-custom-ease hover:bg-custom-white-500/20",
@@ -97,7 +99,7 @@ function PomoConfirmationButtons() {
           </Button>
           <Button
             onClick={() => {
-              endFocusSession();
+              endFocus();
             }}
             className={cn(
               "w-full border border-custom-white-500 bg-transparent text-custom-white-500 opacity-100 backdrop-blur-sm transition-all duration-500 ease-custom-ease hover:bg-custom-white-500/20",

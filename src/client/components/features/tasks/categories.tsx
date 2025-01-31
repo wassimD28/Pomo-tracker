@@ -29,7 +29,9 @@ function Categories() {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
-          <h1 className="text-2xl text-gray-400">Categories</h1>
+          <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+            Categories
+          </h1>
         </span>
         <div className="w-ful flex h-full flex-col gap-2 py-4 opacity-20">
           <div className="flex w-full gap-3 rounded bg-white/10 p-3">
@@ -45,7 +47,9 @@ function Categories() {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
-          <h1 className="text-2xl text-gray-400">Categories</h1>
+          <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+            Categories
+          </h1>
         </span>
         <div className="flex h-full w-full items-center justify-center">
           <p className="text-center text-red-400">
@@ -67,7 +71,7 @@ function Categories() {
   const categories = data?.data || [];
   const showList = () => {
     return (
-      <div className="flex h-full w-full flex-col space-y-2">
+      <div className="flex overflow-scroll max-sm:gap-1 max-sm:w-fit w-full flex-col space-y-2 max-sm:space-y-0 max-sm:flex-row max-sm:flex-nowrap">
         {categories.map((category : Category) => (
           <CategoryCard
             key={category.id}
@@ -92,9 +96,9 @@ function Categories() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
+    <div className="flex h-full max-sm:h-fit w-full flex-col rounded-lg bg-white/10 p-4 max-sm:p-0 max-sm:bg-transparent">
       <span className="mb-4 flex w-full items-center justify-between">
-        <h1 className="text-2xl text-gray-400">Categories</h1>
+        <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">Categories</h1>
         <CreateCategoryDialog />
       </span>
       {categories.length > 0 ? showList() : showEmpty()}

@@ -6,10 +6,15 @@ export const usePomoStore = create<PomoStore>((set) => ({
     target: null,
     currentCycle: 0,
     cyclesNumber: 4,
+    totalSessionDuration: 0,
     focusDuration: 25 * 60,
     breakDuration: 5 * 60,
     longBreakDuration: 15 * 60,
     remainingTime: 25 * 60,
+    currentFocusDuration: 0,
+    currentBreakDuration: 0,
+    totalFocusDuration: 0,
+    totalBreakDuration: 0,
     wastedTime: 0,
     isFocus: false,
     isBreakComplete: false,
@@ -18,6 +23,7 @@ export const usePomoStore = create<PomoStore>((set) => ({
     isStarted: false,
     isCompleted: false,
     skipCounting: false,
+    isBreakSkipped: false,
     isBreak: false,
     isEnded: false,
     pausedAt: [],
@@ -25,6 +31,23 @@ export const usePomoStore = create<PomoStore>((set) => ({
     startedAt: null,
     endedAt: null,
   },
+  updateTotalSessionDuration: () =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        totalSessionDuration:
+          state.pomoSession.totalFocusDuration +
+          state.pomoSession.totalBreakDuration +
+          state.pomoSession.wastedTime,
+      },
+    })),
+  updateWastedTime: (newDuration: number) =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        wastedTime: newDuration,
+      },
+    })),
   startFocus: () =>
     set((state) => ({
       pomoSession: {
@@ -32,7 +55,19 @@ export const usePomoStore = create<PomoStore>((set) => ({
         isBreak: false,
         isFocusComplete: false,
         isBreakComplete: false,
+        isBreakSkipped: false,
         isFocus: true,
+        skipCounting: false,
+      },
+    })),
+  endFocus: () =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        isBreak: false,
+        isFocusComplete: true,
+        isBreakComplete: false,
+        isFocus: false,
         skipCounting: false,
       },
     })),
@@ -44,7 +79,13 @@ export const usePomoStore = create<PomoStore>((set) => ({
         target: null,
         wastedTime: 0,
         currentCycle: 0,
+        totalSessionDuration: 0,
+        currentBreakDuration: 0,
+        currentFocusDuration: 0,
+        totalBreakDuration: 0,
+        totalFocusDuration: 0,
         isFocus: false,
+        isBreakSkipped: false,
         skipCounting: false,
         isBreakComplete: false,
         isFocusComplete: false,
@@ -59,6 +100,38 @@ export const usePomoStore = create<PomoStore>((set) => ({
         endedAt: null,
       },
     })),
+  updateCurrentFocusDuration: (remainingTime: number) =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        currentFocusDuration: state.pomoSession.focusDuration - remainingTime,
+      },
+    })),
+  updateCurrentBreakDuration: (remainingTime: number) =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        currentBreakDuration: state.pomoSession.breakDuration - remainingTime,
+      },
+    })),
+  updateTotalFocusDuration: () =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        totalFocusDuration:
+          state.pomoSession.totalFocusDuration +
+          state.pomoSession.currentFocusDuration,
+      },
+    })),
+  updateTotalBreakDuration: () =>
+    set((state) => ({
+      pomoSession: {
+        ...state.pomoSession,
+        totalBreakDuration:
+          state.pomoSession.totalBreakDuration +
+          state.pomoSession.currentBreakDuration,
+      },
+    })),
   endBreakDuration: () =>
     set((state) => ({
       pomoSession: {
@@ -66,18 +139,21 @@ export const usePomoStore = create<PomoStore>((set) => ({
         isBreak: false,
         isBreakComplete: true,
         skipCounting: false,
-        
+        isBreakSkipped: false,
       },
     })),
   skipBreakDuration: () =>
     set((state) => ({
       pomoSession: {
         ...state.pomoSession,
+        currentBreakDuration: 0,
         isFocusComplete: false,
         isBreak: false,
         isBreakComplete: true,
+        isBreakSkipped: true,
         isPaused: false,
         skipCounting: false,
+        isFocus: false
       },
     })),
   endFocusSession: () =>
@@ -102,7 +178,6 @@ export const usePomoStore = create<PomoStore>((set) => ({
         ...state.pomoSession,
         ...data,
         remainingTime: data.focusDuration,
-        wastedTime: 0,
         isStarted: false,
         isCompleted: false,
       },
@@ -120,9 +195,11 @@ export const usePomoStore = create<PomoStore>((set) => ({
     set((state) => ({
       pomoSession: {
         ...state.pomoSession,
+        isPaused: false,
         isFocusComplete: false,
         isBreak: true,
         isCompleted: false,
+        isBreakSkipped: false,
         isFocus: false,
         skipCounting: false,
       },
@@ -162,7 +239,7 @@ export const usePomoStore = create<PomoStore>((set) => ({
         isStarted: false,
         isCompleted: false,
         isEnded: true,
-      },  
+      },
     })),
   completePomoSession: () =>
     set((state) => ({
@@ -179,7 +256,7 @@ export const usePomoStore = create<PomoStore>((set) => ({
         isStarted: false,
         isCompleted: true,
         isEnded: true,
-      },  
+      },
     })),
   updateRemainingTime: (remainingTime: number) =>
     set((state) => ({

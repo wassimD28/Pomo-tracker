@@ -47,6 +47,8 @@ Note
 ├─ .prettierrc
 ├─ app
 │  ├─ (routes)
+│  │  ├─ calendar
+│  │  │  └─ page.tsx
 │  │  ├─ dashboard
 │  │  │  └─ page.tsx
 │  │  ├─ pomodoro
@@ -64,7 +66,9 @@ Note
 │  │  │  ├─ route.ts
 │  │  │  └─ [id]
 │  │  │     └─ route.ts
-│  │  ├─ taskComponents
+│  │  ├─ settings
+│  │  │  └─ route.ts
+│  │  ├─ task-components
 │  │  │  ├─ route.ts
 │  │  │  ├─ task
 │  │  │  │  └─ [id]
@@ -88,6 +92,17 @@ Note
 │  ├─ layout.tsx
 │  └─ page.tsx
 ├─ bun.lockb
+├─ components
+│  └─ ui
+│     ├─ alert-dialog.tsx
+│     ├─ button.tsx
+│     ├─ select.tsx
+│     ├─ skeleton.tsx
+│     ├─ table.tsx
+│     ├─ tabs.tsx
+│     ├─ textarea.tsx
+│     ├─ toast.tsx
+│     └─ toaster.tsx
 ├─ components.json
 ├─ eslint.config.mjs
 ├─ middleware.ts
@@ -108,10 +123,25 @@ Note
 │  ├─ client
 │  │  ├─ api
 │  │  │  ├─ mutations
-│  │  │  │  └─ category
-│  │  │  │     └─ useDeleteCategory.ts
+│  │  │  │  ├─ category
+│  │  │  │  │  ├─ useCreateCategoy.ts
+│  │  │  │  │  ├─ useDeleteCategory.ts
+│  │  │  │  │  └─ useUpdateCategory.ts
+│  │  │  │  ├─ setting
+│  │  │  │  │  └─ useUpdateSettings.ts
+│  │  │  │  ├─ task
+│  │  │  │  │  ├─ useCreateTask.ts
+│  │  │  │  │  ├─ useDeleteTask.ts
+│  │  │  │  │  └─ useUpdateTask.ts
+│  │  │  │  └─ taskComp
+│  │  │  │     ├─ useCreateTaskComp.ts
+│  │  │  │     ├─ useDeleteTaskComp.ts
+│  │  │  │     └─ useUpdateTaskComp.ts
 │  │  │  └─ queries
-│  │  │     └─ useCatigories.ts
+│  │  │     ├─ useCatigoryQuery.ts
+│  │  │     ├─ useSettingQuery.ts
+│  │  │     ├─ useTaskCompQuery.ts
+│  │  │     └─ useTaskQuery.ts
 │  │  ├─ components
 │  │  │  ├─ features
 │  │  │  │  ├─ dashboard
@@ -119,19 +149,34 @@ Note
 │  │  │  │  │  ├─ pomodoroSamary.tsx
 │  │  │  │  │  └─ todayTodos.tsx
 │  │  │  │  ├─ pomodoro
+│  │  │  │  │  ├─ bluredCercle.tsx
+│  │  │  │  │  ├─ completePomoPanel.tsx
+│  │  │  │  │  ├─ endSessionDialog.tsx
+│  │  │  │  │  ├─ mainPomo.tsx
+│  │  │  │  │  ├─ mainPomoButtons.tsx
+│  │  │  │  │  ├─ pageFooter.tsx
+│  │  │  │  │  ├─ pageHeading.tsx
+│  │  │  │  │  ├─ pageHeadingDesc.tsx
+│  │  │  │  │  ├─ pomoConfirmationButtons.tsx
 │  │  │  │  │  └─ pomoProgressBar.tsx
+│  │  │  │  ├─ settings
+│  │  │  │  │  └─ pomodoroTab.tsx
 │  │  │  │  └─ tasks
 │  │  │  │     ├─ cards
 │  │  │  │     │  ├─ categoryCard.tsx
-│  │  │  │     │  └─ taskCard.tsx
+│  │  │  │     │  ├─ taskCard.tsx
+│  │  │  │     │  └─ taskCompCard.tsx
 │  │  │  │     ├─ categories.tsx
 │  │  │  │     ├─ dialogs
 │  │  │  │     │  ├─ categoryDialog.tsx
+│  │  │  │     │  ├─ taskCompDialong.tsx
 │  │  │  │     │  └─ taskDialog.tsx
 │  │  │  │     ├─ taskComponents.tsx
 │  │  │  │     └─ tasks.tsx
 │  │  │  ├─ layout
-│  │  │  │  └─ sideBar.tsx
+│  │  │  │  ├─ dialogs
+│  │  │  │  │  └─ settings.dialog.tsx
+│  │  │  │  └─ navbar.tsx
 │  │  │  └─ ui
 │  │  │     ├─ button.tsx
 │  │  │     ├─ checkbox.tsx
@@ -146,19 +191,26 @@ Note
 │  │  │     ├─ skeleton.tsx
 │  │  │     └─ tooltip.tsx
 │  │  ├─ context
-│  │  │  └─ authProvider.tsx
 │  │  ├─ hooks
-│  │  │  └─ use-mobile.tsx
+│  │  │  ├─ use-mobile.tsx
+│  │  │  ├─ use-toast.ts
+│  │  │  ├─ useBreakConfirmation.tsx
+│  │  │  └─ useSettings.ts
+│  │  ├─ providers
+│  │  │  ├─ queryProvider.tsx
+│  │  │  └─ settingsProvider.tsx
 │  │  ├─ store
-│  │  │  ├─ useAuthStore.ts
 │  │  │  ├─ useCategoryStore.ts
 │  │  │  ├─ usePomoStore.ts
+│  │  │  ├─ useSettingsStore.ts
 │  │  │  └─ useTaskStore.ts
 │  │  └─ styles
-│  │     └─ calendar.css
+│  │     ├─ calendar.css
+│  │     └─ removeInputBorder.css
 │  ├─ server
 │  │  ├─ controllers
 │  │  │  ├─ category.controller.ts
+│  │  │  ├─ settings.controller.ts
 │  │  │  ├─ task.controller.ts
 │  │  │  ├─ taskComponent.controller.ts
 │  │  │  └─ user.controller.ts
@@ -171,8 +223,9 @@ Note
 │  │  │  └─ validateOwnership.ts
 │  │  └─ repositories
 │  │     ├─ categoryRepo.ts
+│  │     ├─ settingsRepo.ts
 │  │     ├─ taskComponentRepo.ts
-│  │     ├─ taskRep.ts
+│  │     ├─ taskRepo.ts
 │  │     └─ userRepo.ts
 │  └─ shared
 │     ├─ constant
@@ -183,7 +236,9 @@ Note
 │     │  └─ interfaces
 │     │     ├─ common.interface.ts
 │     │     ├─ pomodoro.interface.ts
-│     │     └─ store.interface.ts
+│     │     ├─ store.interface.ts
+│     │     ├─ task.interface.ts
+│     │     └─ taskComp.interface.ts
 │     ├─ utils
 │     │  └─ utils.ts
 │     └─ validations
@@ -191,10 +246,12 @@ Note
 │        │  └─ validation.error.ts
 │        ├─ schemas
 │        │  ├─ category.schema.ts
+│        │  ├─ settings.schema.ts
 │        │  ├─ task.shema.ts
 │        │  └─ taskComponent.shema.ts
 │        └─ validators
 │           ├─ category.validator.ts
+│           ├─ settings.validator.ts
 │           ├─ task.validator.ts
 │           └─ taskComponent.validator.ts
 ├─ tailwind.config.ts

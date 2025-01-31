@@ -30,7 +30,7 @@ export function CreateCategoryDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="h-8 w-4 bg-transparent text-custom-white-200 hover:bg-white/10">
+        <Button className="h-8 w-4 bg-transparent text-custom-white-200 hover:bg-white/10 max-sm:bg-custom-white-500/20 max-sm:rounded-lg max-sm:w-16 ">
           <Plus size={10} className="scale-70 text-sm" />
         </Button>
       </DialogTrigger>
