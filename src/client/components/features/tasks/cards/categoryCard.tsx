@@ -27,7 +27,7 @@ interface CategoryCardProps {
 function CategoryCard({ category, isSelected, onSelect }: CategoryCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(category.name);
-  const isMobile = useIsMobile();
+  //const isMobile = useIsMobile();
 
   // Reset name when category changes
   useEffect(() => {
