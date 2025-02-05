@@ -112,7 +112,7 @@ const PomodoroProgress = ({
     ) {
       wastedTimer.pause();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     pomoSession.isFocusComplete,
     pomoSession.isBreakComplete,
@@ -267,6 +267,17 @@ const PomodoroProgress = ({
     pomoSession.breakDuration,
     pomoSession.isBreakComplete,
   ]);
+
+  useEffect(() => {
+     if (
+       !pomoSession.isStarted &&
+       !pomoSession.isCompleted &&
+       !pomoSession.isEnded
+     ) {
+      wastedTimer.reset();
+     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pomoSession.isStarted, pomoSession.isCompleted, pomoSession.isEnded]);
 
   const center = size / 2;
   const radius = size / 2 - strokeWidth * 2;

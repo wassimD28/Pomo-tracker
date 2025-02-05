@@ -14,7 +14,9 @@ function TaskComponents() {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
-          <h1 className="text-2xl text-gray-400">Details</h1>
+          <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+            Details
+          </h1>
         </span>
         <div className="w-ful flex h-full flex-col gap-4 py-4 opacity-20">
           <div className="flex w-full flex-col gap-3 rounded bg-white/10 p-2">
@@ -57,7 +59,9 @@ function TaskComponents() {
   return (
     <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
       <span className="flex w-full items-center justify-between">
-        <h1 className="text-2xl text-gray-400">Details</h1>
+        <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+          Details
+        </h1>
         <TaskCompDialog
           taskId={activeTaskId}
           latestOrder={getLatestOrder(data?.data)}

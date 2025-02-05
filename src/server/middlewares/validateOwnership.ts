@@ -5,6 +5,7 @@ import { Entity } from "@/src/shared/types/enum/common.enum";
 import { TaskRepository } from "../repositories/taskRepo";
 import { TaskComponentRepository } from "../repositories/taskComponentRepo";
 import { SettingsRepository } from "../repositories/settingsRepo";
+import { PomodoroSessionRepository } from "../repositories/pomodoroRepo";
 
 export const validateOwnership = (entityName: keyof typeof Entity) => {
   return async (c: Context, next: () => Promise<void>) => {
@@ -27,6 +28,9 @@ export const validateOwnership = (entityName: keyof typeof Entity) => {
           break;
         case "TASK_COMPONENT":
           entity = await TaskComponentRepository.getOneById(EntityId);
+          break;
+        case "POMODORO_SESSION":
+          entity = await PomodoroSessionRepository.getSessionById(EntityId);
           break;
         case "SETTING":
           entity = await SettingsRepository.getUserSettings(userId);

@@ -32,7 +32,7 @@ export const TodayTodos = () => {
   ];
 
   return (
-    <div className="flex flex-col rounded-xl bg-custom-white-500/10 py-4 pl-4 pr-2">
+    <div className="flex flex-col rounded-xl bg-custom-white-500/10 py-4 pl-4 pr-2 max-sm:col-span-1">
       <h1 className="text-xl font-bold capitalize text-custom-white-500">
         today todo&apos;s
       </h1>

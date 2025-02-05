@@ -24,5 +24,10 @@ export const API_ENDPOINTS = {
   SETTINGS: {
     BASE: "/api/settings",
   },
-  
+  // Pomodoro Sessions
+  POMODORO_SESSION: {
+    BASE: "/api/pomodoro-session",
+    BY_ID: (id: number) => `/api/pomodoro-session/${id}`,
+    LINK_TASK: "/api/pomodoro-session/link-task",
+  },
 } as const;

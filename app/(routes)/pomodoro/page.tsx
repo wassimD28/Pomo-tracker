@@ -54,7 +54,7 @@ export default function PomodoroPage() {
                   colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
                 });
                 resolve(null);
-              }, 250),
+              }, 100),
             ),
             new Promise((resolve) =>
               setTimeout(() => {
@@ -65,25 +65,13 @@ export default function PomodoroPage() {
                   colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
                 });
                 resolve(null);
-              }, 250),
+              }, 100),
             ),
           ];
 
           // Fire all confetti bursts
           await Promise.all(confettiBursts);
 
-          // Add a final burst after a short delay
-          setTimeout(() => {
-            confetti({
-              particleCount: 150,
-              spread: 160,
-              origin: { x: 0.5, y: 0.5 },
-              colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
-              startVelocity: 45,
-              gravity: 1,
-              ticks: 400,
-            });
-          }, 500);
         }
       } catch (error) {
         console.error("Failed to trigger confetti:", error);

@@ -6,6 +6,7 @@ import { NavBar } from "@/src/client/components/layout/navbar";
 import QueryProvider from "@/src/client/providers/queryProvider";
 import { SettingsProvider } from "@/src/client/providers/settingsProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { UserProvider } from "@/src/client/providers/userProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,11 +39,13 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} pointer-events-auto relative z-10 antialiased`}
         >
           <QueryProvider>
-            <SettingsProvider>
-              <NavBar />
-              {children}
-              <Toaster />
-            </SettingsProvider>
+            <UserProvider>
+              <SettingsProvider>
+                <NavBar />
+                {children}
+                <Toaster />
+              </SettingsProvider>
+            </UserProvider>
           </QueryProvider>
         </body>
       </html>

@@ -56,6 +56,7 @@ function EndSessionDialog() {
             onClick={() => {
               endPomoSession();
               resetPomoSession();
+              
             }}
           >
             End & Save

@@ -153,7 +153,7 @@ export const usePomoStore = create<PomoStore>((set) => ({
         isBreakSkipped: true,
         isPaused: false,
         skipCounting: false,
-        isFocus: false
+        isFocus: false,
       },
     })),
   endFocusSession: () =>

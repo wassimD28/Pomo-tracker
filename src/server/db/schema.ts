@@ -79,16 +79,22 @@ export const pomodoroSessions = pgTable("pomodoroSessions", {
   pausedAt: timestamp("paused_at")
     .array()
     .notNull()
-    .default(sql`'{}'::timestamp[]`), // Set default value as an empty array
+    .default(sql`'{}'::timestamp[]`),
   resumedAt: timestamp("resumed_at")
     .array()
     .notNull()
-    .default(sql`'{}'::timestamp[]`), // Set default value as an empty array
+    .default(sql`'{}'::timestamp[]`),
   startedAt: timestamp("started_at").defaultNow(),
-  endedAt: timestamp("ended_at").defaultNow(),
-  isCompleated: boolean("is_compleated").notNull().default(false),
+  endedAt: timestamp("ended_at"),
+  isCompleted: boolean("is_completed").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+
+  doneCycles: integer("done_cycles").notNull().default(0),
+  totalSessionDuration: integer("total_session_duration").notNull().default(0),
+  totalFocusDuration: integer("total_focus_duration").notNull().default(0),
+  totalBreakDuration: integer("total_break_duration").notNull().default(0),
+  isEnded: boolean("is_ended").notNull().default(false),
 });
 
 export const settings = pgTable("settings", {

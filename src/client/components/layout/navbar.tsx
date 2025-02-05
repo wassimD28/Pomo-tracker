@@ -33,6 +33,8 @@ export const NavBar = () => {
   const isMobile = useIsMobile();
   const { isLoaded, userId } = useAuth();
   const { user } = useUser();
+
+  
   const pathname = usePathname();
   const [links, setLinks] = useState<LinkType[]>([
     {

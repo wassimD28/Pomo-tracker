@@ -16,28 +16,30 @@ function Tasks() {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
-          <h1 className="text-2xl text-gray-400">Tasks</h1>
+          <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+            Tasks
+          </h1>
         </span>
         <div className="w-ful flex h-full flex-col gap-2 py-4 opacity-20">
-          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
-            <Skeleton className="w-4 aspect-square" />
-            <Skeleton className="w-full h-4" />
+          <div className="flex w-full gap-3 rounded bg-white/5 p-3">
+            <Skeleton className="aspect-square w-4" />
+            <Skeleton className="h-4 w-full" />
           </div>
-          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
-            <Skeleton className="w-4 aspect-square" />
-            <Skeleton className="w-full h-4" />
+          <div className="flex w-full gap-3 rounded bg-white/5 p-3">
+            <Skeleton className="aspect-square w-4" />
+            <Skeleton className="h-4 w-full" />
           </div>
-          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
-            <Skeleton className="w-4 aspect-square" />
-            <Skeleton className="w-full h-4" />
+          <div className="flex w-full gap-3 rounded bg-white/5 p-3">
+            <Skeleton className="aspect-square w-4" />
+            <Skeleton className="h-4 w-full" />
           </div>
-          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
-            <Skeleton className="w-4 aspect-square" />
-            <Skeleton className="w-full h-4" />
+          <div className="flex w-full gap-3 rounded bg-white/5 p-3">
+            <Skeleton className="aspect-square w-4" />
+            <Skeleton className="h-4 w-full" />
           </div>
-          <div className="w-full flex gap-3 p-3 bg-white/5 rounded">
-            <Skeleton className="w-4 aspect-square" />
-            <Skeleton className="w-full h-4" />
+          <div className="flex w-full gap-3 rounded bg-white/5 p-3">
+            <Skeleton className="aspect-square w-4" />
+            <Skeleton className="h-4 w-full" />
           </div>
         </div>
       </div>
@@ -49,7 +51,9 @@ function Tasks() {
     return (
       <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
         <span className="flex w-full items-center justify-between">
-          <h1 className="text-2xl text-gray-400">Tasks</h1>
+          <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+            Tasks
+          </h1>
         </span>
         <div className="flex h-full w-full items-center justify-center">
           <p className="text-red-400">Error loading tasks. Please try again.</p>
@@ -79,11 +83,11 @@ function Tasks() {
   };
 
   return (
-    <div
-      className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4"
-    >
+    <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4">
       <span className="flex w-full items-center justify-between">
-        <h1 className="text-2xl text-gray-400">Tasks</h1>
+        <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+          Tasks
+        </h1>
         <TaskDialog categoryId={category.id} disabled={!category.id} />
       </span>
       {!category.id ? (

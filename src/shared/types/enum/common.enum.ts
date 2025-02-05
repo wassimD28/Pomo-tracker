@@ -3,7 +3,7 @@ export enum Entity {
   TASK,
   TASK_COMPONENT,
   SETTING,
-  //POMODORO_SESSION,
+  POMODORO_SESSION,
 }
 
 export enum ContentType {
