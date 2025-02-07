@@ -1,9 +1,7 @@
 "use client"
 import { PomodoroSamary } from "@/src/client/components/features/dashboard/pomodoroSamary";
 import { TodayTodos } from "@/src/client/components/features/dashboard/todayTodos";
-import { useUserContext } from "@/src/client/providers/userProvider";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
 
 // Fix the dynamic import by explicitly handling the default export
 const CalendarComponent = dynamic(
@@ -15,11 +13,6 @@ const CalendarComponent = dynamic(
 );
 
 export default function DashboardPage() {
-
-  const { user: authUser } = useUserContext();
-    useEffect(() => {
-      console.log("authUser :", authUser);
-    }, [authUser]);
   return (
     <div className="pointer-events-auto relative flex h-svh w-full flex-col items-center justify-center overflow-x-hidden overflow-y-scroll bg-custom-black-500 text-custom-white-400 max-sm:p-0">
       {/* blured circle  */}

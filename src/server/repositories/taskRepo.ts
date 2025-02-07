@@ -1,6 +1,6 @@
 import { db } from "@/src/server/db/drizzle";
-import { tasks } from "@/src/server/db/schema";
-import { and, eq } from "drizzle-orm";
+import { categories, tasks } from "@/src/server/db/schema";
+import { and, eq, ilike } from "drizzle-orm";
 
 interface CreateTaskParams {
   userId: number;
@@ -14,6 +14,36 @@ interface UpdateTaskParams {
 }
 
 export class TaskRepository {
+  static async searchTask(userId: number, searchTerm: string) {
+    try {
+
+      const foundTasks = await db
+        .select({
+          id: tasks.id,
+          categoryId: tasks.categoryId,
+          title: tasks.title,
+          isCompleted: tasks.isCompleted,
+          createdAt: tasks.createdAt,
+          updatedAt: tasks.updatedAt,
+          // Include category as a nested object
+          category: {
+            id: categories.id,
+            name: categories.name,
+          },
+        })
+        .from(tasks)
+        .innerJoin(categories, eq(tasks.categoryId, categories.id))
+        .where(
+          and(eq(tasks.userId, userId), ilike(tasks.title, `%${searchTerm}%`)),
+        ).limit(4);
+
+      console.log("Raw database results:", foundTasks);
+      return foundTasks;
+    } catch (error) {
+      console.log("Failed to search task:", error);
+      throw error;
+    }
+  }
   // Create
   static async createTask(params: CreateTaskParams) {
     try {

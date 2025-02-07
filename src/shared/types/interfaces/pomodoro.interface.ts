@@ -18,7 +18,8 @@ export interface PomodoroSession {
   resumedAt: Date[]; // Array of timestamps when the session was resumed
   startedAt: Date | null; // Timestamp when the session started, nullable
   endedAt: Date | null; // Timestamp when the session ended, nullable
-  isCompleated: boolean; // Whether the session is completed
+  isCompleted: boolean; // Whether the session is completed
+  isEnded: boolean; // Whether the session is ended
   createdAt: Date; // Timestamp when the record was created
   updatedAt: Date; // Timestamp when the record was last updated
 }

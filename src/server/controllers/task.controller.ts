@@ -4,6 +4,37 @@ import { TaskRepository } from "../repositories/taskRepo";
 import { HTTPException } from "hono/http-exception";
 
 export class TaskController {
+  static async searchTasks(c: Context, searchTerm?: string) {
+    try {
+      const userIdFromContext = c.get("userId");
+
+      // More robust parsing
+      const userId =
+        typeof userIdFromContext === "number"
+          ? userIdFromContext
+          : parseInt(userIdFromContext as string);
+
+      if (isNaN(userId)) {
+        console.error("Invalid user ID:", userIdFromContext);
+        return c.json(
+          { status: "error", message: "Invalid user authentication" },
+          401,
+        );
+      }
+
+
+      if (!searchTerm) return c.json({ status: "success", data: [] });
+
+      const foundTasks = await TaskRepository.searchTask(userId, searchTerm);
+      return c.json({ status: "success", data: foundTasks });
+    } catch (err) {
+      console.error("Error searching tasks:", err);
+      return c.json(
+        { status: "error", message: "Failed to search tasks" },
+        500,
+      );
+    }
+  }
   static async create(c: Context) {
     try {
       const userId = c.get("userId");

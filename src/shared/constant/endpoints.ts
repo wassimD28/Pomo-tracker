@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     BASE: "/api/tasks",
     BY_ID: (id: number) => `/api/tasks/${id}`,
     BY_CATEGORY: (categoryId: number) => `/api/tasks/category/${categoryId}`,
+    BY_SEARCH_TERM: (searchTerm: string) => `/api/tasks/search?q=${searchTerm}`,
   },
   // task components
   TASK_COMPONENTS: {

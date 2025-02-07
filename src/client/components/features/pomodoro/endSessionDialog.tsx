@@ -12,9 +12,12 @@ import {
 import { usePomoStore } from "@/src/client/store/usePomoStore";
 import { cn } from "@/src/shared/utils/utils";
 import { Square } from "lucide-react";
+interface EndSessionDialogProps {
+  onEndSession: () => void;
+}
+function EndSessionDialog({ onEndSession }: EndSessionDialogProps) {
+  const { pomoSession } = usePomoStore();
 
-function EndSessionDialog() {
-  const { endPomoSession, pomoSession, resetPomoSession } = usePomoStore();
   return (
     <AlertDialog>
       <AlertDialogTrigger
@@ -28,7 +31,7 @@ function EndSessionDialog() {
           className="fill-custom-white-200 stroke-custom-white-200 hover:fill-custom-white-600 hover:stroke-custom-white-600"
         />
       </AlertDialogTrigger>
-      <AlertDialogContent className="border-white/60 bg-white/10 backdrop-blur-md max-sm:w-80 rounded-lg">
+      <AlertDialogContent className="rounded-lg border-white/60 bg-white/10 backdrop-blur-md max-sm:w-80">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-white">
             Will you stop during the session?
@@ -44,22 +47,9 @@ function EndSessionDialog() {
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-custom-orange-500 text-custom-black-700 hover:bg-custom-orange-400"
-            onClick={() => {
-              endPomoSession();
-              resetPomoSession();
-            }}
+            onClick={onEndSession}
           >
             End Session
-          </AlertDialogAction>
-          <AlertDialogAction
-            className="bg-custom-white-500 mb-2 xl:m-0 text-custom-black-700 hover:bg-custom-white-400"
-            onClick={() => {
-              endPomoSession();
-              resetPomoSession();
-              
-            }}
-          >
-            End & Save
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

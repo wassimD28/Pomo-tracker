@@ -6,12 +6,12 @@ function PomoPageFooter() {
   return (
     <p
       className={cn(
-        "absolute -bottom-20 font-light capitalize opacity-0 duration-1000 ease-custom-ease",
+        "absolute -bottom-20 select-none font-light capitalize opacity-0 duration-1000 ease-custom-ease",
         pomoSession.isStarted && "bottom-32 opacity-40",
         (pomoSession.isFocusComplete ||
           pomoSession.isBreakComplete ||
           pomoSession.isPaused) &&
-          "-bottom-20 opacity-0",
+          "-bottom-20 select-none opacity-0",
       )}
     >
       {pomoSession.isFocus

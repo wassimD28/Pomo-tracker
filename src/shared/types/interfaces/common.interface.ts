@@ -19,6 +19,17 @@ export interface Task {
   isCompleted: boolean;
 }
 
+export interface FoundTask{
+  id: number
+  title: string
+  createdAt : Date
+  updatedAt : Date
+  category:{
+    id: number
+    name : number
+  }
+}
+
 export interface PomoSession {
   target: Task | null;
   cyclesNumber: number;

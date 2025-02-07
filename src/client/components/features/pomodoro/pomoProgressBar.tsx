@@ -3,10 +3,12 @@ import { usePomoStore } from "../../../store/usePomoStore";
 import { cn, formatTime } from "@/src/shared/utils/utils";
 import { useTimer } from "react-timer-hook";
 import { useTimer as useIncreamentTimer } from "use-timer";
+import { useTaskSearchBarStore } from "@/src/client/store/useTaskSrearchBarStore";
 const PomodoroProgress = ({
   size = 520, // SVG width/height
   strokeWidth = 25, // Progress bar thickness
 }) => {
+  const { isSearching } = useTaskSearchBarStore();
   const {
     pomoSession,
     updateTotalSessionDuration,
@@ -350,6 +352,7 @@ const PomodoroProgress = ({
           pomoSession.isStarted && "max-sm:translate-y-0",
           (pomoSession.isFocusComplete || pomoSession.isCompleted) &&
             "-translate-y-96 opacity-0",
+            isSearching && "translate-y-80 select-none opacity-0 pointer-events-none"
         )}
       >
         {pomoSession.isStarted

@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { taskSchema } from "../schemas/task.shema";
+import { taskSchema } from "../schemas/task.schema";
 import { ValidationError } from "../errors/validation.error";
 
 export class TaskValidator {

@@ -19,7 +19,7 @@ function PomoConfirmationButtons() {
         {/* break time confirmation buttons  */}
         <div
           className={cn(
-            "pointer-events-none absolute -top-0 grid w-80 grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
+            "pointer-events-none absolute -top-0 grid w-80 select-none grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
             pomoSession.isFocusComplete &&
               "pointer-events-auto top-40 opacity-100",
           )}
@@ -50,7 +50,7 @@ function PomoConfirmationButtons() {
         {/* back to focus confirmation buttons  */}
         <div
           className={cn(
-            "pointer-events-none absolute -top-0 grid w-80 grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
+            "pointer-events-none absolute -top-0 grid w-80 select-none grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
             pomoSession.isBreakComplete &&
               "pointer-events-auto top-40 opacity-100",
           )}
@@ -80,7 +80,7 @@ function PomoConfirmationButtons() {
         {/* pause confirmation buttons  */}
         <div
           className={cn(
-            "pointer-events-none absolute -top-0 grid w-80 grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
+            "pointer-events-none absolute -top-0 grid w-80 select-none grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
             pomoSession.isPaused &&
               pomoSession.isFocus &&
               "pointer-events-auto top-40 opacity-100",
@@ -111,7 +111,7 @@ function PomoConfirmationButtons() {
         {/* pause confirmation buttons on break  */}
         <div
           className={cn(
-            "pointer-events-none absolute -top-0 grid w-80 grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
+            "pointer-events-none absolute -top-0 grid w-80 select-none grid-cols-2 gap-4 opacity-0 transition-all duration-1000 ease-custom-ease",
             pomoSession.isPaused &&
               pomoSession.isBreak &&
               "pointer-events-auto top-40 opacity-100",

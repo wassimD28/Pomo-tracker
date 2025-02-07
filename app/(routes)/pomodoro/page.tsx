@@ -98,14 +98,14 @@ export default function PomodoroPage() {
           skipCounting();
         }}
         className={cn(
-          "pointer-events-none absolute -bottom-10 right-4 border border-transparent bg-custom-tomato-400/10 text-custom-tomato-400 opacity-0 backdrop-blur-sm transition-all duration-500 ease-custom-ease hover:border-custom-tomato-400 hover:bg-custom-tomato-400/30 hover:text-custom-tomato-400",
+          "pointer-events-none absolute -bottom-10 right-4 select-none border border-transparent bg-custom-tomato-400/10 text-custom-tomato-400 opacity-0 backdrop-blur-sm transition-all duration-500 ease-custom-ease hover:border-custom-tomato-400 hover:bg-custom-tomato-400/30 hover:text-custom-tomato-400",
           pomoSession.isFocus &&
             !pomoSession.isPaused &&
             "pointer-events-auto bottom-20 opacity-100",
           pomoSession.isBreak &&
             !pomoSession.isPaused &&
             "pointer-events-auto bottom-20 opacity-100",
-          (pomoSession.isFocusComplete || pomoSession.isBreakComplete )&&
+          (pomoSession.isFocusComplete || pomoSession.isBreakComplete) &&
             "pointer-events-none -bottom-0 opacity-0",
         )}
       >

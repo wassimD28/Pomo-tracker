@@ -7,14 +7,16 @@ import { useUserContext } from "@/src/client/providers/userProvider";
 import { useUpdatePomodoroSession } from "@/src/client/api/mutations/pomodoro-session/useUpdatePomoSession";
 import { useState } from "react";
 import { PomodoroSession } from "@/src/shared/types/interfaces/pomodoro.interface";
+import { useTaskSearchBarStore } from "@/src/client/store/useTaskSrearchBarStore";
 
 function MainPomoButtons() {
+  const { isSearching } = useTaskSearchBarStore();
   // Local state to store the current session ID
   const [currentSession, setCurrentSession] = useState<PomodoroSession | null>(
     null,
   );
 
-  const { pomoSession, startPomoSession, pausePomoSession, resumePomoSession } =
+  const { pomoSession, startPomoSession, pausePomoSession, resumePomoSession, endPomoSession, resetPomoSession } =
     usePomoStore();
 
   const createPomoSession = useCreatePomodoroSession();
@@ -79,6 +81,34 @@ function MainPomoButtons() {
       },
     );
   };
+  const handleEndSession = () => {
+    if (!currentSession) {
+      console.error("No active session found");
+      return;
+    }
+
+    endPomoSession();
+
+    const updatedData : Partial<PomodoroSession> = {
+      wastedTime: pomoSession.wastedTime,
+      isEnded: true,
+      endedAt:  new Date(),
+    };
+    resetPomoSession();
+
+    updatePomoSession.mutate(
+      { id: currentSession.id, ...updatedData },
+      {
+        onSuccess: (response) => {
+          setCurrentSession(response.data);
+        },
+        onError: (error) => {
+          console.error("Failed to pause session:", error);
+          alert("Failed to pause session. Please try again.");
+        },
+      },
+    );
+  };
 
   const handleResumeSession = () => {
     if (!currentSession) {
@@ -110,7 +140,7 @@ function MainPomoButtons() {
   return (
     <div
       className={cn(
-        "absolute bottom-28 flex w-0 items-center justify-center rounded-full bg-gradient-to-b from-custom-tomato-400 to-custom-tomato-600 px-14 py-10 font-bold uppercase text-custom-white-500 opacity-100 shadow-xl shadow-black/20 duration-500 ease-custom-ease text-shadow-glow-sm max-sm:bottom-44",
+        "absolute bottom-28 flex w-0 items-center justify-center rounded-full bg-gradient-to-b from-custom-tomato-400 to-custom-tomato-600 px-14 py-10 font-bold uppercase text-custom-white-500 opacity-100 shadow-xl shadow-black/20 duration-500 ease-custom-ease text-shadow-glow-sm max-sm:bottom-44 transition-all",
         pomoSession.isStarted && "bottom-24 w-44 max-sm:bottom-24",
         pomoSession.isPaused && "from-custom-maroon-400 to-custom-maroon-600",
         pomoSession.isBreak && "from-green-500 to-green-800",
@@ -118,6 +148,7 @@ function MainPomoButtons() {
           "bottom-96 from-green-500 to-green-800 opacity-0",
         (pomoSession.isFocusComplete || pomoSession.isBreakComplete) &&
           "opacity-0",
+          isSearching &&" translate-y-20 opacity-0 pointer-events-none"
       )}
     >
       <Play
@@ -149,7 +180,7 @@ function MainPomoButtons() {
             "pointer-events-auto left-10 opacity-100",
         )}
       />
-      <EndSessionDialog />
+      <EndSessionDialog onEndSession={handleEndSession} />
     </div>
   );
 }

@@ -3,8 +3,10 @@ import { cn } from "@/src/shared/utils/utils";
 import PomodoroProgress from "./pomoProgressBar";
 import MainPomoButtons from "./mainPomoButtons";
 import { Check } from "lucide-react";
+import TaskSearchBar from "./taskSearchBar";
 
 function MainPomo() {
+  
   const { pomoSession } = usePomoStore();
   return (
     <div
@@ -45,6 +47,7 @@ function MainPomo() {
           pomoSession.isFocusComplete && "opacity-100",
         )}
       />
+      <TaskSearchBar/>
       <PomodoroProgress />
       {/* play/pause/stop button */}
       <MainPomoButtons />

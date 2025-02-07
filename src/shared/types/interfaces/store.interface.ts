@@ -34,3 +34,12 @@ export interface CheckListStore {
   toggleTaskCompletion: (taskId: string) => void;
   updateTask: (taskId: string, updatedTask: Task) => void;
 }
+
+export interface TaskSearchBarStore {
+  isSearching: boolean;
+  searchTerm: string;
+  searchResults: Task[];
+  setSearchTerm: (searchTerm: string) => void;
+  setIsSearching: (isOpen : boolean) => void;
+  handleTaskSelect: (taskId: number) => void;
+}
