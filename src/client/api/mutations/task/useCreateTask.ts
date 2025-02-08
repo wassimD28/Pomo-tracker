@@ -37,6 +37,7 @@ export const useCreateTask = (
         title: task.title,
         categoryId: task.categoryId,
         isCompleted: false,
+        inTodayTodos: false,
       };
 
       // Update the cache with the correct query key
