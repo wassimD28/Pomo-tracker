@@ -59,7 +59,6 @@ export class TaskRepository {
         )
         .limit(5);
 
-      console.log("Raw database results:", foundTasks);
       return foundTasks;
     } catch (error) {
       console.log("Failed to search task:", error);

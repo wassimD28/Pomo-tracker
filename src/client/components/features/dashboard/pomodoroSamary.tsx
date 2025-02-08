@@ -7,14 +7,13 @@ import Image from "next/image";
 import { useEffect, useState, useMemo } from "react";
 import FocusPercentageItem from "./focusPercentageItem";
 import { PomodoroSessionWithDetails } from "@/src/shared/types/interfaces/common.interface";
-
+import { useQueryClient } from "@tanstack/react-query";
 
 export const PomodoroSamary = () => {
   const { pomoSession } = usePomoStore();
   const { data: todaySessions, isLoading, refetch } = useTodaySessions();
   const [totalFocusDurationToday, setTotalFocusDurationToday] = useState(0);
   const todaySessionsData = todaySessions?.data as PomodoroSessionWithDetails[];
-  
 
   // Aggregate sessions by category and calculate total durations
   const aggregatedCategories = useMemo(() => {
@@ -82,12 +81,46 @@ export const PomodoroSamary = () => {
     pomoSession.isEnded,
   ]);
 
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (pomoSession.isCompleted || pomoSession.isEnded) {
+      // Immediately invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["todayPomodoroSessions"] });
+      refetch();
+    }
+  }, [pomoSession.isCompleted, pomoSession.isEnded, queryClient, refetch]);
+  if (totalFocusDurationSum == 0) {
+    return (
+      <div
+        id="pomodoro_history"
+        className="relative flex items-center justify-center overflow-hidden rounded-xl bg-[#2b0d3f]"
+      >
+        {/* blured circle */}
+        <div className="absolute aspect-square w-56 rounded-full bg-custom-black-300 blur-[100px] max-sm:-top-[20%] max-sm:col-span-1" />
+        <h1 className="absolute top-8 text-center text-6xl font-bold capitalize text-custom-white-500">
+          Strat focus
+        </h1>
+        <Image
+          className="absolute z-20 scale-95 max-sm:bottom-[20%] max-sm:scale-75"
+          src="/tomato-icon-purple.svg"
+          alt="tomato icon"
+          width={180}
+          height={38}
+          priority
+        />
+        <p className="absolute bottom-6 text-sm opacity-40 max-sm:bottom-10">
+          You did not have any focus session today.
+        </p>
+      </div>
+    );
+  }
   return (
     <div
       id="pomodoro_history"
       className="relative flex items-center justify-center overflow-hidden rounded-xl bg-custom-maroon-700"
     >
-      <div className="absolute z-30 max-sm:left-6 right-10 top-32 flex max-h-36 flex-col items-start justify-start gap-2">
+      <div className="absolute right-10 top-32 z-30 flex max-h-36 flex-col items-start justify-start gap-2 max-sm:left-6">
         {aggregatedCategories.length ? (
           aggregatedCategories.map((category) => (
             <FocusPercentageItem

@@ -49,6 +49,7 @@ export const useUpdatePomodoroSession = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["pomodoroSessions"] });
+      queryClient.invalidateQueries({ queryKey: ["todayPomodoroSessions"] }); // Match useTodaySessions key
     },
   });
 };

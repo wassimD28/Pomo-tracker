@@ -13,7 +13,7 @@ export default async function Home() {
 
   // If user is not authenticated, show the landing page
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] gap-16 bg-custom-black-500 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20 overflow-hidden">
+    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] gap-16 bg-custom-black-500 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20 overflow-hidden pointer-events-auto">
       <main className="row-start-2 flex flex-col items-center gap-8 relative">
       {/* blured circle  */}
       <div className="absolute -top-20 opacity-15 aspect-square w-[800px] rounded-full bg-custom-orange-500 blur-[200px] pointer-events-none" />
