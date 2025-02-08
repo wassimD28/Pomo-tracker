@@ -16,6 +16,7 @@ export interface Task {
   id: number;
   categoryId: number;
   title: string;
+  inTodayTodos: boolean;
   isCompleted: boolean;
 }
 

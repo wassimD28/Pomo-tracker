@@ -4,6 +4,23 @@ import { TaskRepository } from "../repositories/taskRepo";
 import { HTTPException } from "hono/http-exception";
 
 export class TaskController {
+  static async getAllTodayTodos(c: Context) {
+    try {
+      const userId = c.get("userId");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tasks = await TaskRepository.getAllTodayTodos(userId);
+      return c.json({ status: "success", data: tasks });
+    } catch (err) {
+      console.error("Error getting today's tasks:", err);
+      return c.json(
+        { status: "error", message: "Failed to get today's tasks" },
+        500,
+      );
+    }
+  }
   static async searchTasks(c: Context, searchTerm?: string) {
     try {
       const userIdFromContext = c.get("userId");

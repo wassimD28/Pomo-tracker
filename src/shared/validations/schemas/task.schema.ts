@@ -17,5 +17,6 @@ export const taskSchema = {
       .trim(),
     categoryId: z.number().int().positive(),
     isCompleted: z.boolean(),
+    inTodayTodos: z.boolean().optional(),
   }),
 };

@@ -26,7 +26,6 @@ export const authenticateUser = async (
     }
     // Set userId in context for use in controllers
     c.set("userId", user.id);
-    console.log(`__________________\nauthenticated user id : ${user.id}, type : ${typeof user.id}\n______________`);
     
     await next();
   } catch (error) {

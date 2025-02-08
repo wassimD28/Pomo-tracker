@@ -12,7 +12,7 @@ function MainPomo() {
     <div
       className={cn(
         "absolute -bottom-10 max-sm:-bottom-24 flex aspect-square w-[500px] scale-100 flex-col items-center justify-center overflow-hidden rounded-full duration-1000 ease-custom-ease",
-        pomoSession.isStarted && "max-sm:bottom-32 bottom-44 max-sm:scale-[0.6] scale-[0.8]",
+        pomoSession.isStarted && "max-sm:bottom-32 bottom-32 max-sm:scale-[0.6] scale-[0.7]",
         pomoSession.isCompleted && "bottom-64 max-sm:bottom-64 max-sm:scale-[0.4] scale-50",
         pomoSession.isPaused && "-bottom-10 scale-75 max-sm:-bottom-4",
         (pomoSession.isFocusComplete || pomoSession.isBreakComplete) &&

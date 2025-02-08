@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   // Tasks
   TASKS: {
     BASE: "/api/tasks",
+    TODAY_TODOS: "/api/tasks/today-todos",
     BY_ID: (id: number) => `/api/tasks/${id}`,
     BY_CATEGORY: (categoryId: number) => `/api/tasks/category/${categoryId}`,
     BY_SEARCH_TERM: (searchTerm: string) => `/api/tasks/search?q=${searchTerm}`,

@@ -10,12 +10,11 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/src/client/components/ui/dropdown-menu";
-import { Check, EllipsisVertical, PenBox, Sun, Trash2, X } from "lucide-react";
+import { Check, EllipsisVertical, PenBox, Trash2, X } from "lucide-react";
 import { cn } from "@/src/shared/utils/utils";
 import { useState } from "react";
 import { Button } from "@/src/client/components/ui/button";
 import { Input } from "@/src/client/components/ui/input";
-import { useTaskStore } from "@/src/client/store/useTaskStore";
 import { useUpdateTask } from "@/src/client/api/mutations/task/useUpdateTask";
 import { useDeleteTask } from "@/src/client/api/mutations/task/useDeleteTask";
 
@@ -24,7 +23,6 @@ interface TaskCardProps {
 }
 
 function TaskCard({ task }: TaskCardProps) {
-  const { setActiveTask, activeTaskId } = useTaskStore();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTask, setUpdatedTask] = useState<Task>(task);
 
@@ -98,11 +96,10 @@ function TaskCard({ task }: TaskCardProps) {
   }
   return (
     <div
-      onClick={() => setActiveTask(task.id)}
+      
       className={cn(
         "group relative grid h-10 w-full cursor-pointer select-none grid-cols-[auto_1fr_auto] items-center justify-start gap-2 rounded-md bg-transparent px-2 text-custom-white-200/70 duration-300 ease-out hover:bg-custom-white-400/10",
         isEditing && "grid-cols-[1fr_auto] px-2",
-        activeTaskId === task.id && "bg-custom-white-200/10",
       )}
     >
       {isEditing ? (
@@ -176,16 +173,6 @@ function TaskCard({ task }: TaskCardProps) {
           side="right"
         >
           <DropdownMenuRadioGroup>
-            <DropdownMenuRadioItem
-              onClick={() =>
-                updateTask.mutate({ ...updatedTask, inTodayTodos: true })
-              }
-              className="flex cursor-pointer items-center gap-4 rounded-md px-2 hover:bg-custom-white-200/10 hover:text-custom-white-200"
-              value="delete"
-            >
-              <Sun />
-              <h2 className="capitalize">Move to today todo&apos;s</h2>
-            </DropdownMenuRadioItem>
             <DropdownMenuRadioItem
               onClick={() => setIsEditing(true)}
               value="edit"

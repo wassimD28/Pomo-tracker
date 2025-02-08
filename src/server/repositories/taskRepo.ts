@@ -11,12 +11,33 @@ interface CreateTaskParams {
 interface UpdateTaskParams {
   title?: string;
   completed?: boolean;
+  inTodayTodos?: boolean;
 }
 
 export class TaskRepository {
+  static async getAllTodayTodos(userId: number) {
+    try {
+      const todayTodos = await db
+        .select({
+          id: tasks.id,
+          userId: tasks.userId,
+          categoryId: tasks.categoryId,
+          title: tasks.title,
+          isCompleted: tasks.isCompleted,
+          createdAt: tasks.createdAt,
+          updatedAt: tasks.updatedAt,
+        })
+        .from(tasks)
+        .where(and(eq(tasks.inTodayTodos, true), eq(tasks.userId, userId)));
+
+      return todayTodos;
+    } catch (error) {
+      console.log("Failed to get today's todos:", error);
+      throw error;
+    }
+  }
   static async searchTask(userId: number, searchTerm: string) {
     try {
-
       const foundTasks = await db
         .select({
           id: tasks.id,
@@ -35,7 +56,8 @@ export class TaskRepository {
         .innerJoin(categories, eq(tasks.categoryId, categories.id))
         .where(
           and(eq(tasks.userId, userId), ilike(tasks.title, `%${searchTerm}%`)),
-        ).limit(4);
+        )
+        .limit(5);
 
       console.log("Raw database results:", foundTasks);
       return foundTasks;

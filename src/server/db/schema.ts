@@ -46,6 +46,7 @@ export const tasks = pgTable("tasks", {
     .references(() => categories.id),
   title: text("title").notNull(),
   isCompleted: boolean("is_completed").default(false).notNull(),
+  inTodayTodos: boolean("in_today_todos").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

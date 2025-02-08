@@ -15,6 +15,7 @@ export const useUpdateTask = (
         categoryId: newTaskValue.categoryId,
         title: newTaskValue.title,
         isCompleted: newTaskValue.isCompleted,
+        inTodayTodos: newTaskValue.inTodayTodos,
       });
       return response.data;
     },
