@@ -56,7 +56,7 @@ function SettingsDialog() {
         setSettingDialogOpen(open);
       }}
     >
-      <DialogContent className="z-50 flex h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-md w-[95%] rounded-lg items-end">
+      <DialogContent className="z-50 flex 2xl:scale-150 h-96 flex-col gap-0 border-none bg-custom-white-100/10 p-2 text-custom-white-100 backdrop-blur-md w-[95%] rounded-lg items-end">
         <DialogClose
           className="bg-white-20 group absolute right-4 top-4 rounded-sm border-none opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:border-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
           // Ensure this explicitly closes the dialog

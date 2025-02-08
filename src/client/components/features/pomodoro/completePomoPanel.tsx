@@ -18,14 +18,14 @@ function CompletePomoPanel() {
         onClick={() => {
           resetPomoSession();
         }}
-        className="absolute right-4 top-4 size-7 text-white/50 opacity-0 transition-all duration-200 ease-in-out hover:bg-white/10 hover:text-white/90 group-hover:opacity-100 max-sm:opacity-100"
+        className="absolute right-4 top-4 size-7 text-white/50 opacity-0 transition-all duration-200 ease-in-out hover:bg-white/10 hover:text-white/90 group-hover:opacity-100 max-sm:opacity-100 2xl:scale-150"
         variant={"ghost"}
       >
         <X />
       </Button>
-      <h1 className="text-4xl font-bold text-custom-white-500">Overview</h1>
+      <h1 className="text-4xl font-bold text-custom-white-500 2xl:text-5xl 2xl:mb-4">Overview</h1>
       <Table>
-        <TableBody className="max-sm:text-xs">
+        <TableBody className="max-sm:text-xs 2xl:text-xl">
           <TableRow className="border-white/20 hover:bg-white/5">
             <TableCell>Total Session Duration</TableCell>
             <TableCell>

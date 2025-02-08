@@ -13,7 +13,7 @@ import { Label } from "@/src/client/components/ui/label";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { TaskCompCreatePayload } from "@/src/shared/types/interfaces/taskComp.interface";
-import { ContentType } from "@/src/shared/types/enum/common.enum";
+import { AvailableContentType, ContentType } from "@/src/shared/types/enum/common.enum";
 import { useCreateTaskComp } from "@/src/client/api/mutations/taskComp/useCreateTaskComp";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -128,7 +128,7 @@ function TaskCompDialog({ taskId, latestOrder }: TaskDialogProps) {
                 </SelectTrigger>
                 <SelectContent className="bg-custom-white-200/10 text-custom-white-200 backdrop-blur-sm">
                   <SelectGroup>
-                    {Object.values(ContentType).map((type) => (
+                    {Object.values(AvailableContentType).map((type) => (
                       <SelectItem
                         key={type}
                         className="rounded first-letter:uppercase"

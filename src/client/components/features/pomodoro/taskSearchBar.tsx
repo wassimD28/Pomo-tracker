@@ -54,7 +54,7 @@ function TaskSearchBar() {
             <h2 className="opacity-95">{pomoSession.target.title}</h2>
           </div>
         ) : (
-          "Want to link to a task?"
+          "Want to link a task?"
         )}
       </div>
       <div

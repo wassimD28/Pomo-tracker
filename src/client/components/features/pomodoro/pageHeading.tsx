@@ -19,13 +19,13 @@ function PomoPageHeading() {
   return (
     <h1
       className={cn(
-        "absolute top-10 max-sm:top-12 max-sm:text-3xl bg-gradient-to-b from-custom-white-100 to-custom-white-500 bg-clip-text pb-1 xl:text-6xl text-4xl font-bold capitalize text-transparent opacity-100 duration-1000 ease-custom-ease text-shadow-glow-sm",
+        "absolute top-10 bg-gradient-to-b from-custom-white-100 to-custom-white-500 bg-clip-text pb-1 text-4xl font-bold capitalize text-transparent opacity-100 duration-1000 ease-custom-ease text-shadow-glow-sm max-sm:top-12 max-sm:text-3xl xl:text-6xl 2xl:top-20 2xl:scale-150",
         (pomoSession.isStarted || pomoSession.isCompleted) &&
-          "-top-20 opacity-0",
+          "-top-20 opacity-0 2xl:-top-20",
         (pomoSession.isFocusComplete ||
           pomoSession.isBreakComplete ||
           pomoSession.isPaused) &&
-          "top-10 opacity-100",
+          "top-10 opacity-100 2xl:top-20",
       )}
     >
       {getHeading()}

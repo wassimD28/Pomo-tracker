@@ -11,12 +11,15 @@ function MainPomo() {
   return (
     <div
       className={cn(
-        "absolute -bottom-10 max-sm:-bottom-24 flex aspect-square w-[500px] scale-100 flex-col items-center justify-center overflow-hidden rounded-full duration-1000 ease-custom-ease",
-        pomoSession.isStarted && "max-sm:bottom-32 bottom-32 max-sm:scale-[0.6] scale-[0.7]",
-        pomoSession.isCompleted && "bottom-64 max-sm:bottom-64 max-sm:scale-[0.4] scale-50",
-        pomoSession.isPaused && "-bottom-10 scale-75 max-sm:-bottom-4",
+        "absolute -bottom-10 flex aspect-square w-[500px] scale-100 flex-col items-center justify-center overflow-hidden rounded-full duration-1000 ease-custom-ease max-sm:-bottom-24 2xl:-bottom-0 2xl:scale-[1.7]",
+        pomoSession.isStarted &&
+          "bottom-32 scale-[0.7] max-sm:bottom-32 max-sm:scale-[0.6] 2xl:bottom-80 2xl:scale-[1.3]",
+        pomoSession.isCompleted &&
+          "bottom-64 scale-50 max-sm:bottom-64 max-sm:scale-[0.4] 2xl:bottom-[50%] 2xl:scale-100",
+        pomoSession.isPaused &&
+          "-bottom-10 scale-75 max-sm:-bottom-4 2xl:bottom-40",
         (pomoSession.isFocusComplete || pomoSession.isBreakComplete) &&
-          "scale-80 -bottom-32 max-sm:-bottom-24 max-sm:scale-[0.85]",
+          "scale-80 -bottom-32 max-sm:-bottom-24 max-sm:scale-[0.85] 2xl:-bottom-1 2xl:scale-[1.7]",
       )}
     >
       {/* Base gradient */}
@@ -47,11 +50,16 @@ function MainPomo() {
           pomoSession.isFocusComplete && "opacity-100",
         )}
       />
-      <TaskSearchBar/>
+      <TaskSearchBar />
       <PomodoroProgress />
       {/* play/pause/stop button */}
       <MainPomoButtons />
-      <Check className={cn("scale-[13] ml-10 opacity-0 translate-y-96 ease-custom-ease duration-1000", pomoSession.isCompleted && "translate-y-0 opacity-90")}/>
+      <Check
+        className={cn(
+          "ml-10 translate-y-96 scale-[13] opacity-0 duration-1000 ease-custom-ease",
+          pomoSession.isCompleted && "translate-y-0 opacity-90",
+        )}
+      />
     </div>
   );
 }

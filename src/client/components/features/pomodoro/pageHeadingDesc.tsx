@@ -19,13 +19,14 @@ function PomoPageHeadingDesc() {
   return (
     <p
       className={cn(
-        "absolute top-28 select-none text-center font-light opacity-40 duration-1000 ease-custom-ease max-sm:top-24 max-sm:w-[90%] max-sm:text-sm",
-        (pomoSession.isStarted || pomoSession.isCompleted) &&
-          "-top-10 opacity-0",
+        "absolute top-28 select-none text-center font-light opacity-40 duration-1000 ease-custom-ease max-sm:top-24 max-sm:w-[90%] max-sm:text-sm 2xl:top-44 2xl:scale-150",
+       ( pomoSession.isStarted ||
+          pomoSession.isCompleted) &&
+          "-top-10 opacity-0 2xl:-top-20",
         (pomoSession.isFocusComplete ||
           pomoSession.isBreakComplete ||
           pomoSession.isPaused) &&
-          "top-28 opacity-40",
+          "top-28 opacity-40 2xl:top-44",
       )}
     >
       {getHeadingDescription()}

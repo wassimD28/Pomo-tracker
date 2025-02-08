@@ -98,18 +98,18 @@ export const PomodoroSamary = () => {
       >
         {/* blured circle */}
         <div className="absolute aspect-square w-56 rounded-full bg-custom-black-300 blur-[100px] max-sm:-top-[20%] max-sm:col-span-1" />
-        <h1 className="absolute top-8 text-center text-6xl font-bold capitalize text-custom-white-500">
+        <h1 className="absolute top-8 text-center text-6xl font-bold capitalize text-custom-white-500 2xl:top-20 2xl:scale-150">
           Strat focus
         </h1>
         <Image
-          className="absolute z-20 scale-95 max-sm:bottom-[20%] max-sm:scale-75"
+          className="absolute z-20 scale-95 max-sm:bottom-[20%] max-sm:scale-75 2xl:scale-150"
           src="/tomato-icon-purple.svg"
           alt="tomato icon"
           width={180}
           height={38}
           priority
         />
-        <p className="absolute bottom-6 text-sm opacity-40 max-sm:bottom-10">
+        <p className="absolute bottom-6 text-sm opacity-40 max-sm:bottom-10 2xl:bottom-20 2xl:scale-150">
           You did not have any focus session today.
         </p>
       </div>
@@ -120,7 +120,7 @@ export const PomodoroSamary = () => {
       id="pomodoro_history"
       className="relative flex items-center justify-center overflow-hidden rounded-xl bg-custom-maroon-700"
     >
-      <div className="absolute right-10 top-32 z-30 flex max-h-36 flex-col items-start justify-start gap-2 max-sm:left-6">
+      <div className="absolute right-10 top-32 z-30 flex max-h-36 flex-col items-start justify-start gap-2 max-sm:left-6 2xl:right-44 2xl:top-56 2xl:scale-150">
         {aggregatedCategories.length ? (
           aggregatedCategories.map((category) => (
             <FocusPercentageItem
@@ -137,9 +137,9 @@ export const PomodoroSamary = () => {
         )}
       </div>
       {/* blured circle */}
-      <div className="absolute left-0 aspect-square w-56 rounded-full bg-custom-tomato-400 blur-[100px] max-sm:-left-[20%] max-sm:-top-[20%] max-sm:col-span-1" />
+      <div className="absolute left-0 aspect-square w-56 rounded-full bg-custom-tomato-400 blur-[100px] max-sm:-left-[20%] max-sm:-top-[20%] max-sm:col-span-1 2xl:scale-150" />
       <Image
-        className="absolute left-4 z-20 max-sm:-bottom-[5%] max-sm:left-[65%] max-sm:blur-sm"
+        className="absolute left-4 z-20 max-sm:-bottom-[5%] max-sm:left-[65%] max-sm:blur-sm 2xl:left-20 2xl:scale-150"
         src="/tomato-icon.svg"
         alt="tomato icon"
         width={180}
@@ -147,7 +147,7 @@ export const PomodoroSamary = () => {
         priority
       />
       {/* text */}
-      <div className="absolute right-10 top-8 flex flex-col max-sm:left-4 max-sm:top-3">
+      <div className="absolute right-10 top-8 flex flex-col max-sm:left-4 max-sm:top-3 2xl:scale-150 2xl:right-32 2xl:top-20">
         <h1 className="text-6xl font-bold capitalize text-custom-white-500 max-sm:w-96">
           good job
         </h1>

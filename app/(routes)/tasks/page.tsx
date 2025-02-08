@@ -26,7 +26,7 @@ export default function TaskPage() {
     );
   }
   return (
-    <div className="pointer-events-auto relative flex h-svh w-full flex-row items-center justify-center overflow-hidden bg-custom-black-500 py-4 pl-16 pr-4 text-custom-white-300">
+    <div className="pointer-events-auto relative flex h-svh w-full flex-row items-center justify-center overflow-hidden bg-custom-black-500 py-4 pl-16 pr-4 text-custom-white-300 2xl:pl-20">
       {/* blured circle  */}
       <div className="absolute -right-1/4 -top-1/4 aspect-square w-[700px] rounded-full bg-custom-tomato-500 opacity-30 blur-[200px]" />
       <ResizablePanelGroup

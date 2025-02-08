@@ -11,3 +11,7 @@ export enum ContentType {
   image = "image",
   link = "link",
 }
+export enum AvailableContentType {
+  text = "text",
+  image = "image",
+}
