@@ -1,6 +1,6 @@
 import { db } from "@/src/server/db/drizzle";
-import { pomodoroSessions } from "@/src/server/db/schema";
-import { eq } from "drizzle-orm";
+import { categories, pomodoroSessions, tasks } from "@/src/server/db/schema";
+import { and, eq, gte } from "drizzle-orm";
 
 interface CreateSessionParams {
   userId: number;
@@ -88,6 +88,36 @@ export class PomodoroSessionRepository {
         .where(eq(pomodoroSessions.userId, userId));
     } catch (err) {
       console.error("Failed to get sessions:", err);
+      throw err;
+    }
+  }
+  static async getTodayUserSessions(userId: number) {
+    try {
+      // Get the start of the current day
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const sessionsWithDetails = await db
+        .select({
+          session: pomodoroSessions,
+          task: {
+            ...tasks,
+            category: categories, // Nest category information inside the task
+          },
+        })
+        .from(pomodoroSessions)
+        .leftJoin(tasks, eq(pomodoroSessions.targetTaskId, tasks.id))
+        .leftJoin(categories, eq(tasks.categoryId, categories.id))
+        .where(
+          and(
+            eq(pomodoroSessions.userId, userId),
+            gte(pomodoroSessions.createdAt, startOfDay),
+          ),
+        );
+
+      return sessionsWithDetails;
+    } catch (err) {
+      console.error("Failed to get sessions with details:", err);
       throw err;
     }
   }

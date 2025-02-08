@@ -1,21 +1,6 @@
-"use client"
-import { PomodoroSamary } from "@/src/client/components/features/dashboard/pomodoroSamary";
-import { TodayTodos } from "@/src/client/components/features/dashboard/todayTodos";
-import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
 
-// Fix the dynamic import by explicitly handling the default export
-const CalendarComponent = dynamic(
-  () => import("@/src/client/components/features/dashboard/calendar").then((mod) => mod.default),
-  {
-    loading: ()=> <div>loging...</div>,
-    ssr: false,
-  },
-);
-
-export default function DashboardPage() {
-
-  
-
+export default function LoadingPage() {
   return (
     <div className="pointer-events-auto relative flex h-svh w-full flex-col items-center justify-center overflow-x-hidden overflow-y-scroll bg-custom-black-500 text-custom-white-400 max-sm:p-0">
       {/* blured circle  */}
@@ -26,15 +11,15 @@ export default function DashboardPage() {
           overview
         </h1>
         {/* pomodoro samary */}
-        <PomodoroSamary />
+        <Skeleton className="w-full h-full opacity-5" />
         {/* today todo's */}
-        <TodayTodos />
+        <Skeleton className="w-full h-full opacity-5" />
         {/* calendar */}
         <div className="col-span-2 h-full rounded-xl bg-custom-white-500/10 max-sm:col-span-1 max-sm:mb-10">
-          <CalendarComponent />
+          <Skeleton className="w-full h-full opacity-5" />
         </div>
         {/* spacer  */}
-        <div className="col-span-2 h-16 max-sm:col-span-1 max-sm:block hidden" />
+        <div className="col-span-2 hidden h-16 max-sm:col-span-1 max-sm:block" />
       </div>
     </div>
   );

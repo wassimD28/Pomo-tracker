@@ -14,7 +14,7 @@ const BigCalendarComponent = dynamic(
 );
 function CalendarPage() {
   return (
-    <div className="pointer-events-auto relative flex h-svh w-full flex-col items-center justify-center overflow-hidden bg-custom-black-500 py-4 pl-16 pr-4 text-custom-white-300">
+    <div className="pointer-events-auto relative flex h-svh w-full flex-col items-center  max-sm:p-2 max-sm:pb-16 justify-center overflow-hidden bg-custom-black-500 py-4 pl-16 pr-4 text-custom-white-300">
       <BigCalendarComponent />
     </div>
   );

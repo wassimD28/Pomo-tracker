@@ -65,7 +65,7 @@ function CategoryCard({ category, isSelected, onSelect }: CategoryCardProps) {
     <div
       onClick={() => !isEditing && onSelect(category.id)}
       className={cn(
-        "group relative grid h-10 xl:w-full cursor-pointer select-none grid-cols-[1fr_auto] items-center gap-1 rounded-md bg-transparent px-2 text-custom-white-500/70 duration-300 ease-out hover:bg-custom-white-400/10 max-sm:w-32 max-sm:justify-center max-sm:rounded-full max-sm:bg-custom-white-500/10",
+        "group relative grid h-10 cursor-pointer select-none grid-cols-[1fr_auto] items-center gap-1 rounded-md bg-transparent px-2 text-custom-white-500/70 duration-300 ease-out hover:bg-custom-white-400/10 max-sm:!w-32 max-sm:justify-center max-sm:rounded-full max-sm:bg-custom-white-500/10 xl:w-full max-sm:flex",
         isSelected &&
           "bg-custom-white-200/10 max-sm:bg-custom-white-500/25 max-sm:text-custom-white-200/90",
         isEditing && "px-2",

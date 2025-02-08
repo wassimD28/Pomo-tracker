@@ -61,6 +61,18 @@ export class PomodoroSessionController {
     }
   }
 
+  static async getTodayUserSessions(c: Context) {
+    try {
+      const userId = c.get("userId");
+      const sessions = await PomodoroSessionRepository.getTodayUserSessions(userId);
+      return c.json({ status: "success", data: sessions });
+    } catch (err) {
+      console.error("Error fetching today sessions:", err);
+      throw new HTTPException(500, { message: "Failed to fetch today sessions" });
+    }
+  }
+  
+
   static async getSession(c: Context) {
     try {
       const sessionId = parseInt(c.req.param("id"));

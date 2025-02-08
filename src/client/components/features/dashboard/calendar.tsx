@@ -1,120 +1,135 @@
 "use client";
 
-import { Calendar, momentLocalizer, Event } from "react-big-calendar";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "@/src/client/styles/calendar.css";
-import { useState } from "react";
+import { usePomodoroSessionQuery } from "@/src/client/api/queries/usePomoSessionQuery";
+import { PomodoroSession } from "@/src/shared/types/interfaces/pomodoro.interface";
+import { useIsMobile } from "@/src/client/hooks/use-mobile";
 
-// Define the event type
-interface CalendarEvent extends Omit<Event, "title"> {
-  id: string;
+// Type definition for our calendar event
+interface CalendarEvent {
+  id: number;
   title: string;
   start: Date;
   end: Date;
-  description?: string;
-  category?: "work" | "personal" | "meeting";
+  resource: PomodoroSession;
 }
- const CalendarComponent = () => {
-  const localizer = momentLocalizer(moment);
 
-  // Sample events - replace with your actual events data
-  const [events, setEvents] = useState<CalendarEvent[]>([
-    {
-      id: "1",
-      title: "Team Meeting",
-      start: moment().set({ hour: 10, minute: 0 }).toDate(),
-      end: moment().set({ hour: 11, minute: 30 }).toDate(),
-      category: "meeting",
-    },
-    {
-      id: "2",
-      title: "Project Deadline",
-      start: moment().add(2, "days").toDate(),
-      end: moment().add(2, "days").toDate(),
-      category: "work",
-    },
-  ]);
+// Transform a single PomodoroSession into a calendar event
+const transformSessionToEvent = (session: PomodoroSession): CalendarEvent => {
+  // If the session hasn't started, we'll use createdAt as fallback
+  const start = session.startedAt || session.createdAt;
 
-  // Handle event selection with type safety
-  const handleEventSelect = (event: CalendarEvent) => {
-    if (!event) return;
-    console.log("Selected event:", event);
-    // Add your event selection logic here
+  // Calculate the total duration of the session
+  const totalSessionDuration = calculateTotalDuration(session);
+
+  // Calculate end time by adding the duration to start time
+  const end = moment(start).add(totalSessionDuration, "seconds").toDate();
+
+  return {
+    id: session.id,
+    title: `Pomodoro Session ${session.isCompleted ? "✓" : ""}`,
+    start: new Date(start),
+    end: new Date(end),
+    resource: session,
   };
+};
 
-  // Handle event creation from calendar slot selection
-  const handleSelectSlot = ({ start, end }: { start: Date; end: Date }) => {
-    if (!start || !end) return;
+// Calculate the total duration of a session including breaks
+const calculateTotalDuration = (session: PomodoroSession): number => {
+  const focusTime = session.focusDuration * session.cyclesNumber;
+  const regularBreaks = (session.cyclesNumber - 1) * session.breakDuration;
+  const longBreaks =
+    Math.floor((session.cyclesNumber - 1) / 4) * session.longBreakDuration;
+  return focusTime + regularBreaks + longBreaks + session.wastedTime;
+};
 
-    const title = window.prompt("Enter event title:");
-    if (title) {
-      const newEvent: CalendarEvent = {
-        id: Date.now().toString(),
-        title,
-        start,
-        end,
-        category: "personal",
-      };
-      setEvents((prev) => [...prev, newEvent]);
-    }
-  };
-
-  // Custom event styling based on category with type safety
-  const eventStyleGetter = (event: CalendarEvent | undefined) => {
-    if (!event?.category) {
-      return {
-        style: {
-          backgroundColor: "rgba(255, 166, 0, 0.8)",
-          border: "none",
-          borderRadius: "4px",
-        },
-      };
-    }
-
-    let backgroundColor = "rgba(255, 166, 0, 0.8)"; // default orange
-
-    switch (event.category) {
-      case "work":
-        backgroundColor = "rgba(54, 162, 235, 0.8)"; // blue
-        break;
-      case "meeting":
-        backgroundColor = "rgba(255, 99, 132, 0.8)"; // red
-        break;
-      case "personal":
-        backgroundColor = "rgba(75, 192, 192, 0.8)"; // green
-        break;
-    }
-
-    return {
-      style: {
-        backgroundColor,
-        border: "none",
-        borderRadius: "4px",
-      },
-    };
-  };
-
+// Custom event component with proper typing
+const EventComponent = ({ event }: { event: CalendarEvent }) => {
+  const session = event.resource;
   return (
-    <div className="h-full w-full p-4">
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        className="h-full"
-        views={["month", "week", "day"]}
-        selectable
-        onSelectEvent={(event) => handleEventSelect(event as CalendarEvent)}
-        onSelectSlot={handleSelectSlot}
-        eventPropGetter={(event) => eventStyleGetter(event as CalendarEvent)}
-        style={{
-          backgroundColor: "transparent",
-          color: "white",
-        }}
-        defaultView="week"
-      />
+    <div className="p-1 text-xs">
+      <div className="font-semibold">{event.title}</div>
+      <div>{`${session.cyclesNumber} cycles`}</div>
     </div>
   );
 };
+
+function CalendarComponent() {
+  const isMoble = useIsMobile();
+  const localizer = momentLocalizer(moment);
+  const { data: apiResponse, isLoading, error } = usePomodoroSessionQuery();
+
+  // Transform sessions into calendar events with proper error handling
+  const getEvents = (): CalendarEvent[] => {
+    // Check if we have a valid API response with data
+    if (!apiResponse || !apiResponse.data) {
+      console.warn("No sessions data available:", apiResponse);
+      return [];
+    }
+
+    // Now we know we have the data array
+    const sessions = apiResponse.data;
+
+    // Transform sessions to events
+    try {
+      return Array.isArray(sessions)
+        ? sessions.map(transformSessionToEvent)
+        : [transformSessionToEvent(sessions)]; // Handle single session case
+    } catch (err) {
+      console.error("Error transforming sessions to events:", err);
+      return [];
+    }
+  };
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        Loading sessions...
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <div className="flex h-full items-center justify-center text-red-500">
+        Error loading sessions. Please try again later.
+      </div>
+    );
+  }
+
+  // Get events with error handling
+  const events = getEvents();
+
+  return (
+    <div className="h-full w-full px-2 pt-4">
+      <Calendar
+        localizer={localizer}
+        startAccessor="start"
+        endAccessor="end"
+        className="h-full w-full"
+        views={["month", "week", "day"]}
+        style={{ backgroundColor: "transparent" }}
+        defaultView={isMoble ? "day" : "week"}
+        events={events}
+        components={{
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          event: EventComponent as any,
+        }}
+        tooltipAccessor={(event: CalendarEvent) => {
+          const session = event.resource;
+          return `Duration: ${moment
+            .duration(calculateTotalDuration(session), "seconds")
+            .humanize()}
+                  Cycles: ${session.cyclesNumber}
+                  Status: ${session.isCompleted ? "Completed" : "Incomplete"}`;
+        }}
+      />
+    </div>
+  );
+}
 export default CalendarComponent;

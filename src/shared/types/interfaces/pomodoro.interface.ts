@@ -19,10 +19,16 @@ export interface PomodoroSession {
   startedAt: Date | null; // Timestamp when the session started, nullable
   endedAt: Date | null; // Timestamp when the session ended, nullable
   isCompleted: boolean; // Whether the session is completed
-  isEnded: boolean; // Whether the session is ended
   createdAt: Date; // Timestamp when the record was created
   updatedAt: Date; // Timestamp when the record was last updated
+
+  doneCycles: number; // Number of completed cycles
+  totalSessionDuration: number; // Total session duration in seconds
+  totalFocusDuration: number; // Total focus duration in seconds
+  totalBreakDuration: number; // Total break duration in seconds
+  isEnded: boolean; // Whether the session is ended
 }
+
 
 export interface CreateSessionParams {
   userId: number;

@@ -6,13 +6,14 @@ import { useCategoryStore } from "@/src/client/store/useCategoryStore";
 import { useCategoryQuery } from "@/src/client/api/queries/useCatigoryQuery";
 import { Category } from "@/src/shared/types/interfaces/common.interface";
 import { Skeleton } from "@/components/ui/skeleton";
-
+import { useIsMobile } from "@/src/client/hooks/use-mobile";
 
 function Categories() {
   const { setCategory } = useCategoryStore();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>();
   // Fetching categories
-  const { data, isLoading, isError } = useCategoryQuery()
+  const { data, isLoading, isError } = useCategoryQuery();
+  const isMoble = useIsMobile();
 
   // select the first category when loading
   useEffect(() => {
@@ -21,8 +22,8 @@ function Categories() {
       setSelectedCategoryIndex(categories[0].id);
       setCategory(categories[0].id, categories[0].name);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[data])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   // Loading state
   if (isLoading) {
@@ -61,7 +62,9 @@ function Categories() {
   }
   const handleSelectedCategory = (index: number): void => {
     setSelectedCategoryIndex(index);
-    const categoryName = categories.find((category : Category) => category.id === index)?.name;
+    const categoryName = categories.find(
+      (category: Category) => category.id === index,
+    )?.name;
     // console log index and category name
     console.log("category id :", index);
     console.log("category name :", categoryName);
@@ -70,18 +73,35 @@ function Categories() {
 
   const categories = data?.data || [];
   const showList = () => {
-    return (
-      <div className="flex overflow-scroll max-sm:gap-1 max-sm:w-fit w-full flex-col space-y-2 max-sm:space-y-0 max-sm:flex-row max-sm:flex-nowrap">
-        {categories.map((category : Category) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            isSelected={selectedCategoryIndex === category.id}
-            onSelect={handleSelectedCategory}
-          />
-        ))}
-      </div>
-    );
+    if (isMoble) {
+      return (
+        <div className="w-full overflow-x-scroll scrollbar-none">
+          <div className="flex flex-row w-fit gap-2">
+            {categories.map((category: Category) => (
+              <CategoryCard
+                key={category.id}
+                category={category}
+                isSelected={selectedCategoryIndex === category.id}
+                onSelect={handleSelectedCategory}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    } else{
+      return (
+        <div className="flex w-full flex-col space-y-2 overflow-scroll max-sm:w-full max-sm:flex-row max-sm:flex-nowrap max-sm:gap-1 max-sm:space-y-0 max-sm:overflow-hidden">
+          {categories.map((category: Category) => (
+            <CategoryCard
+              key={category.id}
+              category={category}
+              isSelected={selectedCategoryIndex === category.id}
+              onSelect={handleSelectedCategory}
+            />
+          ))}
+        </div>
+      );
+    }
   };
 
   const showEmpty = () => {
@@ -96,9 +116,11 @@ function Categories() {
   };
 
   return (
-    <div className="flex h-full max-sm:h-fit w-full flex-col rounded-lg bg-white/10 p-4 max-sm:p-0 max-sm:bg-transparent">
+    <div className="flex h-full w-full flex-col rounded-lg bg-white/10 p-4 max-sm:h-fit max-sm:bg-transparent max-sm:p-0">
       <span className="mb-4 flex w-full items-center justify-between">
-        <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">Categories</h1>
+        <h1 className="text-2xl text-custom-white-500 max-sm:font-semibold">
+          Categories
+        </h1>
         <CreateCategoryDialog />
       </span>
       {categories.length > 0 ? showList() : showEmpty()}

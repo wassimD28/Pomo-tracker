@@ -31,7 +31,8 @@ export interface FoundTask{
 }
 
 export interface PomoSession {
-  target: Task | null;
+  id: number | null;
+  target: FoundTask | null;
   cyclesNumber: number;
   currentCycle: number;
   totalSessionDuration: number; // in seconds
@@ -71,4 +72,42 @@ export interface Setting {
   defaultFocusDuration: number;
   defaultBreakDuration: number;
   defaultLongBreakDuration: number;
+}
+// Interface for Task with nested Category
+export interface TaskWithCategory {
+  id: number;
+  userId: number;
+  categoryId: number;
+  title: string;
+  isCompleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  category: Category; // Nested category object
+}
+
+// Comprehensive Pomodoro Session Interface
+export interface PomodoroSessionWithDetails {
+  session: {
+    id: number;
+    userId: number;
+    targetTaskId: number | null;
+    focusDuration: number;
+    cyclesNumber: number;
+    breakDuration: number;
+    longBreakDuration: number;
+    wastedTime: number;
+    pausedAt: Date[];
+    resumedAt: Date[];
+    startedAt: Date | null;
+    endedAt: Date | null;
+    isCompleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    doneCycles: number;
+    totalSessionDuration: number;
+    totalFocusDuration: number;
+    totalBreakDuration: number;
+    isEnded: boolean;
+  };
+  task: TaskWithCategory | null; // Nullable in case no task is associated
 }

@@ -20,10 +20,10 @@
   padding: 0;
 }
 .rbc-header + .rbc-header {
-    border-left: none;
-    padding: 0;
+  border-left: none;
+  padding: 0;
 }
-.rbc-time-header-content{
+.rbc-time-header-content {
   border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -67,7 +67,7 @@
 }
 /* Styles for time slot  */
 .rbc-day-slot .rbc-time-slot {
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 .rbc-timeslot-group {
   border: none;
@@ -76,26 +76,26 @@
 .rbc-time-content > * + * > * {
   border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
-.rbc-time-content{
+.rbc-time-content {
   border: none;
   padding-right: 8px;
 }
-.rbc-time-content::-webkit-scrollbar-thumb{
+.rbc-time-content::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.6) !important;
   border-radius: 10px;
   cursor: grab;
 }
-.rbc-time-content::-webkit-scrollbar{
+.rbc-time-content::-webkit-scrollbar {
   width: 8px;
   background: transparent;
 }
 /* left side time in hour style */
 .rbc-label {
-    color: rgba(255, 255, 255, 0.6) !important;
-    font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.9em;
 }
 
-.rbc-current-time-indicator{
+.rbc-current-time-indicator {
   height: 2px;
   background-color: #cd9d1a;
 }
@@ -112,4 +112,16 @@
 
 .rbc-allday-cell {
   display: none;
+}
+
+.rbc-time-header-content {
+  padding-right: 17px;
+}
+@media (max-width: 768px) {
+  .rbc-header {
+    font-size: x-small;
+  }
+  .rbc-time-gutter ,.rbc-time-column{
+    font-size: x-small;
+  }
 }

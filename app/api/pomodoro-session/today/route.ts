@@ -11,6 +11,6 @@ app.use("*", errorHandler);
 app.use("*", authenticateUser);
 
 // Link or unlink a task with a Pomodoro session
-app.post("/api/pomodoro-session/link-task", PomodoroSessionController.linkTask);
+app.get("/api/pomodoro-session/today", PomodoroSessionController.getTodayUserSessions);
 
-export const POST = handle(app);
+export const GET = handle(app);

@@ -7,7 +7,7 @@ import { useUserContext } from "@/src/client/providers/userProvider";
 import { useUpdatePomodoroSession } from "@/src/client/api/mutations/pomodoro-session/useUpdatePomoSession";
 import { useState } from "react";
 import { PomodoroSession } from "@/src/shared/types/interfaces/pomodoro.interface";
-import { useTaskSearchBarStore } from "@/src/client/store/useTaskSrearchBarStore";
+import { useTaskSearchBarStore } from "@/src/client/store/useTaskSearchBarStore";
 
 function MainPomoButtons() {
   const { isSearching } = useTaskSearchBarStore();

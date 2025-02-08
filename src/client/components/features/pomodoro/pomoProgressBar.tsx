@@ -3,11 +3,13 @@ import { usePomoStore } from "../../../store/usePomoStore";
 import { cn, formatTime } from "@/src/shared/utils/utils";
 import { useTimer } from "react-timer-hook";
 import { useTimer as useIncreamentTimer } from "use-timer";
-import { useTaskSearchBarStore } from "@/src/client/store/useTaskSrearchBarStore";
+import { useTaskSearchBarStore } from "@/src/client/store/useTaskSearchBarStore";
+import { useUpdatePomodoroSession } from "@/src/client/api/mutations/pomodoro-session/useUpdatePomoSession";
 const PomodoroProgress = ({
   size = 520, // SVG width/height
   strokeWidth = 25, // Progress bar thickness
 }) => {
+  const updatePomoSession = useUpdatePomodoroSession()
   const { isSearching } = useTaskSearchBarStore();
   const {
     pomoSession,
@@ -47,6 +49,7 @@ const PomodoroProgress = ({
 
       // Finally, complete the session
       completePomoSession();
+      
       console.warn(
         "(pomoSession.isStarted && pomoSession.currentCycle === pomoSession.cyclesNumber) \n IS TRIGGERED",
       );
@@ -80,6 +83,18 @@ const PomodoroProgress = ({
     if (pomoSession.isCompleted || pomoSession.isEnded) {
       // Ensure final focus duration is captured
       updateTotalSessionDuration();
+      if (pomoSession?.id) {
+        updatePomoSession.mutate({
+          id: pomoSession.id,
+          totalFocusDuration: pomoSession.totalFocusDuration,
+          totalBreakDuration: pomoSession.totalBreakDuration,
+          isCompleted: pomoSession.isCompleted,
+          isEnded: pomoSession.isEnded,
+          wastedTime: wastedTimer.time,
+        });
+      } else {
+        console.warn("No active session ID found");
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pomoSession.isCompleted, pomoSession.isEnded]);
@@ -271,14 +286,14 @@ const PomodoroProgress = ({
   ]);
 
   useEffect(() => {
-     if (
-       !pomoSession.isStarted &&
-       !pomoSession.isCompleted &&
-       !pomoSession.isEnded
-     ) {
+    if (
+      !pomoSession.isStarted &&
+      !pomoSession.isCompleted &&
+      !pomoSession.isEnded
+    ) {
       wastedTimer.reset();
-     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pomoSession.isStarted, pomoSession.isCompleted, pomoSession.isEnded]);
 
   const center = size / 2;
@@ -352,7 +367,8 @@ const PomodoroProgress = ({
           pomoSession.isStarted && "max-sm:translate-y-0",
           (pomoSession.isFocusComplete || pomoSession.isCompleted) &&
             "-translate-y-96 opacity-0",
-            isSearching && "translate-y-80 select-none opacity-0 pointer-events-none"
+          isSearching &&
+            "pointer-events-none translate-y-80 select-none opacity-0",
         )}
       >
         {pomoSession.isStarted

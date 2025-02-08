@@ -1,8 +1,11 @@
-import { PomoSession, Task } from "./common.interface";
+import { FoundTask, PomoSession, Task } from "./common.interface";
 import { PomoSessionData } from "./pomodoro.interface";
 
 export interface PomoStore {
   pomoSession: PomoSession;
+  setPomoSessionID: (id: number) => void;
+  removeTargetTask: () => void,
+  setTargetTask: (task : FoundTask) => void;
   updateTotalSessionDuration: () => void;
   updateWastedTime: (newDuration: number) => void;
   updateCurrentFocusDuration: (newDuration: number) => void;

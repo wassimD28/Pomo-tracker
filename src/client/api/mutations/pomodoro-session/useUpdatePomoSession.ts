@@ -8,7 +8,7 @@ export const useUpdatePomodoroSession = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (
-      updatedSession: Partial<PomodoroSession> & { id: number },
+      updatedSession: Partial<PomodoroSession> & { id: number | null },
     ) => {
       const { id, ...data } = updatedSession;
       const response = await axios.put(

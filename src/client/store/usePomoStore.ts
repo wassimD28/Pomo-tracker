@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import { PomoStore } from "@/src/shared/types/interfaces/store.interface";
+import { FoundTask } from "@/src/shared/types/interfaces/common.interface";
 
 export const usePomoStore = create<PomoStore>((set) => ({
   pomoSession: {
+    id: null,
     target: null,
     currentCycle: 0,
     cyclesNumber: 4,
@@ -31,6 +33,24 @@ export const usePomoStore = create<PomoStore>((set) => ({
     startedAt: null,
     endedAt: null,
   },
+  setPomoSessionID: (id: number) => set((state) => ({
+    pomoSession: {
+     ...state.pomoSession,
+      id,
+    },
+  })),
+  setTargetTask: (task: FoundTask) => set((state)=>({
+    pomoSession: {
+     ...state.pomoSession,
+      target: task,
+    },
+  })),
+  removeTargetTask: () => set((state)=>({
+    pomoSession: {
+     ...state.pomoSession,
+      target: null,
+    },
+  })),
   updateTotalSessionDuration: () =>
     set((state) => ({
       pomoSession: {
@@ -76,6 +96,7 @@ export const usePomoStore = create<PomoStore>((set) => ({
       pomoSession: {
         ...state.pomoSession,
         // will reset
+        id: null,
         target: null,
         wastedTime: 0,
         currentCycle: 0,
