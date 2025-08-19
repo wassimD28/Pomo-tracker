@@ -5,10 +5,17 @@ import { useTimer } from "react-timer-hook";
 import { useTimer as useIncreamentTimer } from "use-timer";
 import { useTaskSearchBarStore } from "@/src/client/store/useTaskSearchBarStore";
 import { useUpdatePomodoroSession } from "@/src/client/api/mutations/pomodoro-session/useUpdatePomoSession";
+import useSound from 'use-sound';
+
 const PomodoroProgress = ({
   size = 520, // SVG width/height
   strokeWidth = 25, // Progress bar thickness
 }) => {
+  const notification1 = '/audio/notification-1.mp3';
+const notification2 = '/audio/notification-2.mp3';
+
+const [playNotification1] = useSound(notification1, { volume: 0.5 });
+const [playNotification2] = useSound(notification2, { volume: 0.5 });
   const updatePomoSession = useUpdatePomodoroSession()
   const { isSearching } = useTaskSearchBarStore();
   const {
@@ -49,32 +56,24 @@ const PomodoroProgress = ({
 
       // Finally, complete the session
       completePomoSession();
-      
-      console.warn(
-        "(pomoSession.isStarted && pomoSession.currentCycle === pomoSession.cyclesNumber) \n IS TRIGGERED",
-      );
+      playNotification1();
+
     } else if (pomoSession.isStarted && pomoSession.isFocus) {
       updateCurrentFocusDuration(timer.totalSeconds - 1);
       endFocusSession();
-      console.warn(
-        " pomoSession.isStarted && pomoSession.isFocus IS TRIGGERED",
-      );
+      playNotification1();
     } else if (pomoSession.isStarted && pomoSession.isBreak) {
       wastedTimer.start();
       updateCurrentBreakDuration(timer.totalSeconds);
       endBreakDuration();
       updateRemainingTime(pomoSession.focusDuration);
-      console.warn("pomoSession.isStarted && pomoSession.isBreak IS TRIGGERED");
+      playNotification2();
     } else if (
       pomoSession.isStarted &&
       pomoSession.currentCycle < pomoSession.cyclesNumber
     ) {
       updateRemainingTime(pomoSession.focusDuration);
       startFocus();
-
-      console.warn(
-        " pomoSession.isStarted && pomoSession.currentCycle < pomoSession.cyclesNumber\N IS TRIGGERED",
-      );
     }
   };
 
